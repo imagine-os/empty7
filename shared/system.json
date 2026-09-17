@@ -1,0 +1,2430 @@
+{
+ "meta": {
+  "name": "Northwind Labs \u2014 system map",
+  "seed": 11,
+  "asset_root": "../../shared/assets/",
+  "type_colors": {
+   "service": "#5ec8ff",
+   "database": "#f5b642",
+   "queue": "#ff9f43",
+   "repo": "#b48cff",
+   "file": "#cfd6e6",
+   "document": "#ffd166",
+   "person": "#ff5f8f",
+   "cloud": "#8dff9e"
+  },
+  "type_frames": {
+   "service": "rack",
+   "database": "cylinder",
+   "queue": "pipe",
+   "repo": "folder",
+   "file": "tile",
+   "document": "page",
+   "person": "circle",
+   "cloud": "cloud"
+  },
+  "type_models": {
+   "service": "models/server.glb",
+   "database": "models/database.glb",
+   "queue": "models/queue.glb",
+   "repo": "models/folder.glb",
+   "file": "models/document.glb",
+   "document": "models/document.glb",
+   "person": "models/laptop.glb",
+   "cloud": "models/cloud.glb"
+  },
+  "relation_styles": {
+   "calls": {
+    "color": "#5ec8ff",
+    "width": 1.6,
+    "dash": null,
+    "arrow": true,
+    "label": "calls"
+   },
+   "reads": {
+    "color": "#f5b642",
+    "width": 1.2,
+    "dash": null,
+    "arrow": true,
+    "label": "reads"
+   },
+   "writes": {
+    "color": "#ff9f43",
+    "width": 1.6,
+    "dash": null,
+    "arrow": true,
+    "label": "writes"
+   },
+   "publishes": {
+    "color": "#ff9f43",
+    "width": 1.4,
+    "dash": [
+     6,
+     3
+    ],
+    "arrow": true,
+    "label": "publishes"
+   },
+   "consumes": {
+    "color": "#ff9f43",
+    "width": 1.4,
+    "dash": [
+     2,
+     3
+    ],
+    "arrow": true,
+    "label": "consumes"
+   },
+   "contains": {
+    "color": "rgba(180,140,255,0.45)",
+    "width": 0.9,
+    "dash": null,
+    "arrow": false,
+    "label": "contains"
+   },
+   "documents": {
+    "color": "#ffd166",
+    "width": 1.1,
+    "dash": [
+     4,
+     4
+    ],
+    "arrow": true,
+    "label": "documents"
+   },
+   "references": {
+    "color": "rgba(255,209,102,0.5)",
+    "width": 0.9,
+    "dash": [
+     1,
+     3
+    ],
+    "arrow": true,
+    "label": "references"
+   },
+   "owns": {
+    "color": "#ff5f8f",
+    "width": 1.1,
+    "dash": null,
+    "arrow": false,
+    "label": "owns"
+   },
+   "authored": {
+    "color": "rgba(255,95,143,0.55)",
+    "width": 0.9,
+    "dash": [
+     3,
+     3
+    ],
+    "arrow": true,
+    "label": "authored"
+   },
+   "deploys_to": {
+    "color": "#8dff9e",
+    "width": 1.2,
+    "dash": null,
+    "arrow": true,
+    "label": "deploys to"
+   },
+   "monitors": {
+    "color": "rgba(141,255,158,0.55)",
+    "width": 0.9,
+    "dash": [
+     2,
+     4
+    ],
+    "arrow": true,
+    "label": "monitors"
+   }
+  },
+  "ext_icons": {
+   "ts": "icons/lang-typescript.svg",
+   "py": "icons/lang-python.svg",
+   "go": "icons/lang-go.svg",
+   "rs": "icons/lang-rust.svg",
+   "md": "icons/brand-markdown.svg",
+   "json": "icons/ui-braces.svg",
+   "yaml": "icons/brand-yaml.svg",
+   "sql": "icons/ui-database.svg"
+  },
+  "teams": {
+   "platform": {
+    "label": "Platform",
+    "color": "#5ec8ff"
+   },
+   "payments": {
+    "label": "Payments",
+    "color": "#f5b642"
+   },
+   "data": {
+    "label": "Data",
+    "color": "#b48cff"
+   },
+   "frontend": {
+    "label": "Frontend",
+    "color": "#ff5f8f"
+   }
+  },
+  "counts": {
+   "nodes": 92,
+   "links": 188,
+   "groups": 12,
+   "by_type": {
+    "service": 12,
+    "database": 6,
+    "queue": 2,
+    "repo": 8,
+    "file": 30,
+    "document": 14,
+    "person": 12,
+    "cloud": 8
+   },
+   "by_relation": {
+    "contains": 30,
+    "documents": 21,
+    "references": 10,
+    "calls": 20,
+    "writes": 10,
+    "reads": 10,
+    "publishes": 6,
+    "consumes": 4,
+    "owns": 20,
+    "authored": 14,
+    "deploys_to": 22,
+    "monitors": 21
+   }
+  }
+ },
+ "nodes": [
+  {
+   "id": "svc:api-gateway",
+   "type": "service",
+   "label": "api-gateway",
+   "sublabel": "edge routing",
+   "icon": "icons/ui-network.svg",
+   "logo": "icons/lang-nodejs.svg",
+   "lang": "Node",
+   "owner": "person:lars-brekke",
+   "team": "platform",
+   "repo": "repo:platform-api",
+   "health": "healthy",
+   "rps": 3566,
+   "degree": 17
+  },
+  {
+   "id": "svc:auth",
+   "type": "service",
+   "label": "auth",
+   "sublabel": "OIDC / sessions",
+   "icon": "icons/ui-key-round.svg",
+   "logo": "icons/lang-rust.svg",
+   "lang": "Rust",
+   "owner": "person:mei-tanaka",
+   "team": "platform",
+   "repo": "repo:auth-service",
+   "health": "healthy",
+   "rps": 3529,
+   "degree": 10
+  },
+  {
+   "id": "svc:user-profile",
+   "type": "service",
+   "label": "user-profile",
+   "sublabel": "accounts",
+   "icon": "icons/ui-user.svg",
+   "logo": "icons/lang-typescript.svg",
+   "lang": "TypeScript",
+   "owner": "person:lars-brekke",
+   "team": "platform",
+   "repo": "repo:platform-api",
+   "health": "healthy",
+   "rps": 1870,
+   "degree": 10
+  },
+  {
+   "id": "svc:webhooks",
+   "type": "service",
+   "label": "webhooks",
+   "sublabel": "outbound events",
+   "icon": "icons/ui-webhook.svg",
+   "logo": "icons/lang-rust.svg",
+   "lang": "Rust",
+   "owner": "person:mei-tanaka",
+   "team": "platform",
+   "repo": "repo:platform-api",
+   "health": "degraded",
+   "rps": 3522,
+   "degree": 9
+  },
+  {
+   "id": "svc:billing",
+   "type": "service",
+   "label": "billing",
+   "sublabel": "invoices & plans",
+   "icon": "icons/ui-receipt.svg",
+   "logo": "icons/lang-go.svg",
+   "lang": "Go",
+   "owner": "person:tomasz-wolak",
+   "team": "payments",
+   "repo": "repo:billing-service",
+   "health": "healthy",
+   "rps": 797,
+   "degree": 14
+  },
+  {
+   "id": "svc:payments",
+   "type": "service",
+   "label": "payments",
+   "sublabel": "Stripe adapter",
+   "icon": "icons/ui-credit-card.svg",
+   "logo": "icons/lang-go.svg",
+   "lang": "Go",
+   "owner": "person:diego-ruiz",
+   "team": "payments",
+   "repo": "repo:billing-service",
+   "health": "healthy",
+   "rps": 3312,
+   "degree": 10
+  },
+  {
+   "id": "svc:orders",
+   "type": "service",
+   "label": "orders",
+   "sublabel": "order lifecycle",
+   "icon": "icons/ui-shopping-cart.svg",
+   "logo": "icons/lang-go.svg",
+   "lang": "Go",
+   "owner": "person:tomasz-wolak",
+   "team": "payments",
+   "repo": "repo:billing-service",
+   "health": "down",
+   "rps": 1968,
+   "degree": 12
+  },
+  {
+   "id": "svc:search",
+   "type": "service",
+   "label": "search",
+   "sublabel": "full-text + vector",
+   "icon": "icons/ui-search.svg",
+   "logo": "icons/lang-python.svg",
+   "lang": "Python",
+   "owner": "person:hana-kim",
+   "team": "data",
+   "repo": "repo:search-service",
+   "health": "healthy",
+   "rps": 2534,
+   "degree": 9
+  },
+  {
+   "id": "svc:analytics-ingest",
+   "type": "service",
+   "label": "analytics-ingest",
+   "sublabel": "event firehose",
+   "icon": "icons/ui-activity.svg",
+   "logo": "icons/lang-python.svg",
+   "lang": "Python",
+   "owner": "person:sofia-marin",
+   "team": "data",
+   "repo": "repo:data-pipeline",
+   "health": "healthy",
+   "rps": 405,
+   "degree": 7
+  },
+  {
+   "id": "svc:recommendations",
+   "type": "service",
+   "label": "recommendations",
+   "sublabel": "ranking model",
+   "icon": "icons/ui-sparkles.svg",
+   "logo": "icons/lang-python.svg",
+   "lang": "Python",
+   "owner": "person:kwame-mensah",
+   "team": "data",
+   "repo": "repo:data-pipeline",
+   "health": "degraded",
+   "rps": 1262,
+   "degree": 9
+  },
+  {
+   "id": "svc:notifications",
+   "type": "service",
+   "label": "notifications",
+   "sublabel": "email / push",
+   "icon": "icons/ui-bell.svg",
+   "logo": "icons/lang-nodejs.svg",
+   "lang": "Node",
+   "owner": "person:noor-haddad",
+   "team": "frontend",
+   "repo": "repo:web-frontend",
+   "health": "healthy",
+   "rps": 391,
+   "degree": 9
+  },
+  {
+   "id": "svc:admin-portal",
+   "type": "service",
+   "label": "admin-portal",
+   "sublabel": "internal UI",
+   "icon": "icons/ui-layout-dashboard.svg",
+   "logo": "icons/lang-typescript.svg",
+   "lang": "TypeScript",
+   "owner": "person:ines-costa",
+   "team": "frontend",
+   "repo": "repo:web-frontend",
+   "health": "healthy",
+   "rps": 3336,
+   "degree": 9
+  },
+  {
+   "id": "db:postgres-main",
+   "type": "database",
+   "label": "postgres-main",
+   "sublabel": "primary OLTP",
+   "icon": "icons/ui-database.svg",
+   "logo": "icons/brand-postgresql.svg",
+   "engine": "PostgreSQL",
+   "size_gb": 2400,
+   "degree": 7
+  },
+  {
+   "id": "db:postgres-billing",
+   "type": "database",
+   "label": "postgres-billing",
+   "sublabel": "ledger",
+   "icon": "icons/ui-database.svg",
+   "logo": "icons/brand-postgresql.svg",
+   "engine": "PostgreSQL",
+   "size_gb": 2400,
+   "degree": 3
+  },
+  {
+   "id": "db:redis-cache",
+   "type": "database",
+   "label": "redis-cache",
+   "sublabel": "hot cache",
+   "icon": "icons/ui-database.svg",
+   "logo": "icons/brand-redis.svg",
+   "engine": "Redis",
+   "size_gb": 12,
+   "degree": 4
+  },
+  {
+   "id": "db:redis-sessions",
+   "type": "database",
+   "label": "redis-sessions",
+   "sublabel": "session store",
+   "icon": "icons/ui-database.svg",
+   "logo": "icons/brand-redis.svg",
+   "engine": "Redis",
+   "size_gb": 900,
+   "degree": 1
+  },
+  {
+   "id": "db:clickhouse-events",
+   "type": "database",
+   "label": "clickhouse-events",
+   "sublabel": "analytics OLAP",
+   "icon": "icons/ui-database.svg",
+   "logo": "icons/brand-clickhouse.svg",
+   "engine": "ClickHouse",
+   "size_gb": 340,
+   "degree": 4
+  },
+  {
+   "id": "db:s3-assets",
+   "type": "database",
+   "label": "s3-assets",
+   "sublabel": "object bucket",
+   "icon": "icons/ui-database.svg",
+   "logo": "icons/brand-aws.svg",
+   "engine": "Amazon S3",
+   "size_gb": 340,
+   "degree": 2
+  },
+  {
+   "id": "q:kafka-events",
+   "type": "queue",
+   "label": "kafka-events",
+   "sublabel": "24 partitions",
+   "icon": "icons/ui-layers.svg",
+   "logo": "icons/brand-kafka.svg",
+   "engine": "Apache Kafka",
+   "degree": 8
+  },
+  {
+   "id": "q:sqs-jobs",
+   "type": "queue",
+   "label": "sqs-jobs",
+   "sublabel": "background jobs",
+   "icon": "icons/ui-layers.svg",
+   "logo": "icons/brand-aws.svg",
+   "engine": "Amazon SQS",
+   "degree": 3
+  },
+  {
+   "id": "repo:platform-api",
+   "type": "repo",
+   "label": "platform-api",
+   "sublabel": "TypeScript \u00b7 \u2605 412",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "TypeScript",
+   "stars": 412,
+   "team": "platform",
+   "files": 6,
+   "degree": 11
+  },
+  {
+   "id": "repo:auth-service",
+   "type": "repo",
+   "label": "auth-service",
+   "sublabel": "Rust \u00b7 \u2605 288",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "Rust",
+   "stars": 288,
+   "team": "platform",
+   "files": 4,
+   "degree": 6
+  },
+  {
+   "id": "repo:billing-service",
+   "type": "repo",
+   "label": "billing-service",
+   "sublabel": "Go \u00b7 \u2605 197",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "Go",
+   "stars": 197,
+   "team": "payments",
+   "files": 5,
+   "degree": 7
+  },
+  {
+   "id": "repo:search-service",
+   "type": "repo",
+   "label": "search-service",
+   "sublabel": "Python \u00b7 \u2605 163",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "Python",
+   "stars": 163,
+   "team": "data",
+   "files": 4,
+   "degree": 7
+  },
+  {
+   "id": "repo:data-pipeline",
+   "type": "repo",
+   "label": "data-pipeline",
+   "sublabel": "Python \u00b7 \u2605 121",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "Python",
+   "stars": 121,
+   "team": "data",
+   "files": 4,
+   "degree": 6
+  },
+  {
+   "id": "repo:web-frontend",
+   "type": "repo",
+   "label": "web-frontend",
+   "sublabel": "TypeScript \u00b7 \u2605 534",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "TypeScript",
+   "stars": 534,
+   "team": "frontend",
+   "files": 3,
+   "degree": 7
+  },
+  {
+   "id": "repo:infra",
+   "type": "repo",
+   "label": "infra",
+   "sublabel": "YAML \u00b7 \u2605 76",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "YAML",
+   "stars": 76,
+   "team": "platform",
+   "files": 2,
+   "degree": 4
+  },
+  {
+   "id": "repo:docs",
+   "type": "repo",
+   "label": "docs",
+   "sublabel": "Markdown \u00b7 \u2605 58",
+   "icon": "icons/ui-folder-git-2.svg",
+   "logo": "icons/brand-github.svg",
+   "language": "Markdown",
+   "stars": 58,
+   "team": "frontend",
+   "files": 2,
+   "degree": 4
+  },
+  {
+   "id": "file:platform-api/src/gateway/router.ts",
+   "type": "file",
+   "label": "router.ts",
+   "sublabel": "src/gateway/router.ts",
+   "icon": "icons/lang-typescript.svg",
+   "ext": "ts",
+   "repo": "repo:platform-api",
+   "loc": 1359,
+   "degree": 1
+  },
+  {
+   "id": "file:platform-api/src/gateway/rate-limit.ts",
+   "type": "file",
+   "label": "rate-limit.ts",
+   "sublabel": "src/gateway/rate-limit.ts",
+   "icon": "icons/lang-typescript.svg",
+   "ext": "ts",
+   "repo": "repo:platform-api",
+   "loc": 1280,
+   "degree": 1
+  },
+  {
+   "id": "file:platform-api/src/profile/service.ts",
+   "type": "file",
+   "label": "service.ts",
+   "sublabel": "src/profile/service.ts",
+   "icon": "icons/lang-typescript.svg",
+   "ext": "ts",
+   "repo": "repo:platform-api",
+   "loc": 1351,
+   "degree": 1
+  },
+  {
+   "id": "file:platform-api/src/webhooks/dispatch.rs",
+   "type": "file",
+   "label": "dispatch.rs",
+   "sublabel": "src/webhooks/dispatch.rs",
+   "icon": "icons/lang-rust.svg",
+   "ext": "rs",
+   "repo": "repo:platform-api",
+   "loc": 342,
+   "degree": 1
+  },
+  {
+   "id": "file:platform-api/package.json",
+   "type": "file",
+   "label": "package.json",
+   "sublabel": "package.json",
+   "icon": "icons/ui-braces.svg",
+   "ext": "json",
+   "repo": "repo:platform-api",
+   "loc": 1296,
+   "degree": 1
+  },
+  {
+   "id": "file:platform-api/README.md",
+   "type": "file",
+   "label": "README.md",
+   "sublabel": "README.md",
+   "icon": "icons/brand-markdown.svg",
+   "ext": "md",
+   "repo": "repo:platform-api",
+   "loc": 50,
+   "degree": 1
+  },
+  {
+   "id": "file:auth-service/src/main.rs",
+   "type": "file",
+   "label": "main.rs",
+   "sublabel": "src/main.rs",
+   "icon": "icons/lang-rust.svg",
+   "ext": "rs",
+   "repo": "repo:auth-service",
+   "loc": 1102,
+   "degree": 1
+  },
+  {
+   "id": "file:auth-service/src/oidc.rs",
+   "type": "file",
+   "label": "oidc.rs",
+   "sublabel": "src/oidc.rs",
+   "icon": "icons/lang-rust.svg",
+   "ext": "rs",
+   "repo": "repo:auth-service",
+   "loc": 149,
+   "degree": 1
+  },
+  {
+   "id": "file:auth-service/src/session.rs",
+   "type": "file",
+   "label": "session.rs",
+   "sublabel": "src/session.rs",
+   "icon": "icons/lang-rust.svg",
+   "ext": "rs",
+   "repo": "repo:auth-service",
+   "loc": 141,
+   "degree": 1
+  },
+  {
+   "id": "file:auth-service/Cargo.toml",
+   "type": "file",
+   "label": "Cargo.toml",
+   "sublabel": "Cargo.toml",
+   "icon": "icons/brand-yaml.svg",
+   "ext": "yaml",
+   "repo": "repo:auth-service",
+   "loc": 93,
+   "degree": 1
+  },
+  {
+   "id": "file:billing-service/cmd/billing/main.go",
+   "type": "file",
+   "label": "main.go",
+   "sublabel": "cmd/billing/main.go",
+   "icon": "icons/lang-go.svg",
+   "ext": "go",
+   "repo": "repo:billing-service",
+   "loc": 409,
+   "degree": 1
+  },
+  {
+   "id": "file:billing-service/internal/invoice/invoice.go",
+   "type": "file",
+   "label": "invoice.go",
+   "sublabel": "internal/invoice/invoice.go",
+   "icon": "icons/lang-go.svg",
+   "ext": "go",
+   "repo": "repo:billing-service",
+   "loc": 515,
+   "degree": 1
+  },
+  {
+   "id": "file:billing-service/internal/stripe/client.go",
+   "type": "file",
+   "label": "client.go",
+   "sublabel": "internal/stripe/client.go",
+   "icon": "icons/lang-go.svg",
+   "ext": "go",
+   "repo": "repo:billing-service",
+   "loc": 1248,
+   "degree": 1
+  },
+  {
+   "id": "file:billing-service/internal/orders/state.go",
+   "type": "file",
+   "label": "state.go",
+   "sublabel": "internal/orders/state.go",
+   "icon": "icons/lang-go.svg",
+   "ext": "go",
+   "repo": "repo:billing-service",
+   "loc": 81,
+   "degree": 1
+  },
+  {
+   "id": "file:billing-service/migrations/001_ledger.sql",
+   "type": "file",
+   "label": "001_ledger.sql",
+   "sublabel": "migrations/001_ledger.sql",
+   "icon": "icons/ui-database.svg",
+   "ext": "sql",
+   "repo": "repo:billing-service",
+   "loc": 970,
+   "degree": 1
+  },
+  {
+   "id": "file:search-service/search/indexer.py",
+   "type": "file",
+   "label": "indexer.py",
+   "sublabel": "search/indexer.py",
+   "icon": "icons/lang-python.svg",
+   "ext": "py",
+   "repo": "repo:search-service",
+   "loc": 688,
+   "degree": 1
+  },
+  {
+   "id": "file:search-service/search/query.py",
+   "type": "file",
+   "label": "query.py",
+   "sublabel": "search/query.py",
+   "icon": "icons/lang-python.svg",
+   "ext": "py",
+   "repo": "repo:search-service",
+   "loc": 922,
+   "degree": 1
+  },
+  {
+   "id": "file:search-service/search/embeddings.py",
+   "type": "file",
+   "label": "embeddings.py",
+   "sublabel": "search/embeddings.py",
+   "icon": "icons/lang-python.svg",
+   "ext": "py",
+   "repo": "repo:search-service",
+   "loc": 1230,
+   "degree": 1
+  },
+  {
+   "id": "file:search-service/pyproject.toml",
+   "type": "file",
+   "label": "pyproject.toml",
+   "sublabel": "pyproject.toml",
+   "icon": "icons/brand-yaml.svg",
+   "ext": "yaml",
+   "repo": "repo:search-service",
+   "loc": 420,
+   "degree": 1
+  },
+  {
+   "id": "file:data-pipeline/pipeline/ingest.py",
+   "type": "file",
+   "label": "ingest.py",
+   "sublabel": "pipeline/ingest.py",
+   "icon": "icons/lang-python.svg",
+   "ext": "py",
+   "repo": "repo:data-pipeline",
+   "loc": 1083,
+   "degree": 1
+  },
+  {
+   "id": "file:data-pipeline/pipeline/rank.py",
+   "type": "file",
+   "label": "rank.py",
+   "sublabel": "pipeline/rank.py",
+   "icon": "icons/lang-python.svg",
+   "ext": "py",
+   "repo": "repo:data-pipeline",
+   "loc": 498,
+   "degree": 1
+  },
+  {
+   "id": "file:data-pipeline/sql/events_rollup.sql",
+   "type": "file",
+   "label": "events_rollup.sql",
+   "sublabel": "sql/events_rollup.sql",
+   "icon": "icons/ui-database.svg",
+   "ext": "sql",
+   "repo": "repo:data-pipeline",
+   "loc": 1331,
+   "degree": 1
+  },
+  {
+   "id": "file:data-pipeline/schemas/event.json",
+   "type": "file",
+   "label": "event.json",
+   "sublabel": "schemas/event.json",
+   "icon": "icons/ui-braces.svg",
+   "ext": "json",
+   "repo": "repo:data-pipeline",
+   "loc": 622,
+   "degree": 1
+  },
+  {
+   "id": "file:web-frontend/app/admin/page.tsx",
+   "type": "file",
+   "label": "page.tsx",
+   "sublabel": "app/admin/page.tsx",
+   "icon": "icons/lang-typescript.svg",
+   "ext": "ts",
+   "repo": "repo:web-frontend",
+   "loc": 1043,
+   "degree": 1
+  },
+  {
+   "id": "file:web-frontend/app/notify/worker.ts",
+   "type": "file",
+   "label": "worker.ts",
+   "sublabel": "app/notify/worker.ts",
+   "icon": "icons/lang-typescript.svg",
+   "ext": "ts",
+   "repo": "repo:web-frontend",
+   "loc": 29,
+   "degree": 1
+  },
+  {
+   "id": "file:web-frontend/tsconfig.json",
+   "type": "file",
+   "label": "tsconfig.json",
+   "sublabel": "tsconfig.json",
+   "icon": "icons/ui-braces.svg",
+   "ext": "json",
+   "repo": "repo:web-frontend",
+   "loc": 1376,
+   "degree": 1
+  },
+  {
+   "id": "file:infra/k8s/gateway.yaml",
+   "type": "file",
+   "label": "gateway.yaml",
+   "sublabel": "k8s/gateway.yaml",
+   "icon": "icons/brand-yaml.svg",
+   "ext": "yaml",
+   "repo": "repo:infra",
+   "loc": 194,
+   "degree": 1
+  },
+  {
+   "id": "file:infra/k8s/kafka.yaml",
+   "type": "file",
+   "label": "kafka.yaml",
+   "sublabel": "k8s/kafka.yaml",
+   "icon": "icons/brand-yaml.svg",
+   "ext": "yaml",
+   "repo": "repo:infra",
+   "loc": 956,
+   "degree": 1
+  },
+  {
+   "id": "file:docs/CONTRIBUTING.md",
+   "type": "file",
+   "label": "CONTRIBUTING.md",
+   "sublabel": "CONTRIBUTING.md",
+   "icon": "icons/brand-markdown.svg",
+   "ext": "md",
+   "repo": "repo:docs",
+   "loc": 1361,
+   "degree": 1
+  },
+  {
+   "id": "file:docs/architecture.md",
+   "type": "file",
+   "label": "architecture.md",
+   "sublabel": "architecture.md",
+   "icon": "icons/brand-markdown.svg",
+   "ext": "md",
+   "repo": "repo:docs",
+   "loc": 589,
+   "degree": 1
+  },
+  {
+   "id": "doc:api-spec",
+   "type": "document",
+   "label": "Platform API Specification v3",
+   "sublabel": "PDF \u00b7 42 pp",
+   "icon": "icons/ui-file-text.svg",
+   "thumb": "thumbs/api-spec.png",
+   "format": "pdf",
+   "pages": 42,
+   "kind": "spec",
+   "updated": "2026-07-27",
+   "author": "person:ada-okafor",
+   "degree": 6
+  },
+  {
+   "id": "doc:billing-runbook",
+   "type": "document",
+   "label": "Billing On-call Runbook",
+   "sublabel": "DOCX \u00b7 11 pp",
+   "icon": "icons/ui-scroll-text.svg",
+   "thumb": "thumbs/billing-runbook.png",
+   "format": "docx",
+   "pages": 11,
+   "kind": "runbook",
+   "updated": "2026-04-18",
+   "author": "person:tomasz-wolak",
+   "degree": 5
+  },
+  {
+   "id": "doc:q3-roadmap",
+   "type": "document",
+   "label": "Q3 Roadmap",
+   "sublabel": "PPTX \u00b7 18 pp",
+   "icon": "icons/ui-presentation.svg",
+   "thumb": "thumbs/q3-roadmap.png",
+   "format": "pptx",
+   "pages": 18,
+   "kind": "slides",
+   "updated": "2026-06-17",
+   "author": "person:felix-berg",
+   "degree": 4
+  },
+  {
+   "id": "doc:cloud-costs",
+   "type": "document",
+   "label": "Cloud cost breakdown 2026",
+   "sublabel": "XLSX \u00b7 4 pp",
+   "icon": "icons/ui-table.svg",
+   "thumb": "thumbs/cloud-costs.png",
+   "format": "xlsx",
+   "pages": 4,
+   "kind": "spreadsheet",
+   "updated": "2026-08-19",
+   "author": "person:diego-ruiz",
+   "degree": 3
+  },
+  {
+   "id": "doc:readme-platform",
+   "type": "document",
+   "label": "platform-api README",
+   "sublabel": "MD \u00b7 3 pp",
+   "icon": "icons/brand-markdown.svg",
+   "thumb": "thumbs/readme-platform.png",
+   "format": "md",
+   "pages": 3,
+   "kind": "readme",
+   "updated": "2026-04-12",
+   "author": "person:hana-kim",
+   "degree": 3
+  },
+  {
+   "id": "doc:search-design",
+   "type": "document",
+   "label": "Search relevance design doc",
+   "sublabel": "PDF \u00b7 14 pp",
+   "icon": "icons/ui-file-text.svg",
+   "thumb": "thumbs/search-design.png",
+   "format": "pdf",
+   "pages": 14,
+   "kind": "design",
+   "updated": "2026-08-13",
+   "author": "person:lars-brekke",
+   "degree": 4
+  },
+  {
+   "id": "doc:vendor-contract",
+   "type": "document",
+   "label": "Stripe master services agreement",
+   "sublabel": "PDF \u00b7 27 pp",
+   "icon": "icons/ui-file-text.svg",
+   "thumb": "thumbs/vendor-contract.png",
+   "format": "pdf",
+   "pages": 27,
+   "kind": "contract",
+   "updated": "2026-07-13",
+   "author": "person:sofia-marin",
+   "degree": 2
+  },
+  {
+   "id": "doc:invoice-datadog",
+   "type": "document",
+   "label": "Datadog invoice \u2014 Aug 2026",
+   "sublabel": "PDF \u00b7 2 pp",
+   "icon": "icons/ui-file-text.svg",
+   "thumb": "thumbs/invoice-datadog.png",
+   "format": "pdf",
+   "pages": 2,
+   "kind": "invoice",
+   "updated": "2026-06-22",
+   "author": "person:ines-costa",
+   "degree": 3
+  },
+  {
+   "id": "doc:oncall-handbook",
+   "type": "document",
+   "label": "On-call handbook",
+   "sublabel": "DOCX \u00b7 22 pp",
+   "icon": "icons/ui-scroll-text.svg",
+   "thumb": "thumbs/oncall-handbook.png",
+   "format": "docx",
+   "pages": 22,
+   "kind": "handbook",
+   "updated": "2026-04-10",
+   "author": "person:priya-nair",
+   "degree": 5
+  },
+  {
+   "id": "doc:arch-overview",
+   "type": "document",
+   "label": "Architecture overview",
+   "sublabel": "PPTX \u00b7 9 pp",
+   "icon": "icons/ui-presentation.svg",
+   "thumb": "thumbs/arch-overview.png",
+   "format": "pptx",
+   "pages": 9,
+   "kind": "slides",
+   "updated": "2026-09-10",
+   "author": "person:noor-haddad",
+   "degree": 5
+  },
+  {
+   "id": "doc:incident-report",
+   "type": "document",
+   "label": "INC-2291 postmortem: orders outage",
+   "sublabel": "MD \u00b7 5 pp",
+   "icon": "icons/brand-markdown.svg",
+   "thumb": "thumbs/incident-report.png",
+   "format": "md",
+   "pages": 5,
+   "kind": "postmortem",
+   "updated": "2026-05-16",
+   "author": "person:mei-tanaka",
+   "degree": 4
+  },
+  {
+   "id": "doc:security-policy",
+   "type": "document",
+   "label": "Security & access policy",
+   "sublabel": "PDF \u00b7 16 pp",
+   "icon": "icons/ui-file-text.svg",
+   "thumb": "thumbs/security-policy.png",
+   "format": "pdf",
+   "pages": 16,
+   "kind": "policy",
+   "updated": "2026-04-25",
+   "author": "person:kwame-mensah",
+   "degree": 3
+  },
+  {
+   "id": "doc:data-dictionary",
+   "type": "document",
+   "label": "Event data dictionary",
+   "sublabel": "XLSX \u00b7 7 pp",
+   "icon": "icons/ui-table.svg",
+   "thumb": "thumbs/data-dictionary.png",
+   "format": "xlsx",
+   "pages": 7,
+   "kind": "spreadsheet",
+   "updated": "2026-07-22",
+   "author": "person:ada-okafor",
+   "degree": 4
+  },
+  {
+   "id": "doc:release-notes",
+   "type": "document",
+   "label": "Release notes 2026.09",
+   "sublabel": "MD \u00b7 2 pp",
+   "icon": "icons/brand-markdown.svg",
+   "thumb": "thumbs/release-notes.png",
+   "format": "md",
+   "pages": 2,
+   "kind": "release-notes",
+   "updated": "2026-07-12",
+   "author": "person:tomasz-wolak",
+   "degree": 4
+  },
+  {
+   "id": "person:ada-okafor",
+   "type": "person",
+   "label": "Ada Okafor",
+   "sublabel": "Staff engineer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/ada-okafor.svg",
+   "role": "Staff engineer",
+   "team": "platform",
+   "initials": "AO",
+   "degree": 3
+  },
+  {
+   "id": "person:lars-brekke",
+   "type": "person",
+   "label": "Lars Brekke",
+   "sublabel": "Backend engineer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/lars-brekke.svg",
+   "role": "Backend engineer",
+   "team": "platform",
+   "initials": "LB",
+   "degree": 3
+  },
+  {
+   "id": "person:mei-tanaka",
+   "type": "person",
+   "label": "Mei Tanaka",
+   "sublabel": "SRE",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/mei-tanaka.svg",
+   "role": "SRE",
+   "team": "platform",
+   "initials": "MT",
+   "degree": 5
+  },
+  {
+   "id": "person:diego-ruiz",
+   "type": "person",
+   "label": "Diego Ruiz",
+   "sublabel": "Engineering manager",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/diego-ruiz.svg",
+   "role": "Engineering manager",
+   "team": "payments",
+   "initials": "DR",
+   "degree": 3
+  },
+  {
+   "id": "person:priya-nair",
+   "type": "person",
+   "label": "Priya Nair",
+   "sublabel": "Backend engineer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/priya-nair.svg",
+   "role": "Backend engineer",
+   "team": "payments",
+   "initials": "PN",
+   "degree": 1
+  },
+  {
+   "id": "person:tomasz-wolak",
+   "type": "person",
+   "label": "Tomasz Wolak",
+   "sublabel": "Finance ops",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/tomasz-wolak.svg",
+   "role": "Finance ops",
+   "team": "payments",
+   "initials": "TW",
+   "degree": 4
+  },
+  {
+   "id": "person:sofia-marin",
+   "type": "person",
+   "label": "Sofia Marin",
+   "sublabel": "Data engineer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/sofia-marin.svg",
+   "role": "Data engineer",
+   "team": "data",
+   "initials": "SM",
+   "degree": 2
+  },
+  {
+   "id": "person:kwame-mensah",
+   "type": "person",
+   "label": "Kwame Mensah",
+   "sublabel": "ML engineer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/kwame-mensah.svg",
+   "role": "ML engineer",
+   "team": "data",
+   "initials": "KM",
+   "degree": 3
+  },
+  {
+   "id": "person:hana-kim",
+   "type": "person",
+   "label": "Hana Kim",
+   "sublabel": "Analyst",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/hana-kim.svg",
+   "role": "Analyst",
+   "team": "data",
+   "initials": "HK",
+   "degree": 3
+  },
+  {
+   "id": "person:noor-haddad",
+   "type": "person",
+   "label": "Noor Haddad",
+   "sublabel": "Frontend lead",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/noor-haddad.svg",
+   "role": "Frontend lead",
+   "team": "frontend",
+   "initials": "NH",
+   "degree": 2
+  },
+  {
+   "id": "person:felix-berg",
+   "type": "person",
+   "label": "Felix Berg",
+   "sublabel": "Frontend engineer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/felix-berg.svg",
+   "role": "Frontend engineer",
+   "team": "frontend",
+   "initials": "FB",
+   "degree": 3
+  },
+  {
+   "id": "person:ines-costa",
+   "type": "person",
+   "label": "Ines Costa",
+   "sublabel": "Technical writer",
+   "icon": "icons/ui-user.svg",
+   "avatar": "avatars/ines-costa.svg",
+   "role": "Technical writer",
+   "team": "frontend",
+   "initials": "IC",
+   "degree": 2
+  },
+  {
+   "id": "cloud:aws-ec2",
+   "type": "cloud",
+   "label": "EC2",
+   "sublabel": "AWS \u00b7 compute",
+   "icon": "icons/ui-cpu.svg",
+   "logo": "icons/brand-aws.svg",
+   "provider": "AWS",
+   "degree": 9
+  },
+  {
+   "id": "cloud:aws-lambda",
+   "type": "cloud",
+   "label": "Lambda",
+   "sublabel": "AWS \u00b7 functions",
+   "icon": "icons/ui-zap.svg",
+   "logo": "icons/brand-aws.svg",
+   "provider": "AWS",
+   "degree": 3
+  },
+  {
+   "id": "cloud:aws-cloudfront",
+   "type": "cloud",
+   "label": "CloudFront",
+   "sublabel": "AWS \u00b7 CDN",
+   "icon": "icons/ui-globe.svg",
+   "logo": "icons/brand-aws.svg",
+   "provider": "AWS",
+   "degree": 2
+  },
+  {
+   "id": "cloud:github-actions",
+   "type": "cloud",
+   "label": "GitHub Actions",
+   "sublabel": "GitHub \u00b7 CI/CD",
+   "icon": "icons/ui-workflow.svg",
+   "logo": "icons/brand-github-actions.svg",
+   "provider": "GitHub",
+   "degree": 8
+  },
+  {
+   "id": "cloud:vercel",
+   "type": "cloud",
+   "label": "Vercel",
+   "sublabel": "Vercel \u00b7 frontend hosting",
+   "icon": "icons/ui-cloud.svg",
+   "logo": "icons/brand-vercel.svg",
+   "provider": "Vercel",
+   "degree": 1
+  },
+  {
+   "id": "cloud:datadog",
+   "type": "cloud",
+   "label": "Datadog",
+   "sublabel": "Datadog \u00b7 metrics & APM",
+   "icon": "icons/ui-heart-pulse.svg",
+   "logo": "icons/brand-datadog.svg",
+   "provider": "Datadog",
+   "degree": 13
+  },
+  {
+   "id": "cloud:sentry",
+   "type": "cloud",
+   "label": "Sentry",
+   "sublabel": "Sentry \u00b7 error tracking",
+   "icon": "icons/ui-triangle-alert.svg",
+   "logo": "icons/brand-sentry.svg",
+   "provider": "Sentry",
+   "degree": 9
+  },
+  {
+   "id": "cloud:stripe",
+   "type": "cloud",
+   "label": "Stripe",
+   "sublabel": "Stripe \u00b7 payments API",
+   "icon": "icons/ui-credit-card.svg",
+   "logo": "icons/brand-stripe.svg",
+   "provider": "Stripe",
+   "degree": 3
+  }
+ ],
+ "links": [
+  {
+   "source": "repo:platform-api",
+   "target": "file:platform-api/src/gateway/router.ts",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:platform-api",
+   "target": "file:platform-api/src/gateway/rate-limit.ts",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:platform-api",
+   "target": "file:platform-api/src/profile/service.ts",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:platform-api",
+   "target": "file:platform-api/src/webhooks/dispatch.rs",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:platform-api",
+   "target": "file:platform-api/package.json",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:platform-api",
+   "target": "file:platform-api/README.md",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:auth-service",
+   "target": "file:auth-service/src/main.rs",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:auth-service",
+   "target": "file:auth-service/src/oidc.rs",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:auth-service",
+   "target": "file:auth-service/src/session.rs",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:auth-service",
+   "target": "file:auth-service/Cargo.toml",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:billing-service",
+   "target": "file:billing-service/cmd/billing/main.go",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:billing-service",
+   "target": "file:billing-service/internal/invoice/invoice.go",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:billing-service",
+   "target": "file:billing-service/internal/stripe/client.go",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:billing-service",
+   "target": "file:billing-service/internal/orders/state.go",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:billing-service",
+   "target": "file:billing-service/migrations/001_ledger.sql",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:search-service",
+   "target": "file:search-service/search/indexer.py",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:search-service",
+   "target": "file:search-service/search/query.py",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:search-service",
+   "target": "file:search-service/search/embeddings.py",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:search-service",
+   "target": "file:search-service/pyproject.toml",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:data-pipeline",
+   "target": "file:data-pipeline/pipeline/ingest.py",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:data-pipeline",
+   "target": "file:data-pipeline/pipeline/rank.py",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:data-pipeline",
+   "target": "file:data-pipeline/sql/events_rollup.sql",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:data-pipeline",
+   "target": "file:data-pipeline/schemas/event.json",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:web-frontend",
+   "target": "file:web-frontend/app/admin/page.tsx",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:web-frontend",
+   "target": "file:web-frontend/app/notify/worker.ts",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:web-frontend",
+   "target": "file:web-frontend/tsconfig.json",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:infra",
+   "target": "file:infra/k8s/gateway.yaml",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:infra",
+   "target": "file:infra/k8s/kafka.yaml",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:docs",
+   "target": "file:docs/CONTRIBUTING.md",
+   "relation": "contains"
+  },
+  {
+   "source": "repo:docs",
+   "target": "file:docs/architecture.md",
+   "relation": "contains"
+  },
+  {
+   "source": "doc:api-spec",
+   "target": "svc:api-gateway",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:api-spec",
+   "target": "repo:platform-api",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:api-spec",
+   "target": "doc:security-policy",
+   "relation": "references"
+  },
+  {
+   "source": "doc:billing-runbook",
+   "target": "svc:billing",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:billing-runbook",
+   "target": "svc:payments",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:billing-runbook",
+   "target": "doc:incident-report",
+   "relation": "references"
+  },
+  {
+   "source": "doc:q3-roadmap",
+   "target": "repo:web-frontend",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:q3-roadmap",
+   "target": "doc:arch-overview",
+   "relation": "references"
+  },
+  {
+   "source": "doc:cloud-costs",
+   "target": "cloud:aws-ec2",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:cloud-costs",
+   "target": "doc:invoice-datadog",
+   "relation": "references"
+  },
+  {
+   "source": "doc:readme-platform",
+   "target": "repo:platform-api",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:readme-platform",
+   "target": "doc:api-spec",
+   "relation": "references"
+  },
+  {
+   "source": "doc:search-design",
+   "target": "svc:search",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:search-design",
+   "target": "repo:search-service",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:search-design",
+   "target": "doc:data-dictionary",
+   "relation": "references"
+  },
+  {
+   "source": "doc:vendor-contract",
+   "target": "cloud:stripe",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:invoice-datadog",
+   "target": "cloud:datadog",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:oncall-handbook",
+   "target": "svc:api-gateway",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:oncall-handbook",
+   "target": "svc:auth",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:oncall-handbook",
+   "target": "doc:billing-runbook",
+   "relation": "references"
+  },
+  {
+   "source": "doc:arch-overview",
+   "target": "svc:api-gateway",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:arch-overview",
+   "target": "q:kafka-events",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:arch-overview",
+   "target": "doc:api-spec",
+   "relation": "references"
+  },
+  {
+   "source": "doc:incident-report",
+   "target": "svc:orders",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:incident-report",
+   "target": "doc:oncall-handbook",
+   "relation": "references"
+  },
+  {
+   "source": "doc:security-policy",
+   "target": "svc:auth",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:data-dictionary",
+   "target": "db:clickhouse-events",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:data-dictionary",
+   "target": "svc:analytics-ingest",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:release-notes",
+   "target": "repo:web-frontend",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:release-notes",
+   "target": "repo:platform-api",
+   "relation": "documents"
+  },
+  {
+   "source": "doc:release-notes",
+   "target": "doc:q3-roadmap",
+   "relation": "references"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "svc:auth",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "svc:user-profile",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "svc:billing",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "svc:search",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "svc:orders",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "svc:recommendations",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:billing",
+   "target": "svc:payments",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:orders",
+   "target": "svc:billing",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:orders",
+   "target": "svc:notifications",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:billing",
+   "target": "svc:notifications",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:user-profile",
+   "target": "svc:auth",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:admin-portal",
+   "target": "svc:api-gateway",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:admin-portal",
+   "target": "svc:billing",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:recommendations",
+   "target": "svc:search",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:webhooks",
+   "target": "svc:auth",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:orders",
+   "target": "svc:webhooks",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:payments",
+   "target": "svc:webhooks",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:notifications",
+   "target": "svc:user-profile",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:auth",
+   "target": "db:redis-sessions",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:auth",
+   "target": "db:postgres-main",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:user-profile",
+   "target": "db:postgres-main",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:user-profile",
+   "target": "db:redis-cache",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:user-profile",
+   "target": "db:s3-assets",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "db:redis-cache",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:billing",
+   "target": "db:postgres-billing",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:payments",
+   "target": "db:postgres-billing",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:orders",
+   "target": "db:postgres-main",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:orders",
+   "target": "db:postgres-billing",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:search",
+   "target": "db:postgres-main",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:search",
+   "target": "db:redis-cache",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:analytics-ingest",
+   "target": "db:clickhouse-events",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:recommendations",
+   "target": "db:clickhouse-events",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:recommendations",
+   "target": "db:redis-cache",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:admin-portal",
+   "target": "db:postgres-main",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:admin-portal",
+   "target": "db:clickhouse-events",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:notifications",
+   "target": "db:postgres-main",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:webhooks",
+   "target": "db:postgres-main",
+   "relation": "reads"
+  },
+  {
+   "source": "svc:billing",
+   "target": "db:s3-assets",
+   "relation": "writes"
+  },
+  {
+   "source": "svc:orders",
+   "target": "q:kafka-events",
+   "relation": "publishes"
+  },
+  {
+   "source": "svc:user-profile",
+   "target": "q:kafka-events",
+   "relation": "publishes"
+  },
+  {
+   "source": "svc:payments",
+   "target": "q:kafka-events",
+   "relation": "publishes"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "q:kafka-events",
+   "relation": "publishes"
+  },
+  {
+   "source": "svc:analytics-ingest",
+   "target": "q:kafka-events",
+   "relation": "consumes"
+  },
+  {
+   "source": "svc:search",
+   "target": "q:kafka-events",
+   "relation": "consumes"
+  },
+  {
+   "source": "svc:webhooks",
+   "target": "q:kafka-events",
+   "relation": "consumes"
+  },
+  {
+   "source": "svc:notifications",
+   "target": "q:sqs-jobs",
+   "relation": "consumes"
+  },
+  {
+   "source": "svc:billing",
+   "target": "q:sqs-jobs",
+   "relation": "publishes"
+  },
+  {
+   "source": "svc:recommendations",
+   "target": "q:sqs-jobs",
+   "relation": "publishes"
+  },
+  {
+   "source": "person:lars-brekke",
+   "target": "svc:api-gateway",
+   "relation": "owns"
+  },
+  {
+   "source": "person:mei-tanaka",
+   "target": "svc:auth",
+   "relation": "owns"
+  },
+  {
+   "source": "person:lars-brekke",
+   "target": "svc:user-profile",
+   "relation": "owns"
+  },
+  {
+   "source": "person:mei-tanaka",
+   "target": "svc:webhooks",
+   "relation": "owns"
+  },
+  {
+   "source": "person:tomasz-wolak",
+   "target": "svc:billing",
+   "relation": "owns"
+  },
+  {
+   "source": "person:diego-ruiz",
+   "target": "svc:payments",
+   "relation": "owns"
+  },
+  {
+   "source": "person:tomasz-wolak",
+   "target": "svc:orders",
+   "relation": "owns"
+  },
+  {
+   "source": "person:hana-kim",
+   "target": "svc:search",
+   "relation": "owns"
+  },
+  {
+   "source": "person:sofia-marin",
+   "target": "svc:analytics-ingest",
+   "relation": "owns"
+  },
+  {
+   "source": "person:kwame-mensah",
+   "target": "svc:recommendations",
+   "relation": "owns"
+  },
+  {
+   "source": "person:noor-haddad",
+   "target": "svc:notifications",
+   "relation": "owns"
+  },
+  {
+   "source": "person:ines-costa",
+   "target": "svc:admin-portal",
+   "relation": "owns"
+  },
+  {
+   "source": "person:mei-tanaka",
+   "target": "repo:platform-api",
+   "relation": "owns"
+  },
+  {
+   "source": "person:mei-tanaka",
+   "target": "repo:auth-service",
+   "relation": "owns"
+  },
+  {
+   "source": "person:diego-ruiz",
+   "target": "repo:billing-service",
+   "relation": "owns"
+  },
+  {
+   "source": "person:hana-kim",
+   "target": "repo:search-service",
+   "relation": "owns"
+  },
+  {
+   "source": "person:kwame-mensah",
+   "target": "repo:data-pipeline",
+   "relation": "owns"
+  },
+  {
+   "source": "person:felix-berg",
+   "target": "repo:web-frontend",
+   "relation": "owns"
+  },
+  {
+   "source": "person:ada-okafor",
+   "target": "repo:infra",
+   "relation": "owns"
+  },
+  {
+   "source": "person:felix-berg",
+   "target": "repo:docs",
+   "relation": "owns"
+  },
+  {
+   "source": "person:ada-okafor",
+   "target": "doc:api-spec",
+   "relation": "authored"
+  },
+  {
+   "source": "person:tomasz-wolak",
+   "target": "doc:billing-runbook",
+   "relation": "authored"
+  },
+  {
+   "source": "person:felix-berg",
+   "target": "doc:q3-roadmap",
+   "relation": "authored"
+  },
+  {
+   "source": "person:diego-ruiz",
+   "target": "doc:cloud-costs",
+   "relation": "authored"
+  },
+  {
+   "source": "person:hana-kim",
+   "target": "doc:readme-platform",
+   "relation": "authored"
+  },
+  {
+   "source": "person:lars-brekke",
+   "target": "doc:search-design",
+   "relation": "authored"
+  },
+  {
+   "source": "person:sofia-marin",
+   "target": "doc:vendor-contract",
+   "relation": "authored"
+  },
+  {
+   "source": "person:ines-costa",
+   "target": "doc:invoice-datadog",
+   "relation": "authored"
+  },
+  {
+   "source": "person:priya-nair",
+   "target": "doc:oncall-handbook",
+   "relation": "authored"
+  },
+  {
+   "source": "person:noor-haddad",
+   "target": "doc:arch-overview",
+   "relation": "authored"
+  },
+  {
+   "source": "person:mei-tanaka",
+   "target": "doc:incident-report",
+   "relation": "authored"
+  },
+  {
+   "source": "person:kwame-mensah",
+   "target": "doc:security-policy",
+   "relation": "authored"
+  },
+  {
+   "source": "person:ada-okafor",
+   "target": "doc:data-dictionary",
+   "relation": "authored"
+  },
+  {
+   "source": "person:tomasz-wolak",
+   "target": "doc:release-notes",
+   "relation": "authored"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:auth",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:user-profile",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:webhooks",
+   "target": "cloud:aws-lambda",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:billing",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:payments",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:orders",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:search",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:analytics-ingest",
+   "target": "cloud:aws-lambda",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:recommendations",
+   "target": "cloud:aws-ec2",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:notifications",
+   "target": "cloud:aws-lambda",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:admin-portal",
+   "target": "cloud:vercel",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:admin-portal",
+   "target": "cloud:aws-cloudfront",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:api-gateway",
+   "target": "cloud:aws-cloudfront",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "svc:payments",
+   "target": "cloud:stripe",
+   "relation": "calls"
+  },
+  {
+   "source": "svc:billing",
+   "target": "cloud:stripe",
+   "relation": "calls"
+  },
+  {
+   "source": "repo:platform-api",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:auth-service",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:billing-service",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:search-service",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:data-pipeline",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:web-frontend",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:infra",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "repo:docs",
+   "target": "cloud:github-actions",
+   "relation": "deploys_to"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:api-gateway",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:api-gateway",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:auth",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:user-profile",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:webhooks",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:webhooks",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:billing",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:billing",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:payments",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:payments",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:orders",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:orders",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:search",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:analytics-ingest",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:analytics-ingest",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:recommendations",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:recommendations",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:notifications",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:notifications",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:datadog",
+   "target": "svc:admin-portal",
+   "relation": "monitors"
+  },
+  {
+   "source": "cloud:sentry",
+   "target": "svc:admin-portal",
+   "relation": "monitors"
+  }
+ ],
+ "groups": [
+  {
+   "id": "group:repo:platform-api",
+   "kind": "repo",
+   "label": "platform-api",
+   "color": "#b48cff",
+   "parent": "repo:platform-api",
+   "members": [
+    "file:platform-api/src/gateway/router.ts",
+    "file:platform-api/src/gateway/rate-limit.ts",
+    "file:platform-api/src/profile/service.ts",
+    "file:platform-api/src/webhooks/dispatch.rs",
+    "file:platform-api/package.json",
+    "file:platform-api/README.md"
+   ]
+  },
+  {
+   "id": "group:repo:auth-service",
+   "kind": "repo",
+   "label": "auth-service",
+   "color": "#b48cff",
+   "parent": "repo:auth-service",
+   "members": [
+    "file:auth-service/src/main.rs",
+    "file:auth-service/src/oidc.rs",
+    "file:auth-service/src/session.rs",
+    "file:auth-service/Cargo.toml"
+   ]
+  },
+  {
+   "id": "group:repo:billing-service",
+   "kind": "repo",
+   "label": "billing-service",
+   "color": "#b48cff",
+   "parent": "repo:billing-service",
+   "members": [
+    "file:billing-service/cmd/billing/main.go",
+    "file:billing-service/internal/invoice/invoice.go",
+    "file:billing-service/internal/stripe/client.go",
+    "file:billing-service/internal/orders/state.go",
+    "file:billing-service/migrations/001_ledger.sql"
+   ]
+  },
+  {
+   "id": "group:repo:search-service",
+   "kind": "repo",
+   "label": "search-service",
+   "color": "#b48cff",
+   "parent": "repo:search-service",
+   "members": [
+    "file:search-service/search/indexer.py",
+    "file:search-service/search/query.py",
+    "file:search-service/search/embeddings.py",
+    "file:search-service/pyproject.toml"
+   ]
+  },
+  {
+   "id": "group:repo:data-pipeline",
+   "kind": "repo",
+   "label": "data-pipeline",
+   "color": "#b48cff",
+   "parent": "repo:data-pipeline",
+   "members": [
+    "file:data-pipeline/pipeline/ingest.py",
+    "file:data-pipeline/pipeline/rank.py",
+    "file:data-pipeline/sql/events_rollup.sql",
+    "file:data-pipeline/schemas/event.json"
+   ]
+  },
+  {
+   "id": "group:repo:web-frontend",
+   "kind": "repo",
+   "label": "web-frontend",
+   "color": "#b48cff",
+   "parent": "repo:web-frontend",
+   "members": [
+    "file:web-frontend/app/admin/page.tsx",
+    "file:web-frontend/app/notify/worker.ts",
+    "file:web-frontend/tsconfig.json"
+   ]
+  },
+  {
+   "id": "group:repo:infra",
+   "kind": "repo",
+   "label": "infra",
+   "color": "#b48cff",
+   "parent": "repo:infra",
+   "members": [
+    "file:infra/k8s/gateway.yaml",
+    "file:infra/k8s/kafka.yaml"
+   ]
+  },
+  {
+   "id": "group:repo:docs",
+   "kind": "repo",
+   "label": "docs",
+   "color": "#b48cff",
+   "parent": "repo:docs",
+   "members": [
+    "file:docs/CONTRIBUTING.md",
+    "file:docs/architecture.md"
+   ]
+  },
+  {
+   "id": "group:team-platform",
+   "kind": "team",
+   "label": "Platform team",
+   "color": "#5ec8ff",
+   "members": [
+    "person:ada-okafor",
+    "person:lars-brekke",
+    "person:mei-tanaka",
+    "svc:api-gateway",
+    "svc:auth",
+    "svc:user-profile",
+    "svc:webhooks",
+    "repo:platform-api",
+    "repo:auth-service",
+    "repo:infra"
+   ]
+  },
+  {
+   "id": "group:team-payments",
+   "kind": "team",
+   "label": "Payments team",
+   "color": "#f5b642",
+   "members": [
+    "person:diego-ruiz",
+    "person:priya-nair",
+    "person:tomasz-wolak",
+    "svc:billing",
+    "svc:payments",
+    "svc:orders",
+    "repo:billing-service"
+   ]
+  },
+  {
+   "id": "group:team-data",
+   "kind": "team",
+   "label": "Data team",
+   "color": "#b48cff",
+   "members": [
+    "person:sofia-marin",
+    "person:kwame-mensah",
+    "person:hana-kim",
+    "svc:search",
+    "svc:analytics-ingest",
+    "svc:recommendations",
+    "repo:search-service",
+    "repo:data-pipeline"
+   ]
+  },
+  {
+   "id": "group:team-frontend",
+   "kind": "team",
+   "label": "Frontend team",
+   "color": "#ff5f8f",
+   "members": [
+    "person:noor-haddad",
+    "person:felix-berg",
+    "person:ines-costa",
+    "svc:notifications",
+    "svc:admin-portal",
+    "repo:web-frontend",
+    "repo:docs"
+   ]
+  }
+ ]
+}

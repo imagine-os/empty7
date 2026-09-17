@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objects 3D — three.js</title>
+<!--
+  Graph Gallery · object-views group · three-objects-3d: shared/system.json as a 3D city of real object models.
+  Each node is its .glb (server rack, database discs, queue tube, folder, document stack, laptop, cloud) with the
+  node's logo / avatar / page thumbnail as a canvas texture on a plaque, screen or page; objects stand on a ground
+  grid in depth bands (cloud → services → data stores → repos & files → people & documents); relation-styled tube /
+  dashed edges with arrow cones; always-visible sprite labels; orbit, hover card, click fly-to, glTF export.
+  CDN URLs used (all pinned via the import map below):
+    https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js      (import map "three"; pulls build/three.core.js)
+    https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/              (import map "three/addons/")
+      -> controls/OrbitControls.js, loaders/GLTFLoader.js (+ utils/BufferGeometryUtils.js, utils/SkeletonUtils.js),
+         exporters/GLTFExporter.js
+  Data: ../../shared/system.json · models/textures: ../../shared/assets/ · chrome: ../../shared/hud.js + theme.css · scene: ./main.js
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  body { background: #06070d; }
+  #app { position: fixed; inset: 0; opacity: 0; transition: opacity 1.2s ease-out; }
+  #app.in { opacity: 1; }
+  #app canvas { display: block; }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .legend .sw { display: inline-grid; place-items: center; width: 26px; height: 20px; margin-right: 8px; vertical-align: middle; border: 1.5px solid var(--c); border-radius: 6px; background: color-mix(in srgb, var(--c) 14%, #0b0d14); }
+  .legend .sw img { width: 14px; height: 14px; object-fit: contain; }
+  .legend .sw.circle { border-radius: 50%; width: 20px; } .legend .sw.page { width: 15px; border-radius: 2px; } .legend .sw.cylinder, .legend .sw.pipe { border-radius: 999px; } .legend .sw.cloud { border-radius: 10px; }
+  .legend .rel { display: inline-block; width: 34px; height: 8px; vertical-align: middle; margin-right: 6px; }
+  .legend .col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 11px; text-transform: none; }
+  .preview { position: fixed; right: 16px; bottom: 60px; width: 360px; max-height: calc(100vh - 200px); overflow: auto; z-index: 25; }
+  .preview img { width: 100%; border-radius: 6px; display: block; margin: 6px 0 8px; }
+  .preview .chip { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+  .preview .x { position: absolute; right: 10px; top: 8px; cursor: pointer; color: var(--muted); }
+  .tt-pic { width: 44px; height: 44px; object-fit: contain; float: right; margin: 0 0 4px 8px; border-radius: 6px; background: rgba(255,255,255,.08); }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="app"></div>
+<div class="hint hud">drag to orbit · hover an object · click to fly to it and its neighbours (documents open a preview) · double-click empty to reset · H hides chrome</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

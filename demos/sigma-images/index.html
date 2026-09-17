@@ -1,0 +1,53 @@
+<!doctype html>
+<!--
+  Graph Gallery · sigma-images — Sigma.js v3 WebGL image nodes: every object drawn as a pre-composed card texture
+  (rack + logo + health dot, file tile + ext badge, document page with thumbnail, avatar ring, folder, cloud).
+  CDN URLs used (pinned; import map, all ESM):
+    https://esm.sh/graphology@0.26.0
+    https://esm.sh/graphology-library@0.8.0                        (FA2Layout worker, layout.circular)
+    https://esm.sh/graphology-layout-forceatlas2@0.10.1/worker     (fallback if the CDN serves the node entry)
+    https://esm.sh/sigma@3.0.3
+    https://esm.sh/@sigma/node-image@3.0.0?deps=sigma@3.0.3        (createNodeImageProgram — shares the one sigma instance)
+  Local modules: ./main.js, ../../shared/hud.js, ../../shared/theme.css, ../../shared/system.json, ../../shared/assets/
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Images — Sigma.js objects</title>
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <style>
+    body { background: #090b12; }
+    #paper { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 70% at 50% 45%, rgba(94,200,255,.06), transparent 70%),
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px) 0 0 / 100% 56px, linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px) 0 0 / 56px 100%; }
+    #graph { position: fixed; inset: 0; z-index: 1; opacity: 0; transition: opacity 1.4s ease; } #graph.in { opacity: 1; }
+    #status { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 20; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); pointer-events: none; }
+    .hud-hidden #status { display: none; }
+    #fallback { position: fixed; inset: 0; display: none; place-items: center; z-index: 50; text-align: center; } #fallback.show { display: grid; } #fallback p { max-width: 420px; color: var(--muted); }
+    .tooltip { max-width: 300px; } .tooltip img { display: block; max-width: 96px; max-height: 96px; margin: 0 0 6px; border-radius: 6px; }
+    .tooltip .tt-type { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+    .legend { gap: 5px; } .legend-row { text-transform: none; font-size: 12px; }
+    .lg-frame { display: grid; place-items: center; box-sizing: border-box; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); flex: none; }
+    .lg-frame img { width: 60%; height: 60%; object-fit: contain; } .lg-frame.fill img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+    .lg-rel { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); } .lg-rel svg { width: 34px; height: 8px; flex: none; }
+    .lg-title { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-top: 4px; }
+  </style>
+  <script type="importmap">
+  {"imports":{
+    "graphology":"https://esm.sh/graphology@0.26.0",
+    "graphology-library":"https://esm.sh/graphology-library@0.8.0",
+    "graphology-layout-forceatlas2/worker":"https://esm.sh/graphology-layout-forceatlas2@0.10.1/worker",
+    "sigma":"https://esm.sh/sigma@3.0.3",
+    "@sigma/node-image":"https://esm.sh/@sigma/node-image@3.0.0?deps=sigma@3.0.3"
+  }}
+  </script>
+</head>
+<body>
+  <div id="paper"></div>
+  <div id="graph"></div>
+  <div id="status">ForceAtlas2 settling</div>
+  <div id="fallback"><div><h2>WebGL is required</h2><p>Sigma.js renders with WebGL. Enable hardware acceleration or try another browser.</p></div></div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

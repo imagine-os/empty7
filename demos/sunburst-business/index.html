@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Sunburst — Northwind Labs, six rings deep</title>
+<!--
+  Graph Gallery · sunburst-business (flagship, structured group)
+  Library: D3 7.9.0 (d3-hierarchy partition, d3-shape arc/line, d3-scale diverging, d3-transition), SVG renderer in ./main.js.
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js
+  Data: ../../shared/business.json (built by shared/build-business.py) · Chrome: ../../shared/hud.js (+ theme.css)
+  Rings = company → business units → product lines / departments → products → sub-products → offerings.
+  Arc angle = size metric (revenue · cost · headcount · customers · equal); fill = unit hue / margin / growth / stage / health.
+  Click any arc to zoom (750 ms tween), Esc zooms out one level, double-click empty resets, H hides the HUD.
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  #c { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; display: block; }
+  .arc { stroke: #07080f; stroke-width: .6; cursor: pointer; transition: opacity .25s; }
+  .arc.match { stroke: #fff; stroke-width: 1.4; }
+  #c.hovering .arc:not(.on) { opacity: .22; }
+  #c.filtering .arc:not(.match) { opacity: .1; }
+  .label { fill: #07080f; font-size: 10.5px; font-weight: 600; pointer-events: none; }
+  .label.unit { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+  #c.no-labels .label { display: none; }
+  .centre { cursor: pointer; }
+  .centre circle { fill: rgba(255,255,255,.035); stroke-width: 1.5; }
+  .centre text { fill: #e8eaf2; text-anchor: middle; pointer-events: none; }
+  .centre .c-title { font-size: 15px; font-weight: 600; }
+  .centre .c-sub { font-size: 10.5px; fill: rgba(232,234,242,.55); letter-spacing: .08em; text-transform: uppercase; }
+  .centre .c-kpi { font-size: 12px; fill: rgba(232,234,242,.85); }
+  .centre .spark { fill: none; stroke-width: 1.5; pointer-events: none; }
+  .centre .spark-area { opacity: .18; pointer-events: none; }
+  /* search (top centre) */
+  .search { position: fixed; z-index: 20; top: 52px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; align-items: center;
+    padding: 6px 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; backdrop-filter: blur(10px); }
+  .search input { width: 250px; font: inherit; font-size: 12.5px; color: var(--fg); background: rgba(255,255,255,.06); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 10px; outline: none; }
+  .search input:focus { border-color: rgba(255,255,255,.35); }
+  .search .n { font-size: 11px; color: var(--muted); min-width: 46px; text-align: center; }
+  /* right-side KPI panel */
+  .panel { top: 72px; right: 16px; bottom: 58px; width: 300px; overflow-y: auto; scrollbar-width: thin; padding: 10px 12px; }
+  .modes { display: grid; gap: 6px; margin-bottom: 10px; }
+  .modes .row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .modes .k { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; width: 44px; }
+  .modes .pill { padding: 2px 8px; font-size: 11px; }
+  .crumbs { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 6px; }
+  .crumbs span { cursor: pointer; } .crumbs span:hover { color: var(--fg); text-decoration: underline; }
+  .crumbs .sep { margin: 0 4px; opacity: .5; cursor: default; }
+  .ttl { font-size: 15px; font-weight: 600; line-height: 1.25; }
+  .badges { display: flex; gap: 6px; margin: 5px 0 4px; flex-wrap: wrap; }
+  .badge { font-size: 10.5px; padding: 1px 7px; border-radius: 999px; color: #07080f; font-weight: 600; text-transform: capitalize; }
+  .badge.stage { background: transparent; border: 1px solid; }
+  .own { font-size: 11.5px; color: var(--muted); margin-bottom: 8px; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 8px 0; }
+  .kpi { background: rgba(255,255,255,.04); border-radius: 6px; padding: 5px 7px; }
+  .kpi .k { font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .kpi .v { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .kpi .v small { font-size: 10px; color: var(--muted); font-weight: 500; margin-left: 2px; }
+  .spark-box { height: 44px; margin: 4px 0; } .spark-box svg { width: 100%; height: 44px; display: block; overflow: visible; }
+  .sec { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 10px 0 5px; }
+  .callout { display: grid; gap: 4px; font-size: 11.5px; }
+  .callout div { padding: 5px 8px; border-radius: 6px; background: rgba(255,255,255,.04); border-left: 3px solid; cursor: pointer; }
+  .callout b { font-weight: 600; }
+  .kid { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding: 4px 6px; border-radius: 6px; cursor: pointer; font-size: 11.5px; }
+  .kid:hover { background: rgba(255,255,255,.06); }
+  .kid .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kid .v { font-variant-numeric: tabular-nums; } .kid .sh { color: var(--muted); font-size: 10.5px; text-align: right; }
+  .kid .bar { grid-column: 1 / 3; height: 4px; border-radius: 2px; background: rgba(255,255,255,.07); }
+  .kid .bar i { display: block; height: 100%; border-radius: 2px; }
+  /* colour legend (bottom-left) */
+  .lg { width: 220px; } .lg .t { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+  .lg .bar { position: relative; height: 10px; border-radius: 5px; }
+  .lg .mk { position: absolute; top: -4px; width: 2px; height: 18px; background: #fff; transform: translateX(-1px); box-shadow: 0 0 6px #fff; }
+  .lg .ticks { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .hud-hidden .search { display: none !important; }
+</style>
+</head>
+<body>
+<svg id="c"></svg>
+<div class="search" id="search">
+  <input id="q" type="search" placeholder="Search the business… (Enter zooms)" autocomplete="off" spellcheck="false">
+  <span class="n" id="qn"></span>
+  <button class="pill" id="f-top" type="button">top 10 revenue</button>
+  <button class="pill" id="f-loss" type="button">loss-makers</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

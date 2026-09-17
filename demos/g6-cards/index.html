@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Object Cards — G6</title>
+<!--
+  Graph Gallery · object-views group · g6-cards: AntV G6 v5 `html` nodes drawn as object cards over shared/system.json.
+  Every node is its object: service rack (ui icon + language logo + health dot), repo folder (GitHub mark, ★ stars),
+  file tile (language icon + .ext badge), document page (real thumbnail), person ring (avatar), database pill (engine
+  logo), queue pipe, cloud blob (provider logo). antv-dagre left→right flow, rect combos for repos (files) and teams,
+  relation-styled edges from meta.relation_styles, hover highlight + card, click focus, document preview panel.
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/@antv/g6@5.1.1/dist/g6.min.js        (UMD -> window.G6)
+  Data: ../../shared/system.json · assets: ../../shared/assets/ · chrome: ../../shared/hud.js + theme.css
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  :root { --bg: #0a0c14; }
+  body { background: radial-gradient(ellipse at 50% 40%, #131727 0%, #0a0c14 60%, #06070c 100%); }
+  #app { position: fixed; inset: 0; opacity: 0; transition: opacity 1.2s ease-out; }
+  #app.in { opacity: 1; }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
+  /* ---- object cards (rendered inside G6 html nodes) ---- */
+  .card { position: relative; box-sizing: border-box; width: 100%; height: 100%; display: flex; align-items: center; gap: 8px; padding: 5px 8px;
+    border: 1.5px solid var(--c); border-radius: 10px; background: color-mix(in srgb, var(--c) 14%, #0b0d14); color: #e8eaf2;
+    font: 11px/1.2 var(--font); cursor: pointer; transition: transform .15s, box-shadow .15s; transform-origin: 50% 50%; user-select: none; }
+  .card.hot { transform: scale(1.35); box-shadow: 0 0 0 1px var(--c), 0 0 18px var(--c); z-index: 9; }
+  .card.focus { box-shadow: 0 0 0 2px #fff, 0 0 18px var(--c); }
+  .well { flex: none; display: grid; place-items: center; background: rgba(255,255,255,.08); border-radius: 8px; width: 30px; height: 30px; overflow: hidden; }
+  .well img { width: 72%; height: 72%; object-fit: contain; display: block; }
+  .well.pic img { width: 100%; height: 100%; }
+  .t { min-width: 0; flex: 1; }
+  .t b { display: block; font-weight: 600; font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t small { display: block; color: var(--muted); font-size: 9.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+  .badge { position: absolute; right: 6px; bottom: 4px; font: 600 9px/1.3 var(--mono); padding: 0 4px; border-radius: 4px; background: rgba(0,0,0,.5); color: var(--c); }
+  .dot { position: absolute; right: 7px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--h); box-shadow: 0 0 7px var(--h); }
+  .logo { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; object-fit: contain; }
+  .card.f-circle { border-radius: 999px; } .card.f-circle .well { border-radius: 50%; width: 36px; height: 36px; border: 2px solid var(--c); }
+  .card.f-cylinder, .card.f-pipe { border-radius: 999px; } .card.f-cylinder::before { content: ""; position: absolute; left: 14px; right: 14px; top: 3px; height: 0; border-top: 1px solid var(--c); opacity: .6; }
+  .card.f-folder { border-radius: 4px 10px 10px 10px; } .card.f-folder::before { content: ""; position: absolute; left: -1.5px; top: -9px; width: 42px; height: 9px; background: var(--c); border-radius: 5px 8px 0 0; opacity: .85; }
+  .card.f-cloud { border-radius: 22px; }
+  .card.f-page { border-radius: 8px; } .card.f-page .well { width: 42px; height: 56px; border-radius: 3px; background: #fff; clip-path: polygon(0 0, 80% 0, 100% 16%, 100% 100%, 0 100%); }
+  .card.f-page .well img { object-fit: cover; object-position: top; }
+  .card.f-tile .well { border-radius: 8px; }
+  .card.glyph .well { width: 24px; height: 24px; }
+  /* ---- legend + preview ---- */
+  .legend .mini { display: inline-block; vertical-align: middle; margin-right: 8px; transform: scale(.5); transform-origin: 0 50%; pointer-events: none; }
+  .legend .rel { display: inline-block; width: 34px; height: 8px; vertical-align: middle; margin-right: 6px; }
+  .legend .col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 11px; text-transform: none; }
+  .preview { position: fixed; right: 16px; bottom: 60px; width: 360px; max-height: calc(100vh - 200px); overflow: auto; z-index: 25; }
+  .preview img { width: 100%; border-radius: 6px; display: block; margin: 6px 0 8px; }
+  .preview .chip { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+  .preview .x { position: absolute; right: 10px; top: 8px; cursor: pointer; color: var(--muted); }
+  .tt-pic { width: 44px; height: 44px; object-fit: contain; float: right; margin: 0 0 4px 8px; border-radius: 6px; background: rgba(255,255,255,.08); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@antv/g6@5.1.1/dist/g6.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<div class="hint hud">hover a card · click to focus its neighbourhood (documents open a preview) · double-click empty to reset · H hides chrome</div>
+<script type="module">
+import { mountHud, tooltipHtml, buildNeighbors } from '../../shared/hud.js';
+const { Graph } = window.G6;
+const sys = await (await fetch('../../shared/system.json')).json();
+const { type_colors: TC, type_frames: TF, relation_styles: RS, teams: TEAMS } = sys.meta;
+const asset = p => sys.meta.asset_root + p;
+const byId = new Map(sys.nodes.map(n => [n.id, n])), N = id => byId.get(id), nb = buildNeighbors(sys.links);
+const HEALTH = { healthy: '#8dff9e', degraded: '#ffb347', down: '#ff5f8f' };
+const SIZE = { service: [150, 56], database: [130, 44], queue: [150, 36], repo: [140, 60], file: [124, 40], document: [176, 64], person: [150, 48], cloud: [130, 44] };
+const state = { layout: 'layers', combos: true, files: false, cards: true };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const pictureFor = n => n.thumb || n.avatar || n.logo || n.icon;
+const sizeFor = n => state.cards ? SIZE[n.type] : [104, 34];
+
+// ---- the card: frame per type, picture on a lighter well, label + sublabel, badges ----------------------------------
+function cardHtml(n, glyph = !state.cards) {
+  const c = TC[n.type], pic = glyph ? n.icon : pictureFor(n), isPic = !glyph && (n.thumb || n.avatar);
+  const sub = n.type === 'repo' && !state.files ? `${n.files} files · ${n.language}` : n.sublabel || '';
+  const extra = glyph ? '' :
+    n.type === 'service' ? `<span class="dot" style="--h:${HEALTH[n.health]}"></span><img class="logo" src="${asset(n.logo)}" alt="">` :
+    n.type === 'file' ? `<span class="badge">.${n.ext}</span>` :
+    n.type === 'repo' ? `<span class="badge">★ ${n.stars}</span>` :
+    n.type === 'document' ? `<span class="badge">${(n.format || '').toUpperCase()} · ${n.pages} pp</span>` :
+    (n.type === 'database' || n.type === 'cloud' || n.type === 'queue') && n.logo ? `<img class="logo" src="${asset(n.logo)}" alt="">` : '';
+  const logo = !glyph && (n.type === 'database' || n.type === 'cloud' || n.type === 'queue') ? `<img src="${asset(n.icon)}" alt="">` : `<img src="${asset(pic)}" alt="">`;
+  return `<div class="card f-${TF[n.type]}${glyph ? ' glyph' : ''}" data-nid="${esc(n.id)}" style="--c:${c}" title="${esc(n.label)}">
+    <div class="well${isPic ? ' pic' : ''}">${logo}</div><div class="t"><b>${esc(n.label)}</b>${sub && !glyph ? `<small>${esc(sub)}</small>` : ''}</div>${extra}</div>`;
+}
+const cardEl = id => document.querySelector(`.card[data-nid="${CSS.escape(id)}"]`);
+
+// ---- default layout: team bands (people | repo folder + file strip | services) with documents left, data stores + cloud right
+function layeredPositions() {
+  const pos = {}, GAP = 14, W = t => sizeFor({ type: t })[0], H = t => sizeFor({ type: t })[1];
+  const put = (n, x, y) => { pos[n.id] = [x + W(n.type) / 2, y + H(n.type) / 2]; };
+  const stripW = state.files ? W('repo') + 16 + 3 * (W('file') + 8) : W('repo');
+  const X = { doc: 0, person: 2 * (W('document') + 10) + 50, repo: 0, service: 0, data: 0, cloud: 0 };
+  X.repo = X.person + W('person') + 50; X.service = X.repo + stripW + 60; X.data = X.service + W('service') + 70; X.cloud = X.data + W('database') + 60;
+  const teams = [...Object.keys(TEAMS), 'other'], teamOf = n => TEAMS[n.team] ? n.team : 'other';
+  let y = 0;
+  for (const team of teams) {
+    const of = t => sys.nodes.filter(n => n.type === t && teamOf(n) === team);
+    if (!of('person').length && !of('service').length && !of('repo').length) continue;
+    let yp = y, ys = y, yr = y;
+    for (const n of of('person')) { put(n, X.person, yp); yp += H('person') + GAP; }
+    for (const n of of('service')) { put(n, X.service, ys); ys += H('service') + GAP; }
+    for (const r of of('repo')) { put(r, X.repo, yr); const files = state.files ? sys.nodes.filter(n => n.type === 'file' && n.repo === r.id) : [];
+      files.forEach((f, i) => put(f, X.repo + W('repo') + 16 + (i % 3) * (W('file') + 8), yr + Math.floor(i / 3) * (H('file') + 8)));
+      yr += Math.max(H('repo'), Math.ceil(files.length / 3) * (H('file') + 8)) + GAP + 6; }
+    y = Math.max(yp, ys, yr) + 110;
+  }
+  const total = y - 110, spread = (t, x, list) => list.forEach((n, i) => put(n, x, (i + 0.5) * total / list.length - H(t) / 2));
+  const docs = sys.nodes.filter(n => n.type === 'document'); spread('document', X.doc, docs.filter((_, i) => i % 2 === 0)); spread('document', X.doc + W('document') + 10, docs.filter((_, i) => i % 2 === 1));
+  spread('database', X.data, sys.nodes.filter(n => n.type === 'database' || n.type === 'queue')); spread('cloud', X.cloud, sys.nodes.filter(n => n.type === 'cloud'));
+  return pos;
+}
+
+// ---- data (rebuilt on every toggle): nodes, relation-styled edges, repo/team combos -----------------------------------
+function buildData() {
+  const nodes = sys.nodes.filter(n => state.files || n.type !== 'file'), pos = state.layout === 'layers' ? layeredPositions() : null;
+  const keep = new Set(nodes.map(n => n.id)), comboOf = new Map();
+  const combos = [];
+  if (state.combos) for (const g of sys.groups) {
+    const team = g.kind === 'team' ? g.id.replace('group:team-', '') : N(g.parent)?.team;
+    combos.push({ id: g.id, combo: g.kind === 'repo' && team ? 'group:team-' + team : undefined, data: g,
+      style: { fill: g.color, fillOpacity: 0.07, stroke: g.color, strokeOpacity: 0.35, lineDash: g.kind === 'team' ? [6, 4] : 0, radius: 14, padding: g.kind === 'team' ? [30, 16, 16, 16] : [26, 12, 12, 12],
+        labelText: g.label, labelFill: g.color, labelFontSize: g.kind === 'team' ? 12 : 10.5, labelFontWeight: 600, labelPlacement: 'top', labelPosition: 'left', labelOffsetY: -2, labelOpacity: 0.9 } });
+    if (g.kind === 'repo' && keep.has(g.parent)) comboOf.set(g.parent, g.id);
+    for (const m of g.members) if (keep.has(m)) { if (g.kind === 'team' && comboOf.has(m)) continue; comboOf.set(m, g.id); }
+  }
+  return {
+    nodes: nodes.map(n => ({ id: n.id, combo: comboOf.get(n.id), data: n, style: pos ? { x: pos[n.id][0], y: pos[n.id][1] } : {} })),
+    edges: sys.links.filter(l => keep.has(l.source) && keep.has(l.target)).map((l, i) => ({ id: 'e' + i, source: l.source, target: l.target, data: l })),
+    combos,
+  };
+}
+const layoutFor = () => state.layout === 'layers' ? undefined : state.layout === 'dagre'
+  ? { type: 'antv-dagre', rankdir: 'LR', nodesep: 14, ranksep: 70, sortByCombo: true, nodeSize: n => sizeFor(N(n.id) || n.data) }
+  : { type: 'd3-force', link: { distance: 110, strength: 0.5 }, manyBody: { strength: -520 }, collide: { radius: n => Math.max(...sizeFor(N(n.id) || n.data || { type: 'repo' })) * 0.6 }, alphaDecay: 0.06 };
+const edgeType = () => state.layout === 'force' ? 'line' : 'cubic-horizontal';
+const rs = e => RS[e.data.relation];
+
+const graph = new Graph({
+  container: 'app', autoResize: true, background: 'transparent', animation: false, data: buildData(), layout: layoutFor(),
+  node: { type: 'html', style: { size: n => sizeFor(n.data), dx: n => -sizeFor(n.data)[0] / 2, dy: n => -sizeFor(n.data)[1] / 2, innerHTML: n => cardHtml(n.data), pointerEvents: 'auto', cursor: 'pointer' },
+    state: { active: { opacity: 1, zIndex: 5 }, inactive: { opacity: 0.18 } } },
+  edge: { type: edgeType(), style: { stroke: e => rs(e).color, lineWidth: e => rs(e).width, lineDash: e => rs(e).dash || 0, endArrow: e => !!rs(e).arrow, endArrowSize: 6, endArrowType: 'triangle', curveOffset: 30,
+      label: false, labelText: e => rs(e).label, labelFontSize: 10, labelFill: '#e8eaf2', labelBackground: true, labelBackgroundFill: '#0b0d14', labelBackgroundOpacity: 0.85, labelBackgroundRadius: 4, labelPadding: [1, 5], labelAutoRotate: false },
+    state: { active: { label: true, lineWidth: e => rs(e).width + 1, strokeOpacity: 1, zIndex: 4 }, inactive: { strokeOpacity: 0.06 } } },
+  combo: { type: 'rect', style: { lineWidth: 1.2, labelBackground: false, cursor: 'default' }, state: { inactive: { fillOpacity: 0.03, strokeOpacity: 0.12, labelOpacity: 0.25 } } },
+  behaviors: ['drag-canvas', { type: 'zoom-canvas', sensitivity: 1.1 }],
+});
+
+// ---- hover: neighbourhood highlight + metadata card; click: focus (zoom + centre) --------------------------------------
+let hover = null, focus = null, lastClick = 0;
+const nameOf = id => N(id)?.label;
+const kvFor = n => ({
+  service: { type: 'service', lang: n.lang, health: n.health, owner: nameOf(n.owner), repo: nameOf(n.repo), rps: n.rps, 'deploys to': sys.links.filter(l => l.source === n.id && l.relation === 'deploys_to').map(l => nameOf(l.target)).join(', ') },
+  database: { type: 'database', engine: n.engine, size: n.size_gb + ' GB' }, queue: { type: 'queue', engine: n.engine },
+  repo: { type: 'repo', language: n.language, stars: n.stars, files: n.files }, file: { type: 'file', path: n.sublabel, ext: n.ext, loc: n.loc, repo: nameOf(n.repo) },
+  document: { type: 'document', format: n.format, pages: n.pages, kind: n.kind, updated: n.updated, author: nameOf(n.author) },
+  person: { type: 'person', role: n.role, team: TEAMS[n.team]?.label }, cloud: { type: 'cloud', provider: n.provider },
+}[n.type]);
+function highlight(id) {                                   // id null -> clear
+  const s = {}, keep = id ? new Set([id, ...(nb.get(id) || [])]) : null;
+  for (const n of graph.getNodeData()) s[n.id] = !keep ? [] : keep.has(n.id) ? ['active'] : ['inactive'];
+  for (const e of graph.getEdgeData()) s[e.id] = !keep ? [] : (e.source === id || e.target === id) ? ['active'] : ['inactive'];
+  for (const c of graph.getComboData()) s[c.id] = !keep ? [] : ['inactive'];
+  return graph.setElementState(s, false);
+}
+function setHover(id, x, y) {
+  if (id && id !== hover) { cardEl(hover)?.classList.remove('hot'); hover = id; cardEl(id)?.classList.add('hot'); highlight(id); }
+  if (id) { const n = N(id); hud.showTooltip(`<img class="tt-pic" src="${asset(pictureFor(n))}">` + tooltipHtml(n.label, kvFor(n)), x, y); }
+}
+function clearHover() { hud.hideTooltip(); cardEl(hover)?.classList.remove('hot'); hover = null; highlight(focus); }
+async function focusNode(id) {
+  if (performance.now() - lastClick < 400) return; lastClick = performance.now();
+  if (focus === id) return reset();
+  cardEl(focus)?.classList.remove('focus'); focus = id; cardEl(id)?.classList.add('focus');
+  const pts = [id, ...(nb.get(id) || [])].filter(i => graph.getNodeData(i)).map(i => graph.getElementPosition(i));
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]), w = Math.max(...xs) - Math.min(...xs) + 420, h = Math.max(...ys) - Math.min(...ys) + 260;
+  await graph.zoomTo(Math.min(1.5, Math.max(0.5, Math.min(innerWidth / w, innerHeight / h))), { duration: 500 });
+  await graph.focusElement(id, { duration: 500 });
+  highlight(id);
+  if (N(id).type === 'document') showPreview(N(id)); else hidePreview();
+}
+async function reset() { cardEl(focus)?.classList.remove('focus'); focus = null; hidePreview(); await highlight(null); await graph.fitView({ when: 'always' }, { duration: 600 }); }
+// HTML cards: listen on the DOM (works at any zoom); image/glyph fallbacks also go through G6 node events.
+document.addEventListener('pointerover', e => { const c = e.target.closest?.('.card'); if (c) setHover(c.dataset.nid, e.clientX, e.clientY); });
+document.addEventListener('pointermove', e => { const c = e.target.closest?.('.card'); if (c && hover) setHover(hover, e.clientX, e.clientY); });
+document.addEventListener('pointerout', e => { const c = e.target.closest?.('.card'); if (c && !c.contains(e.relatedTarget)) clearHover(); });
+document.addEventListener('click', e => { const c = e.target.closest?.('.card'); if (c) focusNode(c.dataset.nid); });
+graph.on('node:pointerenter', e => setHover(e.target.id, e.client.x, e.client.y));
+graph.on('node:pointerleave', clearHover);
+graph.on('node:click', e => focusNode(e.target.id));
+graph.on('canvas:dblclick', reset);
+document.getElementById('app').addEventListener('dblclick', e => { if (!e.target.closest('.card')) reset(); });
+
+// ---- document preview (larger thumbnail + linked things as chips) ------------------------------------------------------
+const pv = document.createElement('div'); pv.className = 'hud preview'; pv.hidden = true; pv.innerHTML = '';
+function showPreview(n) {
+  const chips = sys.links.filter(l => l.source === n.id || l.target === n.id).map(l => `<span class="chip">${RS[l.relation].label} · ${esc(nameOf(l.source === n.id ? l.target : l.source))}</span>`).join('');
+  pv.innerHTML = `<b>${esc(n.label)}</b><span class="x">✕</span><div class="sub">${esc(n.sublabel)} · ${n.kind} · updated ${n.updated}</div><img src="${asset(n.thumb)}" alt="">${chips}`;
+  pv.hidden = false; pv.querySelector('.x').onclick = hidePreview;
+}
+const hidePreview = () => { pv.hidden = true; };
+
+// ---- HUD: toggles rebuild data + layout; custom legend drawn with real cards -------------------------------------------
+async function apply() {
+  hover = null; focus = null; hidePreview();
+  graph.setData(buildData()); graph.setLayout(layoutFor()); graph.setEdge({ type: edgeType() });
+  await graph.render(); await graph.fitView({ when: 'always' });
+}
+const hud = mountHud({ title: 'Object Cards', library: 'AntV G6', version: '5.1.1 · html nodes · team bands / antv-dagre / d3-force', legend: false, toggles: [
+  { id: 'dagre', label: 'Dagre flow', on: false, onChange: on => { state.layout = on ? 'dagre' : 'layers'; hud.setToggle('force', false); apply(); } },
+  { id: 'force', label: 'Force layout', on: false, onChange: on => { state.layout = on ? 'force' : 'layers'; hud.setToggle('dagre', false); apply(); } },
+  { id: 'combos', label: 'Repo / team combos', on: true, onChange: on => { state.combos = on; apply(); } },
+  { id: 'files', label: 'Files inside repos', on: true, onChange: on => { state.files = !on; apply(); } },
+  { id: 'glyphs', label: 'Glyphs only', on: false, onChange: on => { state.cards = !on; apply(); } },
+] });
+const wrap = document.createElement('div'); wrap.appendChild(pv); hud.root.appendChild(wrap);
+const lg = document.createElement('div'); lg.className = 'hud hud--bl legend';
+for (const t of Object.keys(TC)) { const n = sys.nodes.find(n => n.type === t), [w, h] = SIZE[t];
+  lg.insertAdjacentHTML('beforeend', `<div class="legend-row"><span class="mini" style="width:${w}px;height:${h}px;margin-right:${-w / 2 + 8}px">${cardHtml(n, false)}</span>${t}</div>`); }
+lg.insertAdjacentHTML('beforeend', `<div class="col2">${Object.entries(RS).map(([k, r]) => `<div><svg class="rel" viewBox="0 0 34 8"><line x1="0" y1="4" x2="34" y2="4" stroke="${r.color}" stroke-width="${r.width * 1.3}" ${r.dash ? `stroke-dasharray="${r.dash.join(' ')}"` : ''}/></svg>${r.label}</div>`).join('')}</div>`);
+hud.root.appendChild(lg);
+
+// ---- test hooks + render ------------------------------------------------------------------------------------------------
+window.__demo = { graph, sys, hud, state, ready: false, get hoverNode() { return hover ? N(hover) : null; },
+  screenPos: id => { const p = graph.getElementPosition(id); const v = graph.getCanvas().getClientByCanvas([p[0], p[1]]); return Array.isArray(v) ? { x: v[0], y: v[1] } : { x: v.x, y: v.y }; },
+  hoverState: () => ({ hover, active: graph.getElementDataByState('node', 'active').length, inactive: graph.getElementDataByState('node', 'inactive').length, hotCards: document.querySelectorAll('.card.hot').length }),
+  clickState: () => ({ focus, zoom: +graph.getZoom().toFixed(2), preview: !pv.hidden }),
+  toggleState: () => ({ ...state, layoutType: graph.getLayout()?.type || 'layers', nodes: graph.getNodeData().length, combos: graph.getComboData().length, cards: document.querySelectorAll('.card').length, imgs: document.querySelectorAll('#app img').length }),
+  focus: focusNode, reset, settle: () => {} };
+document.getElementById('app').classList.add('in');
+await graph.render();
+await graph.fitView({ when: 'always' });
+window.__demo.ready = true;
+</script>
+</body>
+</html>

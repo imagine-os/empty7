@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Graph Gallery</title>
-<meta name="description" content="Fifteen live demos of graph visualization libraries in two groups: network views of one film-studio dataset, and structured tree views of a department model, so we can pick the ones worth leading with.">
+<meta name="description" content="Twenty-two live demos of graph visualization libraries in three groups: network views of one film-studio dataset, structured tree views of a department model with a featured business-model sunburst, and object views where every node is drawn as the thing itself (logos, file icons, document thumbnails, avatars, 3D models).">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='10' r='5' fill='%235ec8ff'/%3E%3Ccircle cx='23' cy='14' r='5' fill='%23ff5f8f'/%3E%3Ccircle cx='13' cy='24' r='5' fill='%23f5b642'/%3E%3Cpath d='M9 10L23 14L13 24Z' fill='none' stroke='%23e8eaf2' stroke-opacity='.6' stroke-width='1.5'/%3E%3C/svg%3E">
 <style>
   /* Palette mirrors shared/theme.css (type colours from shared/data.json meta.type_colors). */
@@ -180,6 +180,7 @@
   .subnav a i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; background: var(--dot, #fff); box-shadow: 0 0 6px var(--dot, #fff); }
   .subnav a.n-network i { --dot: var(--c-person); }
   .subnav a.n-structured i { --dot: var(--c-studio); }
+  .subnav a.n-objects i { --dot: var(--c-film); }
   .subnav a.n-table i { --dot: var(--c-genre); }
   .subnav a.n-findings i { --dot: var(--c-award); }
 
@@ -209,6 +210,46 @@
   .legend .sep { width: 1px; height: 18px; background: var(--line-2); }
   .legend .hue { display: inline-flex; align-items: center; gap: 6px; }
   .legend .hue i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--h); box-shadow: 0 0 6px var(--h); }
+
+  /* Asset legend for the object group: real icons, thumbnails and avatars from shared/assets/ --- */
+  .legend.assets { gap: 8px 14px; }
+  .legend.assets span.t { gap: 8px; text-transform: none; letter-spacing: 0.02em; }
+  .legend.assets .fr {
+    display: inline-grid; place-items: center; width: 26px; height: 22px;
+    border: 1.5px solid var(--c); border-radius: 6px;
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+  }
+  .legend.assets .fr img { width: 15px; height: 15px; object-fit: contain; display: block; }
+  .legend.assets .fr.circle { width: 22px; border-radius: 50%; }
+  .legend.assets .fr.circle img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+  .legend.assets .fr.page { width: 17px; border-radius: 2px; overflow: hidden; }
+  .legend.assets .fr.page img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .legend.assets .fr.pill { border-radius: 999px; }
+  .legend.assets .fr.tile { position: relative; }
+  .legend.assets .fr.tile small { position: absolute; right: -4px; bottom: -6px; font: 700 8px/1 var(--mono); color: var(--c); background: var(--bg); padding: 1px 2px; border-radius: 2px; }
+  .legend.assets .fr.model { border-style: dashed; }
+
+  /* Featured card: the executive view, full width with two captures side by side ------------ */
+  .card.featured { grid-column: 1 / -1; border-color: rgba(255, 209, 102, 0.35); }
+  .card.featured:hover, .card.featured:focus-within { border-color: rgba(255, 209, 102, 0.6); }
+  .card.featured .rank { color: #0a0b14; background: var(--c-gold); border-color: var(--c-gold); }
+  .card.featured .thumbs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); background: #0a0b14; }
+  .card.featured .thumbs .thumb { border-bottom: 0; }
+  .card.featured .thumbs .thumb + .thumb { border-left: 1px solid var(--line); }
+  .card.featured .body { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px 28px; align-items: start; }
+  .card.featured .body h2 { font-size: 24px; }
+  .card.featured .body > .lib, .card.featured .body > .badges, .card.featured .body > .look { grid-column: 1; }
+  .card.featured .body .kpis { grid-column: 2; grid-row: 1 / span 4; margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .card.featured .body .kpis li { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: rgba(10, 12, 20, 0.6); }
+  .card.featured .body .kpis li b { color: var(--fg); font-weight: 600; }
+  .card.featured .body .actions { grid-column: 1 / -1; }
+  @media (max-width: 720px) {
+    .card.featured .thumbs { grid-template-columns: 1fr; }
+    .card.featured .thumbs .thumb + .thumb { border-left: 0; border-top: 1px solid var(--line); }
+    .card.featured .body { grid-template-columns: 1fr; }
+    .card.featured .body .kpis { grid-column: 1; grid-row: auto; }
+    .card.featured .body .actions { grid-column: 1; }
+  }
   .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); -webkit-overflow-scrolling: touch; }
   table { border-collapse: collapse; width: 100%; min-width: 960px; font-size: 13px; }
   th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
@@ -257,7 +298,7 @@
       Graph visualization bake-off
     </div>
     <h1>Graph Gallery</h1>
-    <p class="intro">Fifteen live demos of graph visualization libraries in two groups: <a href="#network">network views</a> of one shared film-studio dataset, and <a href="#structured">structured views</a> that keep every branch of a department tree separate. Same colours, same interactions, so we can pick the ones worth leading with.</p>
+    <p class="intro">Twenty-two live demos of graph visualization libraries in three groups: <a href="#network">network views</a> of one shared film-studio dataset, <a href="#structured">structured views</a> that keep every branch of a department tree separate (plus a featured <a href="#sunburst-business">executive view</a> of the business model), and <a href="#objects">object views</a> where every node is drawn as the thing itself. Same colours, same interactions, so we can pick the ones worth leading with.</p>
     <div class="howto">
       <b>How to compare.</b> Within a group every demo loads the same dataset, uses the same type colours and offers the same basic interactions (hover, click to focus, drag, zoom). Judge <b>label legibility</b>, <b>motion quality</b>, <b>hover feel</b>, and how much of the beauty is <b>default vs. custom code</b> (the effort meter on each card). Press <kbd>H</kbd> in any demo to hide the HUD for a clean look.
     </div>
@@ -266,6 +307,7 @@
   <nav class="subnav" aria-label="Sections">
     <a class="n-network" href="#network"><i></i>Network views</a>
     <a class="n-structured" href="#structured"><i></i>Structured views</a>
+    <a class="n-objects" href="#objects"><i></i>Object views</a>
     <a class="n-table" href="#comparison"><i></i>Comparison</a>
     <a class="n-findings" href="#findings"><i></i>Findings</a>
   </nav>
@@ -482,6 +524,34 @@
     </div>
     <div class="grid" id="cards-structured">
 
+    <!-- Featured: the executive view of the business model (shared/business.json), the flagship of this group. -->
+    <article class="card featured" data-slug="sunburst-business" id="sunburst-business">
+      <span class="rank">Featured · executive view</span>
+      <div class="thumbs">
+        <div class="thumb"><img src="demos/sunburst-business/thumb.jpg" alt="Business Sunburst: Northwind Labs as six rings, four business units in their own hues, arc angle by revenue" loading="lazy" width="1280" height="800"></div>
+        <div class="thumb"><img src="screenshots/sunburst-business-drill.png" alt="Business Sunburst drilled into the Platform unit: Data Cloud highlighted, KPI panel with revenue, cost, margin, growth, headcount, customers, health and the children ranked by revenue" loading="lazy" width="1280" height="800"></div>
+      </div>
+      <div class="body">
+        <h2><a href="demos/sunburst-business/">Business Sunburst</a></h2>
+        <p class="lib"><b>D3</b> 7.9.0 (d3-hierarchy partition, d3-shape arc, d3-scale diverging, d3-transition)</p>
+        <div class="badges">
+          <span class="badge r-svg">SVG</span>
+          <span class="badge lic">ISC</span>
+          <span class="effort" data-effort="high" title="Partition and arcs are built in; the KPI aggregation, size and colour modes, zoom tween, search, filters, sparkline and side panel are all custom"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Business model sunburst: <b>554 nodes, 6 levels</b> (company, business units, product lines and departments, products and teams, sub-products and services, offerings). Arc <b>size</b> by revenue, cost, headcount or customers; <b>colour</b> by unit, margin, growth, stage or health. Click any arc to drill down (750 ms tween, Esc backs out), search jumps to a match, and the quick filters light up the top-10 revenue makers or the loss-makers. Built for the person who asks "where does the money come from?" rather than "how does the code connect?".</p>
+        <ul class="kpis" aria-label="What the KPI panel shows">
+          <li><b>KPI panel</b> for the focused arc: revenue, cost, margin, growth YoY, headcount, customers, health score, revenue per FTE, descendant count, with a 12-month sparkline.</li>
+          <li><b>What's dragging, what's leading:</b> the lowest-margin and fastest-growing descendants, named, with their numbers.</li>
+          <li><b>Children ranked by revenue</b> as bars with share of parent, so a drill-down reads like a board slide.</li>
+        </ul>
+        <div class="actions">
+          <a class="btn primary" href="demos/sunburst-business/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/d3" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
     <article class="card" data-slug="radial-tree-d3">
       <span class="rank">10</span>
       <div class="thumb"><img src="demos/radial-tree-d3/thumb.jpg" alt="Radial Tree: D3 tidy tree with six department sectors" loading="lazy" width="1280" height="800"></div>
@@ -599,6 +669,151 @@
     </div>
   </section>
 
+  <!-- Group 3: object views of shared/system.json. Every node is drawn as the object itself. Brief in plan-objects.md. -->
+  <section class="group" id="objects">
+    <h2>Object views: nodes as the things themselves</h2>
+    <p class="lede">The third dataset is the <b>system map</b> of the same fictional software company, Northwind Labs: <b>92 objects / 188 relations</b>, a dozen services, six databases, two queues, eight repos with thirty source files, fourteen documents, twelve people and eight cloud providers. Here no node is a plain circle. A service is a rack with its <b>language logo</b> and a health dot, a repo is a folder with the GitHub mark, a file is a tile with its language icon and an <b>extension badge</b>, a document is a page showing <b>its own thumbnail</b>, a person is an <b>avatar</b>, a cloud is its provider's mark, and in 3D each of them is a small <b>model</b>. Labels are always on, so a screenshot reads like a map: you can see what is connected to what, not just that something is.</p>
+    <ul class="compare">
+      <li><b>Recognisability at a glance.</b> With the HUD hidden, can a newcomer name the object kinds and the specific technologies (Go vs Rust service, Postgres vs Redis, invoice vs runbook) from the picture alone?</li>
+      <li><b>Screenshot legibility.</b> At 1280x800, are all labels readable, do any overlap the pictures, and do document thumbnails still read as those documents at postage-stamp size?</li>
+      <li><b>Density before clutter.</b> How many picture-nodes fit before the map stops being readable: the full 92, or only the 62 you get with files folded into their repos? Where does each renderer hit its ceiling?</li>
+    </ul>
+    <div class="legend assets" aria-label="Object kinds, drawn with the real assets each demo uses">
+      <span class="k">objects</span>
+      <span class="t" style="--c:#5ec8ff"><span class="fr"><img src="shared/assets/icons/lang-go.svg" alt="Go logo"></span>service</span>
+      <span class="t" style="--c:#f5b642"><span class="fr pill"><img src="shared/assets/icons/brand-postgresql.svg" alt="PostgreSQL logo"></span>database</span>
+      <span class="t" style="--c:#ff9f43"><span class="fr pill"><img src="shared/assets/icons/brand-kafka.svg" alt="Apache Kafka logo"></span>queue</span>
+      <span class="t" style="--c:#b48cff"><span class="fr"><img src="shared/assets/icons/brand-github.svg" alt="GitHub mark"></span>repo</span>
+      <span class="t" style="--c:#cfd6e6"><span class="fr tile"><img src="shared/assets/icons/lang-typescript.svg" alt="TypeScript icon"><small>.ts</small></span>file</span>
+      <span class="t" style="--c:#ffd166"><span class="fr page"><img src="shared/assets/thumbs/invoice-datadog.png" alt="Thumbnail of the Datadog invoice document"></span>document</span>
+      <span class="t" style="--c:#ff5f8f"><span class="fr circle"><img src="shared/assets/avatars/ada-okafor.svg" alt="Avatar of Ada Okafor"></span>person</span>
+      <span class="t" style="--c:#8dff9e"><span class="fr"><img src="shared/assets/icons/brand-aws.svg" alt="AWS logo"></span>cloud</span>
+      <span class="sep" aria-hidden="true"></span>
+      <span class="k">assets</span>
+      <span class="hue" style="--h:#5ec8ff"><i></i>71 icons (simple-icons, devicon, lucide)</span>
+      <span class="hue" style="--h:#ffd166"><i></i>14 document thumbnails</span>
+      <span class="hue" style="--h:#ff5f8f"><i></i>12 avatars</span>
+      <span class="hue" style="--h:#8dff9e"><i></i>7 glTF models</span>
+    </div>
+    <div class="grid" id="cards-objects">
+
+    <article class="card" data-slug="d3-object-map">
+      <span class="rank">16</span>
+      <div class="thumb"><img src="demos/d3-object-map/thumb.jpg" alt="Object Map: D3 SVG system map with service racks, file tiles, document pages, avatars and repo hulls" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/d3-object-map/">Object Map</a></h2>
+        <p class="lib"><b>D3</b> 7.9.0 (d3-force, d3-zoom, d3-drag, d3-polygon; SVG frames + &lt;image&gt;)</p>
+        <div class="badges">
+          <span class="badge r-svg">SVG</span>
+          <span class="badge lic">ISC</span>
+          <span class="effort" data-effort="high" title="Every frame (rack, cylinder, pipe, folder, tile, page, ring, cloud), badge, hull and arrowhead is hand-built SVG"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Hand-drawn frames per kind: racks with language logo and health dot, file tiles with .ext badges, document pages with real thumbnails, avatar rings. Type layers (cloud on top, data stores below, repos right, people and documents left), repo hulls, one arrowhead colour per relation. Toggles: files inside repos, pictures, relation labels, layers.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/d3-object-map/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/d3" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="sigma-images">
+      <span class="rank">17</span>
+      <div class="thumb"><img src="demos/sigma-images/thumb.jpg" alt="Images: Sigma.js WebGL image nodes, every object a pre-composed card texture" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/sigma-images/">Images</a></h2>
+        <p class="lib"><b>Sigma.js</b> 3.0.3 · @sigma/node-image 3.0.0 · graphology 0.26.0 · forceatlas2 0.10.1</p>
+        <div class="badges">
+          <span class="badge r-webgl2d">WebGL 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="high" title="Each object is composed on an offscreen canvas (frame + logo + badge + thumbnail) and uploaded as a texture; hulls, labels and the legend are custom"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Every object is pre-composed into a card texture and drawn as a WebGL image node through <code>@sigma/node-image</code>; ForceAtlas2 runs in a worker, labels stay on at every zoom, team hulls on demand. The fastest of the six with a hundred pictures on screen. Toggles: pictures, files inside repos, all labels, team hulls.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/sigma-images/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/@sigma/node-image" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="cytoscape-icons">
+      <span class="rank">18</span>
+      <div class="thumb"><img src="demos/cytoscape-icons/thumb.jpg" alt="Icons: Cytoscape.js background-image nodes inside nested repo and team compounds" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/cytoscape-icons/">Icons</a></h2>
+        <p class="lib"><b>Cytoscape.js</b> 3.34.3 · cytoscape-fcose 2.2.0</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="medium" title="The stylesheet does most of the work (background-image pairs, shapes, compounds); the legend, hover card and layers layout are custom"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">The CSS-like stylesheet carries it: <code>background-image</code> per node with icon and logo as an image pair, a shape per kind (round-rectangle racks, ellipse people, 3:4 pages, barrel databases, tag-shaped folders), nested compounds for files inside repos inside teams, fcose layout, relation words on the edges. Toggles: pictures, compounds, files inside repos, layers layout, relation labels.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/cytoscape-icons/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/cytoscape" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="g6-cards">
+      <span class="rank">19</span>
+      <div class="thumb"><img src="demos/g6-cards/thumb.jpg" alt="Object Cards: AntV G6 html nodes rendered as DOM cards with combos for repos and teams" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/g6-cards/">Object Cards</a></h2>
+        <p class="lib"><b>AntV G6</b> 5.1.1 (html nodes, antv-dagre, d3-force, rect combos)</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D + HTML nodes</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="medium" title="Cards are plain HTML templates styled with CSS; layouts and combos are built in, the preview panel and hover card are custom"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">G6's <code>html</code> node type renders real DOM cards over the canvas: title, sublabel, logo, health dot, star count, a document thumbnail. The richest node for the least drawing code. Layered, dagre (left-to-right flow) or force layouts, rect combos for repos and teams, a document preview panel. Toggles: dagre, force, combos, files inside repos, glyphs only.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/g6-cards/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/@antv/g6" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="three-objects-3d">
+      <span class="rank">20</span>
+      <div class="thumb"><img src="demos/three-objects-3d/thumb.jpg" alt="Objects 3D: three.js scene of glTF server racks, databases, folders, document stacks and laptops on a ground grid" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/three-objects-3d/">Objects 3D</a></h2>
+        <p class="lib"><b>three.js</b> 0.186.0 (GLTFLoader, OrbitControls, GLTFExporter)</p>
+        <div class="badges">
+          <span class="badge r-webgl3d">WebGL 3D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="high" title="Scene, model placement, texture plaques, tube edges, sprite labels, raycast hover, fly-to camera and export are all hand-written"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">A small city of glTF models: server racks, database discs, queue tubes, folders, document stacks, laptops with the avatar on screen, clouds; each wears its logo or page thumbnail as a texture. Depth bands by kind, tube edges with arrow cones, sprite labels that never disappear, orbit, click to fly to, export the scene as glTF. Toggles: labels, pictures, files inside repos, procedural models, auto-orbit.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/three-objects-3d/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/three" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="echarts-image-symbols">
+      <span class="rank">21</span>
+      <div class="thumb"><img src="demos/echarts-image-symbols/thumb.jpg" alt="Image Symbols: ECharts graph series with image symbols composed offscreen and repo hulls behind the canvas" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/echarts-image-symbols/">Image Symbols</a></h2>
+        <p class="lib"><b>Apache ECharts</b> 6.1.0 (series.type 'graph', image:// symbols)</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">Apache-2.0</span>
+          <span class="effort" data-effort="medium" title="Force and circular layouts, adjacency focus and roam are built in; the offscreen symbol composer and the hull layer are custom"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look"><code>series.type: 'graph'</code> where every node is an <code>image://</code> symbol composed offscreen (frame, icon, logo, badge, health dot) and documents are 54x72 thumbnail symbols; per-relation dashes and arrows, adjacency focus on hover, repo hulls drawn on an SVG layer behind the chart. Toggles: files inside repos, pictures, circular layout, labels.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/echarts-image-symbols/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/echarts" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    </div>
+  </section>
+
   </main>
 
   <section id="comparison">
@@ -643,8 +858,8 @@
   </section>
 
   <footer>
-    <span><a href="https://github.com/imagine-os/empty7" target="_blank" rel="noopener">imagine-os/empty7</a> on GitHub · <a href="research.md">research.md</a> · <a href="plan.md">plan.md</a> · <a href="plan-structured.md">plan-structured.md</a></span>
-    <span>datasets: fictional film-studio catalog, <code>85 nodes / 361 links</code> (<code>shared/data.json</code>) · Northwind Labs org tree, <code>189 nodes / 188 links</code> (<code>shared/org.json</code>, regenerate with <code>shared/build-org.py</code>)</span>
+    <span><a href="https://github.com/imagine-os/empty7" target="_blank" rel="noopener">imagine-os/empty7</a> on GitHub · <a href="research.md">research.md</a> · <a href="plan.md">plan.md</a> · <a href="plan-structured.md">plan-structured.md</a> · <a href="plan-objects.md">plan-objects.md</a> · <a href="shared/assets/LICENSES.md">asset licences</a></span>
+    <span>datasets (all fictional, all generated): film-studio catalog, <code>85 nodes / 361 links</code> (<code>shared/data.json</code>) · Northwind Labs org tree, <code>189 nodes / 188 links</code> (<code>shared/org.json</code>, <code>shared/build-org.py</code>) · Northwind Labs system map, <code>92 objects / 188 relations</code> (<code>shared/system.json</code>, <code>shared/build-system.py</code>) · Northwind Labs business model, <code>554 nodes / 6 levels</code> (<code>shared/business.json</code>, <code>shared/build-business.py</code>)</span>
   </footer>
 </div>
 </body>

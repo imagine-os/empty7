@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icons — Cytoscape.js objects</title>
+<!--
+  Graph Gallery · cytoscape-icons — every node drawn as the object it is (Canvas 2D background images).
+  Library: Cytoscape.js 3.34.3 + cytoscape-fcose 2.2.0 (needs layout-base → cose-base first).
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/cytoscape@3.34.3/dist/cytoscape.min.js
+    https://cdn.jsdelivr.net/npm/layout-base@2.0.1/layout-base.js
+    https://cdn.jsdelivr.net/npm/cose-base@2.2.0/cose-base.js
+    https://cdn.jsdelivr.net/npm/cytoscape-fcose@2.2.0/cytoscape-fcose.js
+  Data: ../../shared/system.json (+ ../../shared/assets/) · Chrome: ../../shared/hud.js, theme.css
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  html, body { background: #090b12; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 40%, rgba(94,200,255,.07), transparent 65%); }
+  #cy { position: fixed; inset: 0; z-index: 1; }
+  .tooltip { max-width: 300px; } .tooltip img { display: block; max-width: 96px; max-height: 96px; margin: 0 0 6px; border-radius: 6px; }
+  .tooltip .tt-type { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+  .legend { gap: 5px; } .legend-row { text-transform: none; font-size: 12px; }
+  .lg-frame { display: grid; place-items: center; box-sizing: border-box; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); flex: none; }
+  .lg-frame img { width: 60%; height: 60%; object-fit: contain; } .lg-frame.fill img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  .lg-rel { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .lg-rel svg { width: 34px; height: 8px; flex: none; }
+  .lg-title { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div id="cy"></div>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.34.3/dist/cytoscape.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/layout-base@2.0.1/layout-base.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cose-base@2.2.0/cose-base.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape-fcose@2.2.0/cytoscape-fcose.js"></script>
+<script type="module">
+import { mountHud, tooltipHtml } from '../../shared/hud.js';
+
+const sys = await (await fetch('../../shared/system.json')).json();
+const { type_colors: C, relation_styles: REL, teams: TEAMS } = sys.meta;
+const asset = p => sys.meta.asset_root + p;
+const byId = new Map(sys.nodes.map(n => [n.id, n]));
+const FONT = 'Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+const BG = '#090b12', HEALTH = { healthy: '#8dff9e', degraded: '#ffb347', down: '#ff5f8f' };
+const SIZE = { service: [120, 44], database: [96, 40], queue: [130, 32], repo: [110, 56], file: [44, 44], document: [54, 72], person: [48, 48], cloud: [96, 44] };
+const SHAPE = { service: 'round-rectangle', database: 'barrel', queue: 'round-rectangle', repo: 'round-rectangle', file: 'round-rectangle', document: 'rectangle', person: 'ellipse', cloud: 'round-rectangle' };
+const ell = (s, n = 18) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
+const svgUrl = s => 'data:image/svg+xml;utf8,' + encodeURIComponent(s);
+const dot = c => svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="${c}" stroke="${BG}" stroke-width="1.5"/></svg>`);
+const badge = t => svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" width="30" height="14" viewBox="0 0 30 14"><rect width="30" height="14" rx="4" fill="#1a1e2c" stroke="${C.file}" stroke-opacity=".6"/><text x="15" y="10.5" font-family="ui-monospace,Menlo,monospace" font-size="9" font-weight="600" fill="#e8eaf2" text-anchor="middle">${t}</text></svg>`);
+const rgba = c => { const m = c.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/); return m ? { hex: '#' + [m[1], m[2], m[3]].map(v => (+v).toString(16).padStart(2, '0')).join(''), a: m[4] == null ? 1 : +m[4] } : { hex: c, a: 1 }; };
+
+// ---------------------------------------------------------------- picture layers per object kind (pictures on) / single glyph (off)
+function layers(n) {
+  const L = (img, w, x, y, fit = 'contain') => ({ img, w, x, y, fit });
+  const pic = n.thumb || n.avatar || n.logo || n.icon;
+  switch (n.type) {
+    case 'service': return [L(asset(n.icon), 24, '16px', '50%'), L(asset(n.logo), 26, '84px', '50%'), L(dot(HEALTH[n.health] || '#888'), 11, '108px', '7px')];
+    case 'database': return [L(asset(n.icon), 20, '18px', '50%'), L(asset(n.logo), 24, '66px', '50%')];
+    case 'queue': return [L(asset(n.icon), 18, '16px', '50%'), L(asset(n.logo), 22, '98px', '50%')];
+    case 'cloud': return [L(asset(n.icon), 22, '16px', '50%'), L(asset(n.logo), 30, '62px', '50%')];
+    case 'repo': return [L(asset(n.icon), 26, '18px', '50%'), L(asset(n.logo), 22, '78px', '50%')];
+    case 'file': return [L(asset(n.icon), 22, '50%', '12px'), L(badge('.' + n.ext), 30, '50%', '30px')];
+    case 'document': return [L(asset(pic), '100%', '50%', '50%', 'cover')];
+    case 'person': return [L(asset(pic), '100%', '50%', '50%', 'cover')];
+  }
+}
+const glyph = n => [{ img: asset(n.icon), w: 24, x: '50%', y: '50%', fit: 'contain' }];
+const prop = key => e => (e.data('type') ? (state.pictures ? layers(e.data()) : glyph(e.data())) : []).map(l => l[key]);
+
+// ---------------------------------------------------------------- elements: objects, typed relations, compounds (repos, teams)
+const parentOf = new Map();                         // node id -> compound id
+for (const g of sys.groups) for (const m of g.members) parentOf.set(m, g.id);
+for (const g of sys.groups.filter(g => g.kind === 'repo')) parentOf.set(g.parent, g.id);    // the repo folder sits inside its own hull
+const teamOfRepo = new Map(sys.groups.filter(g => g.kind === 'team').flatMap(g => g.members.filter(m => m.startsWith('repo:')).map(m => [m, g.id])));
+const groupParent = g => (g.kind === 'repo' ? teamOfRepo.get(g.parent) : undefined);       // nested: repo hull inside team hull
+
+const nodes = sys.nodes.map(n => {
+  const [w, h] = SIZE[n.type], color = n.type === 'person' ? (TEAMS[n.team]?.color || C.person) : C[n.type];
+  const sub = ['service', 'repo', 'document', 'database', 'queue', 'cloud'].includes(n.type) && n.sublabel ? '\n' + ell(n.sublabel, 22) : '';
+  return { data: { ...n, w, h, color, shape: SHAPE[n.type], short: ell(n.label) + sub, shortOnly: ell(n.label), parent: parentOf.get(n.id) } };
+});
+const groups = sys.groups.map(g => ({ data: { id: g.id, label: g.label, grp: g.kind, color: g.color, parent: groupParent(g) } }));
+const edges = sys.links.map((l, i) => {
+  const r = REL[l.relation], { hex, a } = rgba(r.color);
+  return { data: { id: `e${i}`, source: l.source, target: l.target, relation: l.relation, color: hex, alpha: a * 0.8, width: r.width, dash: r.dash || [1, 0], style: r.dash ? 'dashed' : 'solid', arrow: r.arrow ? 'triangle' : 'none', loud: /calls|reads|writes|publishes|consumes/.test(l.relation) } };
+});
+
+// ---------------------------------------------------------------- stylesheet
+const style = [
+  { selector: 'node[type]', style: {
+    width: 'data(w)', height: 'data(h)', shape: 'data(shape)', 'background-color': 'data(color)', 'background-opacity': 0.16,
+    'border-width': 1.5, 'border-color': 'data(color)', 'border-opacity': 0.9, 'overlay-opacity': 0, 'corner-radius': 10,
+    'background-image': prop('img'), 'background-width': prop('w'), 'background-height': prop('w'), 'background-fit': prop('fit'),
+    'background-position-x': prop('x'), 'background-position-y': prop('y'), 'background-clip': 'node',
+    label: 'data(short)', 'font-family': FONT, 'font-size': 11, 'font-weight': 500, color: '#e8eaf2', 'text-wrap': 'wrap', 'text-max-width': 150,
+    'text-valign': 'bottom', 'text-margin-y': 4, 'text-outline-color': BG, 'text-outline-width': 2.5, 'text-outline-opacity': 0.95, 'line-height': 1.15,
+    'transition-property': 'opacity, width, height', 'transition-duration': '160ms', 'z-index': 2 } },
+  { selector: 'node[type = "document"], node[type = "person"]', style: { 'background-opacity': 0.9, 'background-color': '#161a26', 'corner-radius': 4 } },
+  { selector: 'node[type = "queue"]', style: { 'corner-radius': 16 } }, { selector: 'node[type = "cloud"]', style: { 'corner-radius': 22 } },
+  { selector: 'node.lowzoom', style: { label: 'data(shortOnly)' } },
+  { selector: 'node.glyphs', style: { 'background-fit': 'contain' } },
+  { selector: ':parent', style: {
+    shape: 'round-rectangle', 'background-image': 'none', 'background-color': 'data(color)', 'background-opacity': 0.07, 'border-width': 1, 'border-opacity': 0.45, 'corner-radius': 16,
+    padding: 10, 'compound-sizing-wrt-labels': 'include', label: 'data(label)', 'text-valign': 'top', 'text-halign': 'left', 'text-margin-y': 18, 'text-margin-x': 8,
+    'text-transform': 'uppercase', 'font-size': 9.5, 'font-weight': 600, color: 'data(color)', 'text-opacity': 0.9, 'text-outline-width': 0, 'z-index': 0 } },
+  { selector: ':parent[grp = "team"]', style: { 'text-margin-y': 22, padding: 18, 'font-size': 10.5, 'background-opacity': 0.05 } },
+  { selector: 'edge', style: {
+    'curve-style': 'bezier', width: 'data(width)', 'line-color': 'data(color)', 'line-opacity': 'data(alpha)', 'line-style': 'data(style)', 'line-dash-pattern': 'data(dash)',
+    'target-arrow-shape': 'data(arrow)', 'target-arrow-color': 'data(color)', 'arrow-scale': 0.6, 'font-family': FONT, 'font-size': 8.5, color: '#e8eaf2',
+    'text-outline-color': BG, 'text-outline-width': 2, 'text-rotation': 'autorotate', 'transition-property': 'line-opacity, width', 'transition-duration': '160ms' } },
+  { selector: 'edge[?loud]', style: { 'z-index': 1 } },
+  { selector: '.hidden', style: { display: 'none' } },
+  { selector: 'node.faded', style: { opacity: 0.15 } }, { selector: 'edge.faded', style: { 'line-opacity': 0.04, 'target-arrow-shape': 'none' } },
+  { selector: 'edge.nb', style: { 'line-opacity': 1, width: e => e.data('width') + 0.8, label: 'data(relation)' } },
+  { selector: 'edge.nb.nolabel', style: { label: '' } },
+  { selector: 'node[type].hover', style: { width: e => e.data('w') * 1.35, height: e => e.data('h') * 1.35, 'border-width': 2, 'z-index': 9,
+    'underlay-color': 'data(color)', 'underlay-opacity': 0.28, 'underlay-padding': 10, 'underlay-shape': 'round-rectangle' } },
+  { selector: 'node:selected', style: { 'border-width': 2.5, 'border-color': '#fff' } },
+];
+
+cytoscape.use(cytoscapeFcose);
+const state = { pictures: true, compounds: true, filesIn: false, layout: 'fcose', focus: null, relLabels: true };
+const cy = cytoscape({ container: document.getElementById('cy'), elements: { nodes: [...groups, ...nodes], edges }, style, minZoom: 0.15, maxZoom: 6, boxSelectionEnabled: false, pixelRatio: 'auto' });
+cy.edges('[relation = "contains"]').addClass('hidden');           // containment is drawn by the repo hull
+
+// ---------------------------------------------------------------- layouts
+const IDEAL = { contains: 40, owns: 120, authored: 120, references: 110, documents: 150, monitors: 200, deploys_to: 170, calls: 150, reads: 120, writes: 120, publishes: 130, consumes: 130 };
+const fcose = { name: 'fcose', quality: 'proof', randomize: true, animate: true, animationDuration: 1100, animationEasing: 'ease-out-cubic', fit: true, padding: 40, packComponents: true, tile: true,
+  nodeRepulsion: n => (n.isParent() ? 3500 : ({ file: 1500, document: 5500, service: 5000 })[n.data('type')] || 3500), idealEdgeLength: e => IDEAL[e.data('relation')] || 70, edgeElasticity: 0.3, nestingFactor: 0.05,
+  gravity: 1.2, gravityRange: 2.2, gravityCompound: 3, gravityRangeCompound: 1, numIter: 4000, nodeDimensionsIncludeLabels: false };
+const ROW = { cloud: 0, service: 1, database: 2, queue: 2, repo: 3, file: 4, document: 5, person: 6 };
+const rows = () => { const cols = {}; return n => { const r = ROW[n.data('type')]; cols[r] = (cols[r] || 0) + 1; return { row: r, col: cols[r] }; }; };
+const layersLayout = () => ({ name: 'grid', animate: true, animationDuration: 1000, fit: true, padding: 40, avoidOverlap: true, avoidOverlapPadding: 30, condense: true, position: rows(), rows: 7 });
+let running = null;
+function runLayout(extra = {}) { running?.stop(); running = cy.layout(state.layout === 'fcose' ? { ...fcose, ...extra } : layersLayout()); running.run(); }
+
+function setCompounds(on) {
+  state.compounds = on;
+  cy.batch(() => {
+    if (on) { state.removedGroups?.restore(); cy.nodes('[type]').forEach(n => { const p = parentOf.get(n.id()); if (p && cy.$id(p).length) n.move({ parent: p }); }); }
+    else { cy.nodes('[type]').forEach(n => n.move({ parent: null })); state.removedGroups = cy.$('node[grp]').remove(); }
+    cy.edges('[relation = "contains"]').toggleClass('hidden', on || state.filesIn);
+  });
+  runLayout();
+}
+function setFilesIn(on) {                            // collapse the 30 files into their repo folders (count badge in the sublabel)
+  state.filesIn = on;
+  cy.batch(() => {
+    if (on) state.removedFiles = cy.nodes('[type = "file"]').remove(); else state.removedFiles?.restore();
+    cy.nodes('[type = "repo"]').forEach(r => { const d = r.data(); r.data('short', ell(d.label) + '\n' + (on ? `▣ ${d.files} files · ★ ${d.stars}` : ell(d.sublabel, 22))); });
+    cy.edges('[relation = "contains"]').toggleClass('hidden', state.compounds || on);
+  });
+  runLayout();
+}
+
+// ---------------------------------------------------------------- HUD + object legend
+const hud = mountHud({ title: 'Object Icons', library: 'Cytoscape.js + fcose', version: '3.34.3 · 2.2.0', legend: false, toggles: [
+  { id: 'pictures', label: 'pictures', on: true, onChange: on => { state.pictures = on; cy.nodes('[type]').toggleClass('glyphs', !on); cy.style().update(); } },
+  { id: 'compounds', label: 'compounds', on: true, onChange: setCompounds },
+  { id: 'files', label: 'files inside repos', on: false, onChange: setFilesIn },
+  { id: 'layout', label: 'layers layout', on: false, onChange: on => { state.layout = on ? 'layers' : 'fcose'; runLayout(); } },
+  { id: 'rel', label: 'relation labels', on: true, onChange: on => { state.relLabels = on; cy.edges().toggleClass('nolabel', !on); } },
+] });
+const SAMPLE = { service: 'svc:api-gateway', database: 'db:postgres-main', queue: 'q:kafka-events', repo: 'repo:platform-api', file: 'file:platform-api/src/gateway/router.ts', document: 'doc:api-spec', person: 'person:ada-okafor', cloud: 'cloud:aws-ec2' };
+const RADIUS = { service: 8, database: 20, queue: 14, repo: 6, file: 7, document: 2, person: 50, cloud: 14 };
+const legend = document.createElement('div'); legend.className = 'hud hud--bl legend';
+legend.innerHTML = Object.entries(SAMPLE).map(([t, id]) => { const n = byId.get(id), [w, h] = SIZE[t], fill = t === 'document' || t === 'person', pic = fill ? (n.thumb || n.avatar) : (n.logo || n.icon);
+  return `<div class="legend-row"><span class="lg-frame${fill ? ' fill' : ''}" style="--c:${C[t]};width:${w * .5}px;height:${h * .5}px;border-radius:${RADIUS[t]}${t === 'person' ? '%' : 'px'}"><img src="${asset(pic)}" alt=""></span>${t}</div>`; }).join('')
+  + '<div class="lg-title">relations</div>' + Object.entries(REL).map(([k, r]) => `<div class="lg-rel"><svg viewBox="0 0 34 8"><line x1="0" y1="4" x2="${r.arrow ? 28 : 34}" y2="4" stroke="${r.color}" stroke-width="${r.width + 0.6}" ${r.dash ? `stroke-dasharray="${r.dash.join(' ')}"` : ''}/>${r.arrow ? `<path d="M27 0.5 L34 4 L27 7.5 Z" fill="${r.color}"/>` : ''}</svg>${r.label}</div>`).join('');
+hud.root.appendChild(legend);
+
+// ---------------------------------------------------------------- hover card, neighbourhood highlight, focus
+const name = id => byId.get(id)?.label || id;
+const CARD = { service: d => ({ lang: d.lang, health: d.health, owner: name(d.owner), repo: name(d.repo), rps: d.rps?.toLocaleString(), 'deploys to': cy.$id(d.id).outgoers('edge[relation = "deploys_to"]').targets().map(name).join(', ') }),
+  database: d => ({ engine: d.engine, size: d.size_gb + ' GB' }), queue: d => ({ engine: d.engine }), repo: d => ({ language: d.language, stars: d.stars, files: d.files, team: TEAMS[d.team]?.label }),
+  file: d => ({ path: d.sublabel, ext: '.' + d.ext, loc: d.loc, repo: name(d.repo) }), document: d => ({ format: d.format, pages: d.pages, kind: d.kind, updated: d.updated, author: name(d.author) }),
+  person: d => ({ role: d.role, team: TEAMS[d.team]?.label }), cloud: d => ({ provider: d.provider }) };
+function card(n) { const d = n.data(); if (!d.type) return tooltipHtml(d.label, { kind: d.grp, members: n.descendants().length }); const pic = d.thumb || d.avatar || d.logo || d.icon;
+  return `<img src="${asset(pic)}" alt=""><div class="tt-type">${d.type}</div>` + tooltipHtml(d.label, { ...CARD[d.type](d), degree: d.degree }); }
+function highlight(n) {
+  const hood = n.closedNeighborhood().union(n.descendants()).union(n.descendants().connectedEdges());
+  cy.batch(() => { cy.elements().removeClass('faded nb hover'); cy.elements().not(hood).not(':parent').addClass('faded'); hood.addClass('nb'); n.addClass('hover'); });
+  return hood;
+}
+const clear = () => cy.elements().removeClass('faded nb hover');
+cy.on('mouseover', 'node', e => { if (!state.focus) highlight(e.target); hud.showTooltip(card(e.target), e.originalEvent.clientX, e.originalEvent.clientY); });
+cy.on('mouseout', 'node', () => { if (!state.focus) clear(); hud.hideTooltip(); });
+cy.on('tap', 'node', e => { state.focus = e.target; cy.animate({ fit: { eles: highlight(e.target), padding: 80 } }, { duration: 700, easing: 'ease-in-out-cubic' }); });
+cy.on('tap', e => { if (e.target === cy && state.focus) { state.focus = null; clear(); } });
+cy.on('dbltap', e => { if (e.target !== cy && !e.target.isEdge() && !e.target.isParent()) return; state.focus = null; clear(); cy.animate({ fit: { eles: cy.elements(), padding: 40 } }, { duration: 700, easing: 'ease-in-out-cubic' }); });
+
+// labels stay readable at any zoom (screenshot rule): font grows as the map shrinks; sublabels drop below k = 0.6
+let zoomRaf = 0;
+cy.on('zoom', () => { if (zoomRaf) return; zoomRaf = requestAnimationFrame(() => { zoomRaf = 0; const k = cy.zoom(), f = Math.min(11 / k, 30) / 11;
+  cy.batch(() => { cy.nodes('[type]').toggleClass('lowzoom', k < 0.6).style({ 'font-size': 11 * f, 'text-outline-width': 2.5 * f, 'text-max-width': 150 * f, 'text-margin-y': 4 * f }); cy.nodes(':parent').style('font-size', Math.min(10 / k, 24)); }); }); });
+// ---------------------------------------------------------------- entrance
+cy.nodes('[type]').forEach(n => n.position({ x: (Math.random() - 0.5) * 120, y: (Math.random() - 0.5) * 120 }));
+cy.nodes().style('opacity', 0); runLayout();
+cy.nodes().animate({ style: { opacity: 1 } }, { duration: 900, easing: 'ease-out-cubic' });
+setTimeout(() => cy.nodes().removeStyle('opacity'), 1000);
+
+window.__demo = { cy, hud, ready: true, relayout: runLayout, setFilesIn, setCompounds,
+  nodePos(id = 'svc:api-gateway') { const p = cy.$id(id).renderedPosition(); return { x: p.x, y: p.y }; },
+  allPos: () => cy.nodes().map(n => n.isParent() ? n.renderedBoundingBox() : { ...n.renderedPosition(), r: n.renderedOuterWidth() / 2 }),
+  state: () => ({ hovered: cy.$('.hover').length > 0, focused: !!state.focus, k: cy.zoom(), nodes: cy.nodes('[type]').length, parents: cy.nodes(':parent').length, pictures: state.pictures }) };
+</script>
+</body>
+</html>
