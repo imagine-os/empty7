@@ -1,0 +1,5 @@
+# Graph Gallery
+
+A gallery of small, self-contained demos that put graph visualization libraries side by side on one shared dataset (a fictional film-studio catalog in `seed.sql`), so we can compare them on the same footing and pick the ones worth leading with. The landing page (`index.html`) is a plain HTML card grid; each demo lives in its own folder under `demos/` (currently `demos/studio-graph/`, which pairs 3d-force-graph/three.js with sql.js for an in-browser SQLite database rendered as a 3D force graph). Adding a library means adding a folder and a card.
+
+Everything is static with relative paths, so there is no build step. To run locally, start any static server from the repo root, for example `python3 -m http.server 8000`, and open http://localhost:8000/ (the demos fetch `seed.sql` and load their libraries from public CDNs, so a plain `file://` open will not work). The site deploys via GitHub Pages from the `main` branch, root folder; `.nojekyll` makes Pages serve the files exactly as committed.

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Graph</title>
+<meta name="description" content="An in-browser SQLite database of a fictional film-studio catalog, explored through live 3D graph views of its schema and data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='10' r='5' fill='%233987e5'/%3E%3Ccircle cx='23' cy='14' r='5' fill='%23d95926'/%3E%3Ccircle cx='13' cy='24' r='5' fill='%23199e70'/%3E%3Cpath d='M9 10L23 14L13 24Z' fill='none' stroke='%23c3c2b7' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<!-- sql.js (SQLite compiled to WebAssembly) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<!-- 3d-force-graph (three.js + d3-force-3d bundled) -->
+<script src="https://unpkg.com/3d-force-graph"></script>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Studio Graph <span>SQLite in the browser, viewed as a 3D network</span></h1>
+    <div class="segmented" role="group" aria-label="Graph mode">
+      <button id="mode-schema" aria-pressed="false" title="Tables as nodes, foreign keys as edges">Schema</button>
+      <button id="mode-data" aria-pressed="true" title="Every row as a node, every foreign key as an edge">Data</button>
+    </div>
+    <input id="search" type="search" placeholder="Search names / titles  ( / )" aria-label="Search graph nodes by name or title" autocomplete="off">
+    <span class="spacer"></span>
+    <span id="status" class="status" aria-live="polite">loading…</span>
+    <button id="btn-help" class="ghost" title="How this works">?</button>
+  </header>
+
+  <aside id="schema" aria-label="Schema">
+    <div class="panel-title">Tables <button id="btn-rebuild" class="ghost" title="Re-read sqlite_master and PRAGMA info and rebuild the graph">Rebuild graph from DB</button></div>
+    <div id="table-list"></div>
+    <div class="panel-title" style="margin-top:14px">Database</div>
+    <button id="btn-reset" class="ghost" style="width:100%;text-align:left" title="Drop everything and reload seed.sql">Reset to seed data</button>
+  </aside>
+
+  <main>
+    <div id="graph-wrap">
+      <div id="graph"></div>
+      <div id="labels" aria-hidden="true"></div>
+      <div id="explain" role="status"></div>
+      <div id="graph-toolbar">
+        <button id="btn-focus" aria-pressed="false" disabled title="Hide everything that is not part of the current result / neighborhood">Focus result</button>
+        <button id="btn-clear" disabled title="Clear highlight and focus">Clear</button>
+        <button id="btn-fit" title="Fit all visible nodes in view">Fit</button>
+      </div>
+      <div id="legend" aria-label="Legend (click to toggle a table)"></div>
+      <div id="loading">Loading SQLite (WebAssembly) and seed data…</div>
+    </div>
+
+    <section id="query" aria-label="SQL query">
+      <div class="qbar">
+        <label class="sr-only" for="presets">Preset queries</label>
+        <select id="presets"><option value="">Preset queries…</option></select>
+        <button id="btn-run" class="primary">Run</button>
+        <span class="hint"><kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Enter</kbd> runs · results with id columns light up the graph</span>
+      </div>
+      <label class="sr-only" for="sql">SQL editor</label>
+      <textarea id="sql" spellcheck="false" placeholder="SELECT … (full SQLite: joins, CTEs, window functions, CREATE TABLE, INSERT …)"></textarea>
+      <div id="results"><div class="meta">Results appear here.</div></div>
+    </section>
+  </main>
+
+  <aside id="side" aria-label="Details" aria-live="polite">
+    <div class="empty">Click a node in the graph, or a row in a result, to see the full record and everything related to it.</div>
+  </aside>
+
+  <div id="hint">
+    <div class="card" role="dialog" aria-labelledby="hint-title">
+      <h2 id="hint-title">How this works</h2>
+      <p>A real SQLite database (sql.js, WebAssembly) holds a fictional film-studio catalog: 8 tables joined by foreign keys. The 3D view is built from that live database.</p>
+      <ol>
+        <li><b>Data</b> mode: every row is a node colored by table; every foreign key is an edge. Drag to rotate, scroll to zoom, click a node for its record and relations.</li>
+        <li><b>Schema</b> mode: tables sized by row count, edges labelled with the FK column. Hover a table for its columns; click it to query it.</li>
+        <li>Run SQL (<kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Enter</kbd>). Any id columns in the result are mapped back to nodes and highlighted; <b>Focus result</b> re-lays out just that subgraph.</li>
+        <li>Try <code>CREATE TABLE</code> or <code>INSERT</code>: the sidebar and graph rebuild from the database.</li>
+      </ol>
+      <button id="hint-close" class="primary">Got it</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

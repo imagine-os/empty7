@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graph Gallery</title>
+<meta name="description" content="Live demos of graph visualization libraries on one shared dataset, to pick the ones worth leading with.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='10' r='5' fill='%233987e5'/%3E%3Ccircle cx='23' cy='14' r='5' fill='%23d95926'/%3E%3Ccircle cx='13' cy='24' r='5' fill='%23199e70'/%3E%3Cpath d='M9 10L23 14L13 24Z' fill='none' stroke='%23c3c2b7' stroke-width='1.5'/%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d0d0d;
+    --surface: #141416;
+    --surface-2: #1c1c1f;
+    --border: rgba(255, 255, 255, 0.10);
+    --border-strong: rgba(255, 255, 255, 0.22);
+    --text: #f4f4f2;
+    --text-2: #c3c2b7;
+    --muted: #898781;
+    --accent: #3987e5;
+    --accent-soft: rgba(57, 135, 229, 0.16);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+    --radius: 10px;
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    background-image:
+      radial-gradient(900px 480px at 15% -10%, rgba(57,135,229,0.16), transparent 60%),
+      radial-gradient(700px 420px at 95% 10%, rgba(217,89,38,0.10), transparent 60%);
+    color: var(--text);
+    font: 15px/1.5 var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 16px 40px; }
+
+  header { margin-bottom: 40px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: 600 11.5px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-2);
+  }
+  .eyebrow svg { width: 18px; height: 18px; }
+  h1 { font-size: clamp(32px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.02em; margin: 14px 0 12px; }
+  .intro { color: var(--text-2); font-size: 17px; max-width: 620px; margin: 0; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 22px 22px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: inherit; text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .card:hover, .card:focus-visible {
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+    outline: none;
+  }
+  .card:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
+  .card .thumb {
+    height: 120px; border-radius: 6px;
+    background: #101013;
+    border: 1px solid var(--border);
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .card .thumb svg { width: 100%; height: 100%; }
+  .card h2 { font-size: 18px; line-height: 1.25; margin: 0; letter-spacing: -0.01em; }
+  .card h2 small { display: block; font-weight: 500; font-size: 13px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+  .card p { margin: 0; color: var(--text-2); font-size: 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; }
+  .tag {
+    font: 600 11px/1 var(--mono); letter-spacing: 0.04em;
+    color: var(--text-2);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 9px;
+  }
+  .card .cta { color: var(--accent); font-weight: 600; font-size: 13.5px; }
+  .card .cta::after { content: " \2192"; }
+
+  footer {
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 13.5px;
+    display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between;
+  }
+  footer code { font-family: var(--mono); color: var(--text-2); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="9" cy="10" r="5" fill="#3987e5"/><circle cx="23" cy="14" r="5" fill="#d95926"/><circle cx="13" cy="24" r="5" fill="#199e70"/><path d="M9 10L23 14L13 24Z" fill="none" stroke="#c3c2b7" stroke-width="1.5"/></svg>
+      Graph visualization bake-off
+    </div>
+    <h1>Graph Gallery</h1>
+    <p class="intro">Live demos of graph visualization libraries on one shared dataset, to pick the ones worth leading with.</p>
+  </header>
+
+  <!-- One card per demo. To add a library: copy a <a class="card"> block and point it at demos/<name>/ -->
+  <main class="grid">
+    <a class="card" href="demos/studio-graph/">
+      <div class="thumb" aria-hidden="true">
+        <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice">
+          <g stroke="rgba(195,194,183,0.35)" stroke-width="1">
+            <line x1="60" y1="40" x2="120" y2="70"/><line x1="120" y1="70" x2="180" y2="35"/>
+            <line x1="180" y1="35" x2="240" y2="80"/><line x1="120" y1="70" x2="150" y2="105"/>
+            <line x1="60" y1="40" x2="40" y2="95"/><line x1="180" y1="35" x2="230" y2="20"/>
+            <line x1="150" y1="105" x2="240" y2="80"/><line x1="40" y1="95" x2="150" y2="105"/>
+          </g>
+          <circle cx="60" cy="40" r="7" fill="#3987e5"/><circle cx="120" cy="70" r="10" fill="#d95926"/>
+          <circle cx="180" cy="35" r="8" fill="#199e70"/><circle cx="240" cy="80" r="6" fill="#c98500"/>
+          <circle cx="150" cy="105" r="5" fill="#d55181"/><circle cx="40" cy="95" r="5" fill="#9085e9"/>
+          <circle cx="230" cy="20" r="4" fill="#3987e5"/>
+        </svg>
+      </div>
+      <h2>Studio Graph <small>3d-force-graph (three.js) + sql.js</small></h2>
+      <p>A real SQLite database in the browser, rendered as a live 3D force graph. Switch between schema and data views, run SQL, and watch results light up the graph.</p>
+      <div class="tags"><span class="tag">3D</span><span class="tag">WebGL</span><span class="tag">SQL-driven</span></div>
+      <span class="cta">Open demo</span>
+    </a>
+  </main>
+
+  <footer>
+    <span>More libraries coming: Sigma.js, G6, Cosmograph, ECharts GL, Cytoscape.js, three.js custom</span>
+    <span>Every demo runs on the same seed dataset (<code>seed.sql</code>).</span>
+  </footer>
+</div>
+</body>
+</html>
