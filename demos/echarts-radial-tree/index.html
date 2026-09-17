@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECharts Radial Tree</title>
+<!--
+  Graph Gallery demo (structured group): Apache ECharts series.type 'tree', layout 'radial' — company at the centre,
+  six department branches in their own sectors (invisible spacer branches keep angular gaps), typed leaves by symbol + colour.
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js   (UMD -> window.echarts)
+  Data: ../../shared/org.json via loadOrg()   Chrome: ../../shared/hud.js + theme.css
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  body { background: radial-gradient(circle at 50% 50%, #0d1222 0%, #07080f 55%, #04060b 100%); }
+  #chart { position: fixed; inset: 0; animation: fade 1s ease-out both; }
+  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); letter-spacing: .02em; white-space: nowrap; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<div class="hint hud">drag · wheel to zoom · hover for type + path · click a department / project to collapse · double-click empty to reset</div>
+<script type="module">
+import { loadOrg, mountHud, tooltipHtml } from '../../shared/hud.js';
+
+const org = await loadOrg();
+const el = document.getElementById('chart');
+const chart = echarts.init(el, null, { renderer: 'canvas' });
+const state = { orthogonal: false, expandAll: true, denseLabels: false, glow: true };
+const GAP = 8;                                        // invisible leaf slots between departments = angular gap
+const BG = '#07080f', FG = '#e8eaf2', MUTED = 'rgba(232,234,242,0.6)';
+const HEX = 'path://M50,0 L93.3,25 L93.3,75 L50,100 L6.7,75 L6.7,25 Z';
+const STAR = 'path://M50,0 L61.8,35.5 L100,38.2 L69.1,61.8 L79.4,100 L50,77.6 L20.6,100 L30.9,61.8 L0,38.2 L38.2,35.5 Z';
+const SYMBOL = { company: 'circle', department: HEX, project: 'rect', skill: 'circle', agent: 'diamond', template: 'triangle', tool: STAR };
+const EDGE_W = [0, 3, 2, 1.3];
+const alpha = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+const depthOf = id => org.byId.get(id).depth;
+
+// ---- tree data: per-node symbol/colour by type, edge tint by department hue, collapsed flags by depth ---------------
+const size = n => n.type === 'company' ? 34 : n.type === 'department' ? 22 : n.type === 'project' ? 11
+  : n.type === 'skill' ? 5.5 + (n.level || 1) * 1.2 : n.type === 'agent' ? 10 : 8;
+function item(src, maxDepth) {
+  const n = org.byId.get(src.id), dept = org.deptOf(n.id) || (n.type === 'department' ? n : null), hue = dept ? dept.hue : '#ffffff';
+  const hollow = n.type === 'agent' && n.status === 'idea';
+  const it = {
+    id: n.id, name: n.label, nid: n.id, symbol: SYMBOL[n.type], symbolSize: size(n),
+    itemStyle: {
+      color: hollow ? BG : n.color, borderColor: n.type === 'department' ? hue : n.color, borderWidth: n.type === 'department' ? 2 : hollow || n.status === 'pilot' ? 1.4 : 0,
+      borderType: n.status === 'pilot' ? 'dashed' : 'solid', opacity: n.status === 'idea' ? .75 : 1,
+      shadowBlur: state.glow ? (n.type === 'department' ? 22 : n.type === 'company' ? 30 : 8) : 0,
+      shadowColor: n.type === 'company' ? '#ffffff' : n.type === 'department' ? hue : alpha(n.color, .8),
+    },
+    lineStyle: { color: alpha(hue, .55), width: EDGE_W[n.depth] || 1 },
+    label: labelFor(n),
+  };
+  if (src.children?.length) { it.children = src.children.map(c => item(c, maxDepth)); it.collapsed = n.depth >= maxDepth; }
+  return it;
+}
+function labelFor(n) {
+  if (n.type === 'company') return { show: true, position: 'bottom', distance: 12, rotate: 0, fontSize: 12, fontWeight: 600, color: '#fff', letterSpacing: 2 };
+  if (n.type === 'department') return { show: true, fontSize: 11, fontWeight: 600, color: FG, formatter: p => p.name.toUpperCase(), letterSpacing: 1.5 };
+  if (n.type === 'project') return { show: true, fontSize: 10, color: MUTED };
+  return { show: state.denseLabels, fontSize: 9, color: MUTED, distance: 4 };
+}
+const ghost = (id, children) => ({ id, name: '', symbolSize: 0, itemStyle: { opacity: 0 }, lineStyle: { width: 0, opacity: 0 }, label: { show: false }, emphasis: { disabled: true }, collapsed: false, children });
+function buildRoot(maxDepth) {
+  const rootItem = item({ id: 'company:root' }, 1), children = [];
+  org.tree.children.forEach((d, i) => {
+    children.push(item(d, maxDepth));
+    children.push(ghost('gap' + i, Array.from({ length: GAP }, (_, j) => ghost(`gap${i}-${j}`))));   // sector gap between departments
+  });
+  rootItem.children = children; rootItem.collapsed = false;
+  return rootItem;
+}
+
+function option(maxDepth) {
+  const radial = !state.orthogonal;
+  return {
+    backgroundColor: 'transparent', tooltip: { show: false },
+    animationDuration: 700, animationDurationUpdate: 750, animationEasingUpdate: 'cubicInOut',
+    series: [{
+      type: 'tree', id: 'org', data: [buildRoot(maxDepth)],
+      layout: radial ? 'radial' : 'orthogonal', orient: 'LR', edgeShape: 'curve', edgeForkPosition: '55%',
+      top: radial ? '5%' : '4%', bottom: radial ? '5%' : '4%', left: radial ? '5%' : '8%', right: radial ? '5%' : '16%',
+      roam: true, expandAndCollapse: true, initialTreeDepth: 2, symbolSize: 8,
+      lineStyle: { curveness: 0.5 },
+      label: { color: FG, position: radial ? undefined : 'right', verticalAlign: 'middle', align: radial ? undefined : 'left' },
+      leaves: { label: { position: radial ? undefined : 'right' } },
+      emphasis: { focus: 'ancestor', blurScope: 'series', itemStyle: { shadowBlur: 18 }, lineStyle: { opacity: 1, width: 2.5 }, label: { show: true } },
+      blur: { itemStyle: { opacity: .25 }, lineStyle: { opacity: .12 }, label: { opacity: .3 } },
+    }],
+  };
+}
+
+// ---- unfurl: root → departments → projects → leaves, staggered via collapsed flags ---------------------------------
+let stage = 0;
+function unfurl() { stage = 0; chart.setOption(option(1), { notMerge: true }); [2, 3].forEach((d, i) => setTimeout(() => { if (d <= (state.expandAll ? 3 : 2)) { stage = d; chart.setOption(option(d)); } }, 550 * (i + 1))); }
+const render = () => chart.setOption(option(state.expandAll ? 3 : 2));
+
+// ---- interaction: HUD tooltip with type + path, native click = collapse/expand, double-click empty = reset ------------
+const pathOf = n => { const p = []; for (let c = n; c; c = c.parent ? org.byId.get(c.parent) : null) p.unshift(c.label); return p.join(' › '); };
+let hovered = null;
+chart.on('mouseover', p => {
+  if (p.seriesType !== 'tree' || !p.data?.nid) return;
+  const n = hovered = org.byId.get(p.data.nid), ev = p.event.event;
+  hud.showTooltip(tooltipHtml(n.label, { type: n.type, path: pathOf(n), level: n.level && '●'.repeat(n.level) + '○'.repeat(5 - n.level), status: n.status,
+    department: n.type === 'department' ? `${(org.childrenOf.get(n.id) || []).length} direct children` : undefined }), ev.clientX, ev.clientY);
+});
+chart.on('mouseout', () => { hovered = null; hud.hideTooltip(); });
+chart.on('globalout', () => { hovered = null; hud.hideTooltip(); });
+chart.getZr().on('dblclick', e => { if (!e.target) reset(); });
+function reset() { chart.setOption(option(state.expandAll ? 3 : 2), { notMerge: true }); }
+addEventListener('resize', () => chart.resize());
+
+const toggle = (id, label, on, fn) => ({ id, label, on, onChange: v => { fn(v); render(); } });
+const hud = mountHud({
+  title: 'ECharts Radial Tree', library: 'Apache ECharts · series.type tree', version: 'echarts@6.1.0', typeColors: org.meta.type_colors,
+  toggles: [
+    toggle('layout', 'orthogonal', false, v => state.orthogonal = v),
+    toggle('expand', 'expand all', true, v => state.expandAll = v),
+    toggle('labels', 'leaf labels', false, v => state.denseLabels = v),
+    toggle('glow', 'glow', true, v => state.glow = v),
+  ],
+});
+unfurl();
+
+// ---- test hooks --------------------------------------------------------------------------------------------------
+const series = () => chart.getModel().getSeriesByIndex(0);
+const indexOf = id => { const d = series().getData(); for (let i = 0; i < d.count(); i++) if (d.getId(i) === id) return i; return -1; };
+window.__demo = {
+  org, hud, state, chart, get hoverNode() { return hovered; }, get stage() { return stage; }, reset,
+  screenPos(id) { const [x, y] = series().getData().getItemGraphicEl(indexOf(id)).transformCoordToGlobal(0, 0), r = el.getBoundingClientRect(); return { x: x + r.left, y: y + r.top }; },
+  isExpanded: id => series().getData().tree.getNodeByDataIndex(indexOf(id)).isExpand,
+  layoutOf: () => series().get('layout'),
+};
+</script>
+</body>
+</html>

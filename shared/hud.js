@@ -144,4 +144,32 @@ export function tooltipHtml(label, kv = {}) {
   return `<div class="tt-label">${label}</div>${rows}`;
 }
 
-export { TYPE_COLORS, RELATION_COLORS, GOLD, FAINT };
+// ---------------------------------------------------------------------------
+// Structured group (org.json): Company -> departments -> projects -> typed leaves.
+
+/** Distinct per-department accents (branch tint); node type is still shown by shape + type colour. */
+const DEPT_HUES = ['#ff7a45', '#ffd166', '#4fd1c5', '#5ec8ff', '#b48cff', '#ff5f8f'];
+
+/**
+ * Fetch org.json and index it. Returns {...d, byId, childrenOf, deptOf(id)}.
+ * Every node gets `.color` (from meta.type_colors); department nodes also get `.hue`
+ * (a distinct accent from DEPT_HUES, in meta.departments order) for tinting their branch.
+ */
+export async function loadOrg(url = '../../shared/org.json') {
+  const d = await (await fetch(url)).json();
+  const byId = new Map(d.nodes.map(n => [n.id, n]));
+  const childrenOf = new Map();
+  for (const l of d.links) {
+    if (!childrenOf.has(l.source)) childrenOf.set(l.source, []);
+    childrenOf.get(l.source).push(l.target);
+  }
+  const depts = d.meta.departments || d.nodes.filter(n => n.type === 'department').map(n => n.id);
+  d.nodes.forEach(n => {
+    n.color = d.meta.type_colors[n.type];
+    if (n.type === 'department') n.hue = DEPT_HUES[depts.indexOf(n.id) % DEPT_HUES.length];
+  });
+  const deptOf = id => { const n = byId.get(id); return n && n.department ? byId.get(n.department) : null; };
+  return { ...d, byId, childrenOf, deptOf };
+}
+
+export { TYPE_COLORS, RELATION_COLORS, GOLD, FAINT, DEPT_HUES };

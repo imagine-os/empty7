@@ -1,0 +1,3671 @@
+{
+ "meta": {
+  "source": "shared/build-org.py (fictional company, seed 7)",
+  "type_colors": {
+   "company": "#ffffff",
+   "department": "#f5b642",
+   "project": "#ff5f8f",
+   "skill": "#5ec8ff",
+   "agent": "#8dff9e",
+   "template": "#e6c3ff",
+   "tool": "#4fd1c5"
+  },
+  "type_shapes": {
+   "company": "circle",
+   "department": "hexagon",
+   "project": "square",
+   "skill": "circle",
+   "agent": "diamond",
+   "template": "triangle",
+   "tool": "wrench-or-star"
+  },
+  "counts": {
+   "agent": 34,
+   "company": 1,
+   "department": 6,
+   "project": 21,
+   "skill": 52,
+   "template": 33,
+   "tool": 42,
+   "nodes": 189,
+   "links": 188
+  },
+  "departments": [
+   "dept:eng",
+   "dept:design",
+   "dept:mkt",
+   "dept:sales",
+   "dept:ops",
+   "dept:fin"
+  ]
+ },
+ "tree": {
+  "id": "company:root",
+  "type": "company",
+  "label": "Northwind Labs",
+  "children": [
+   {
+    "id": "dept:eng",
+    "type": "department",
+    "label": "Engineering",
+    "children": [
+     {
+      "id": "proj:eng-platform",
+      "type": "project",
+      "label": "Platform",
+      "children": [
+       {
+        "id": "skill:eng-typescript",
+        "type": "skill",
+        "label": "TypeScript",
+        "level": 1
+       },
+       {
+        "id": "skill:eng-rust",
+        "type": "skill",
+        "label": "Rust",
+        "level": 2
+       },
+       {
+        "id": "agent:eng-code-review-agent",
+        "type": "agent",
+        "label": "Code review agent",
+        "status": "live"
+       },
+       {
+        "id": "template:eng-rfc-template",
+        "type": "template",
+        "label": "RFC template"
+       },
+       {
+        "id": "tool:eng-dbt",
+        "type": "tool",
+        "label": "dbt"
+       },
+       {
+        "id": "tool:eng-grafana",
+        "type": "tool",
+        "label": "Grafana"
+       },
+       {
+        "id": "tool:eng-kafka",
+        "type": "tool",
+        "label": "Kafka"
+       }
+      ]
+     },
+     {
+      "id": "proj:eng-mobile-app",
+      "type": "project",
+      "label": "Mobile App",
+      "children": [
+       {
+        "id": "skill:eng-kotlin",
+        "type": "skill",
+        "label": "Kotlin",
+        "level": 4
+       },
+       {
+        "id": "skill:eng-distributed-systems",
+        "type": "skill",
+        "label": "Distributed systems",
+        "level": 2
+       },
+       {
+        "id": "skill:eng-observability",
+        "type": "skill",
+        "label": "Observability",
+        "level": 5
+       },
+       {
+        "id": "agent:eng-dependency-upgrader",
+        "type": "agent",
+        "label": "Dependency upgrader",
+        "status": "live"
+       },
+       {
+        "id": "agent:eng-release-notes-agent",
+        "type": "agent",
+        "label": "Release notes agent",
+        "status": "pilot"
+       },
+       {
+        "id": "template:eng-architecture-decision-record",
+        "type": "template",
+        "label": "Architecture decision record"
+       }
+      ]
+     },
+     {
+      "id": "proj:eng-data-pipeline",
+      "type": "project",
+      "label": "Data Pipeline",
+      "children": [
+       {
+        "id": "skill:eng-graphql",
+        "type": "skill",
+        "label": "GraphQL",
+        "level": 5
+       },
+       {
+        "id": "agent:eng-flaky-test-hunter",
+        "type": "agent",
+        "label": "Flaky test hunter",
+        "status": "pilot"
+       },
+       {
+        "id": "template:eng-api-changelog-template",
+        "type": "template",
+        "label": "API changelog template"
+       },
+       {
+        "id": "tool:eng-datadog",
+        "type": "tool",
+        "label": "Datadog"
+       },
+       {
+        "id": "tool:eng-xcode",
+        "type": "tool",
+        "label": "Xcode"
+       },
+       {
+        "id": "tool:eng-docker",
+        "type": "tool",
+        "label": "Docker"
+       }
+      ]
+     },
+     {
+      "id": "proj:eng-developer-tools",
+      "type": "project",
+      "label": "Developer Tools",
+      "children": [
+       {
+        "id": "skill:eng-go",
+        "type": "skill",
+        "label": "Go",
+        "level": 1
+       },
+       {
+        "id": "skill:eng-sql-tuning",
+        "type": "skill",
+        "label": "SQL tuning",
+        "level": 1
+       },
+       {
+        "id": "agent:eng-incident-triage-agent",
+        "type": "agent",
+        "label": "Incident triage agent",
+        "status": "pilot"
+       },
+       {
+        "id": "template:eng-service-readme-template",
+        "type": "template",
+        "label": "Service README template"
+       }
+      ]
+     },
+     {
+      "id": "skill:eng-swift",
+      "type": "skill",
+      "label": "Swift",
+      "level": 5
+     },
+     {
+      "id": "skill:eng-security-review",
+      "type": "skill",
+      "label": "Security review",
+      "level": 2
+     },
+     {
+      "id": "skill:eng-kubernetes",
+      "type": "skill",
+      "label": "Kubernetes",
+      "level": 1
+     },
+     {
+      "id": "skill:eng-stream-processing",
+      "type": "skill",
+      "label": "Stream processing",
+      "level": 1
+     },
+     {
+      "id": "agent:eng-on-call-summariser",
+      "type": "agent",
+      "label": "On-call summariser",
+      "status": "pilot"
+     },
+     {
+      "id": "agent:eng-migration-assistant",
+      "type": "agent",
+      "label": "Migration assistant",
+      "status": "pilot"
+     },
+     {
+      "id": "template:eng-incident-runbook-template",
+      "type": "template",
+      "label": "Incident runbook template"
+     },
+     {
+      "id": "template:eng-postmortem-template",
+      "type": "template",
+      "label": "Postmortem template"
+     },
+     {
+      "id": "tool:eng-github-actions",
+      "type": "tool",
+      "label": "GitHub Actions"
+     },
+     {
+      "id": "tool:eng-terraform",
+      "type": "tool",
+      "label": "Terraform"
+     },
+     {
+      "id": "tool:eng-sentry",
+      "type": "tool",
+      "label": "Sentry"
+     }
+    ]
+   },
+   {
+    "id": "dept:design",
+    "type": "department",
+    "label": "Design",
+    "children": [
+     {
+      "id": "proj:design-design-system",
+      "type": "project",
+      "label": "Design System",
+      "children": [
+       {
+        "id": "skill:design-prototyping",
+        "type": "skill",
+        "label": "Prototyping",
+        "level": 1
+       },
+       {
+        "id": "skill:design-interaction-design",
+        "type": "skill",
+        "label": "Interaction design",
+        "level": 3
+       },
+       {
+        "id": "tool:design-lottie",
+        "type": "tool",
+        "label": "Lottie"
+       }
+      ]
+     },
+     {
+      "id": "proj:design-onboarding-redesign",
+      "type": "project",
+      "label": "Onboarding Redesign",
+      "children": [
+       {
+        "id": "skill:design-typography",
+        "type": "skill",
+        "label": "Typography",
+        "level": 1
+       },
+       {
+        "id": "skill:design-design-tokens",
+        "type": "skill",
+        "label": "Design tokens",
+        "level": 3
+       },
+       {
+        "id": "agent:design-accessibility-audit-agent",
+        "type": "agent",
+        "label": "Accessibility audit agent",
+        "status": "live"
+       },
+       {
+        "id": "template:design-persona-template",
+        "type": "template",
+        "label": "Persona template"
+       },
+       {
+        "id": "tool:design-zeroheight",
+        "type": "tool",
+        "label": "Zeroheight"
+       }
+      ]
+     },
+     {
+      "id": "proj:design-brand-refresh",
+      "type": "project",
+      "label": "Brand Refresh",
+      "children": [
+       {
+        "id": "skill:design-illustration",
+        "type": "skill",
+        "label": "Illustration",
+        "level": 3
+       },
+       {
+        "id": "agent:design-component-doc-generator",
+        "type": "agent",
+        "label": "Component doc generator",
+        "status": "live"
+       },
+       {
+        "id": "agent:design-icon-variant-agent",
+        "type": "agent",
+        "label": "Icon variant agent",
+        "status": "live"
+       },
+       {
+        "id": "template:design-component-spec-template",
+        "type": "template",
+        "label": "Component spec template"
+       },
+       {
+        "id": "template:design-handoff-template",
+        "type": "template",
+        "label": "Handoff template"
+       },
+       {
+        "id": "tool:design-framer",
+        "type": "tool",
+        "label": "Framer"
+       },
+       {
+        "id": "tool:design-maze",
+        "type": "tool",
+        "label": "Maze"
+       }
+      ]
+     },
+     {
+      "id": "skill:design-user-research",
+      "type": "skill",
+      "label": "User research",
+      "level": 5
+     },
+     {
+      "id": "skill:design-accessibility",
+      "type": "skill",
+      "label": "Accessibility",
+      "level": 4
+     },
+     {
+      "id": "skill:design-motion-design",
+      "type": "skill",
+      "label": "Motion design",
+      "level": 5
+     },
+     {
+      "id": "agent:design-research-synthesis-agent",
+      "type": "agent",
+      "label": "Research synthesis agent",
+      "status": "live"
+     },
+     {
+      "id": "agent:design-copy-polish-agent",
+      "type": "agent",
+      "label": "Copy polish agent",
+      "status": "pilot"
+     },
+     {
+      "id": "template:design-design-review-checklist",
+      "type": "template",
+      "label": "Design review checklist"
+     },
+     {
+      "id": "template:design-usability-test-script",
+      "type": "template",
+      "label": "Usability test script"
+     },
+     {
+      "id": "tool:design-figma",
+      "type": "tool",
+      "label": "Figma"
+     },
+     {
+      "id": "tool:design-storybook",
+      "type": "tool",
+      "label": "Storybook"
+     }
+    ]
+   },
+   {
+    "id": "dept:mkt",
+    "type": "department",
+    "label": "Marketing",
+    "children": [
+     {
+      "id": "proj:mkt-q4-campaign",
+      "type": "project",
+      "label": "Q4 Campaign",
+      "children": [
+       {
+        "id": "skill:mkt-seo",
+        "type": "skill",
+        "label": "SEO",
+        "level": 4
+       },
+       {
+        "id": "agent:mkt-competitor-watch-agent",
+        "type": "agent",
+        "label": "Competitor watch agent",
+        "status": "live"
+       },
+       {
+        "id": "agent:mkt-webinar-follow-up-agent",
+        "type": "agent",
+        "label": "Webinar follow-up agent",
+        "status": "pilot"
+       },
+       {
+        "id": "tool:mkt-ahrefs",
+        "type": "tool",
+        "label": "Ahrefs"
+       },
+       {
+        "id": "tool:mkt-descript",
+        "type": "tool",
+        "label": "Descript"
+       }
+      ]
+     },
+     {
+      "id": "proj:mkt-content-engine",
+      "type": "project",
+      "label": "Content Engine",
+      "children": [
+       {
+        "id": "skill:mkt-partnerships",
+        "type": "skill",
+        "label": "Partnerships",
+        "level": 4
+       },
+       {
+        "id": "agent:mkt-campaign-planner-agent",
+        "type": "agent",
+        "label": "Campaign planner agent",
+        "status": "live"
+       },
+       {
+        "id": "template:mkt-landing-page-template",
+        "type": "template",
+        "label": "Landing page template"
+       },
+       {
+        "id": "tool:mkt-mailchimp",
+        "type": "tool",
+        "label": "Mailchimp"
+       },
+       {
+        "id": "tool:mkt-figma",
+        "type": "tool",
+        "label": "Figma"
+       }
+      ]
+     },
+     {
+      "id": "proj:mkt-product-launch",
+      "type": "project",
+      "label": "Product Launch",
+      "children": [
+       {
+        "id": "skill:mkt-email-marketing",
+        "type": "skill",
+        "label": "Email marketing",
+        "level": 5
+       },
+       {
+        "id": "skill:mkt-brand-strategy",
+        "type": "skill",
+        "label": "Brand strategy",
+        "level": 4
+       },
+       {
+        "id": "skill:mkt-copywriting",
+        "type": "skill",
+        "label": "Copywriting",
+        "level": 4
+       },
+       {
+        "id": "agent:mkt-newsletter-drafter",
+        "type": "agent",
+        "label": "Newsletter drafter",
+        "status": "pilot"
+       },
+       {
+        "id": "template:mkt-case-study-template",
+        "type": "template",
+        "label": "Case study template"
+       },
+       {
+        "id": "tool:mkt-webflow",
+        "type": "tool",
+        "label": "Webflow"
+       }
+      ]
+     },
+     {
+      "id": "proj:mkt-community",
+      "type": "project",
+      "label": "Community",
+      "children": [
+       {
+        "id": "skill:mkt-video-editing",
+        "type": "skill",
+        "label": "Video editing",
+        "level": 2
+       },
+       {
+        "id": "skill:mkt-lifecycle-marketing",
+        "type": "skill",
+        "label": "Lifecycle marketing",
+        "level": 4
+       },
+       {
+        "id": "template:mkt-campaign-brief-template",
+        "type": "template",
+        "label": "Campaign brief template"
+       },
+       {
+        "id": "template:mkt-brand-voice-template",
+        "type": "template",
+        "label": "Brand voice template"
+       }
+      ]
+     },
+     {
+      "id": "skill:mkt-event-production",
+      "type": "skill",
+      "label": "Event production",
+      "level": 3
+     },
+     {
+      "id": "skill:mkt-paid-social",
+      "type": "skill",
+      "label": "Paid social",
+      "level": 3
+     },
+     {
+      "id": "skill:mkt-analytics",
+      "type": "skill",
+      "label": "Analytics",
+      "level": 1
+     },
+     {
+      "id": "agent:mkt-social-scheduler-agent",
+      "type": "agent",
+      "label": "Social scheduler agent",
+      "status": "idea"
+     },
+     {
+      "id": "agent:mkt-headline-tester",
+      "type": "agent",
+      "label": "Headline tester",
+      "status": "live"
+     },
+     {
+      "id": "template:mkt-launch-checklist",
+      "type": "template",
+      "label": "Launch checklist"
+     },
+     {
+      "id": "template:mkt-press-release-template",
+      "type": "template",
+      "label": "Press release template"
+     },
+     {
+      "id": "tool:mkt-hubspot",
+      "type": "tool",
+      "label": "HubSpot"
+     },
+     {
+      "id": "tool:mkt-google-analytics",
+      "type": "tool",
+      "label": "Google Analytics"
+     },
+     {
+      "id": "tool:mkt-notion",
+      "type": "tool",
+      "label": "Notion"
+     }
+    ]
+   },
+   {
+    "id": "dept:sales",
+    "type": "department",
+    "label": "Sales",
+    "children": [
+     {
+      "id": "proj:sales-enterprise-pipeline",
+      "type": "project",
+      "label": "Enterprise Pipeline",
+      "children": [
+       {
+        "id": "skill:sales-procurement-navigation",
+        "type": "skill",
+        "label": "Procurement navigation",
+        "level": 5
+       },
+       {
+        "id": "skill:sales-negotiation",
+        "type": "skill",
+        "label": "Negotiation",
+        "level": 5
+       },
+       {
+        "id": "agent:sales-renewal-risk-agent",
+        "type": "agent",
+        "label": "Renewal risk agent",
+        "status": "idea"
+       },
+       {
+        "id": "template:sales-qbr-deck-template",
+        "type": "template",
+        "label": "QBR deck template"
+       },
+       {
+        "id": "template:sales-security-questionnaire-pack",
+        "type": "template",
+        "label": "Security questionnaire pack"
+       },
+       {
+        "id": "tool:sales-outreach",
+        "type": "tool",
+        "label": "Outreach"
+       }
+      ]
+     },
+     {
+      "id": "proj:sales-smb-self-serve",
+      "type": "project",
+      "label": "SMB Self-serve",
+      "children": [
+       {
+        "id": "skill:sales-objection-handling",
+        "type": "skill",
+        "label": "Objection handling",
+        "level": 2
+       },
+       {
+        "id": "tool:sales-docusign",
+        "type": "tool",
+        "label": "DocuSign"
+       },
+       {
+        "id": "tool:sales-clari",
+        "type": "tool",
+        "label": "Clari"
+       }
+      ]
+     },
+     {
+      "id": "proj:sales-partner-channel",
+      "type": "project",
+      "label": "Partner Channel",
+      "children": [
+       {
+        "id": "skill:sales-discovery-calls",
+        "type": "skill",
+        "label": "Discovery calls",
+        "level": 1
+       },
+       {
+        "id": "skill:sales-account-planning",
+        "type": "skill",
+        "label": "Account planning",
+        "level": 2
+       },
+       {
+        "id": "agent:sales-proposal-drafter",
+        "type": "agent",
+        "label": "Proposal drafter",
+        "status": "pilot"
+       },
+       {
+        "id": "agent:sales-meeting-prep-agent",
+        "type": "agent",
+        "label": "Meeting prep agent",
+        "status": "live"
+       },
+       {
+        "id": "template:sales-mutual-action-plan",
+        "type": "template",
+        "label": "Mutual action plan"
+       },
+       {
+        "id": "tool:sales-gong",
+        "type": "tool",
+        "label": "Gong"
+       }
+      ]
+     },
+     {
+      "id": "skill:sales-solution-demos",
+      "type": "skill",
+      "label": "Solution demos",
+      "level": 2
+     },
+     {
+      "id": "skill:sales-forecasting",
+      "type": "skill",
+      "label": "Forecasting",
+      "level": 5
+     },
+     {
+      "id": "agent:sales-call-summary-agent",
+      "type": "agent",
+      "label": "Call summary agent",
+      "status": "pilot"
+     },
+     {
+      "id": "agent:sales-lead-scoring-agent",
+      "type": "agent",
+      "label": "Lead scoring agent",
+      "status": "idea"
+     },
+     {
+      "id": "template:sales-proposal-template",
+      "type": "template",
+      "label": "Proposal template"
+     },
+     {
+      "id": "template:sales-discovery-call-template",
+      "type": "template",
+      "label": "Discovery call template"
+     },
+     {
+      "id": "tool:sales-salesforce",
+      "type": "tool",
+      "label": "Salesforce"
+     },
+     {
+      "id": "tool:sales-linkedin-sales-navigator",
+      "type": "tool",
+      "label": "LinkedIn Sales Navigator"
+     }
+    ]
+   },
+   {
+    "id": "dept:ops",
+    "type": "department",
+    "label": "Operations",
+    "children": [
+     {
+      "id": "proj:ops-vendor-management",
+      "type": "project",
+      "label": "Vendor Management",
+      "children": [
+       {
+        "id": "skill:ops-onboarding-design",
+        "type": "skill",
+        "label": "Onboarding design",
+        "level": 4
+       },
+       {
+        "id": "skill:ops-procurement",
+        "type": "skill",
+        "label": "Procurement",
+        "level": 1
+       },
+       {
+        "id": "agent:ops-access-review-agent",
+        "type": "agent",
+        "label": "Access review agent",
+        "status": "live"
+       },
+       {
+        "id": "template:ops-policy-template",
+        "type": "template",
+        "label": "Policy template"
+       },
+       {
+        "id": "tool:ops-jira-service-management",
+        "type": "tool",
+        "label": "Jira Service Management"
+       }
+      ]
+     },
+     {
+      "id": "proj:ops-office-remote",
+      "type": "project",
+      "label": "Office & Remote",
+      "children": [
+       {
+        "id": "skill:ops-soc-2-controls",
+        "type": "skill",
+        "label": "SOC 2 controls",
+        "level": 4
+       },
+       {
+        "id": "skill:ops-change-management",
+        "type": "skill",
+        "label": "Change management",
+        "level": 4
+       },
+       {
+        "id": "agent:ops-vendor-renewal-agent",
+        "type": "agent",
+        "label": "Vendor renewal agent",
+        "status": "idea"
+       },
+       {
+        "id": "agent:ops-policy-q-a-agent",
+        "type": "agent",
+        "label": "Policy Q&A agent",
+        "status": "pilot"
+       },
+       {
+        "id": "tool:ops-rippling",
+        "type": "tool",
+        "label": "Rippling"
+       }
+      ]
+     },
+     {
+      "id": "proj:ops-compliance-program",
+      "type": "project",
+      "label": "Compliance Program",
+      "children": [
+       {
+        "id": "skill:ops-vendor-negotiation",
+        "type": "skill",
+        "label": "Vendor negotiation",
+        "level": 4
+       },
+       {
+        "id": "template:ops-sop-template",
+        "type": "template",
+        "label": "SOP template"
+       },
+       {
+        "id": "template:ops-vendor-scorecard",
+        "type": "template",
+        "label": "Vendor scorecard"
+       },
+       {
+        "id": "tool:ops-envoy",
+        "type": "tool",
+        "label": "Envoy"
+       }
+      ]
+     },
+     {
+      "id": "proj:ops-people-ops",
+      "type": "project",
+      "label": "People Ops",
+      "children": [
+       {
+        "id": "agent:ops-ticket-router-agent",
+        "type": "agent",
+        "label": "Ticket router agent",
+        "status": "pilot"
+       },
+       {
+        "id": "template:ops-audit-evidence-template",
+        "type": "template",
+        "label": "Audit evidence template"
+       },
+       {
+        "id": "tool:ops-okta",
+        "type": "tool",
+        "label": "Okta"
+       },
+       {
+        "id": "tool:ops-vanta",
+        "type": "tool",
+        "label": "Vanta"
+       }
+      ]
+     },
+     {
+      "id": "skill:ops-facilities",
+      "type": "skill",
+      "label": "Facilities",
+      "level": 4
+     },
+     {
+      "id": "skill:ops-process-mapping",
+      "type": "skill",
+      "label": "Process mapping",
+      "level": 3
+     },
+     {
+      "id": "skill:ops-risk-assessment",
+      "type": "skill",
+      "label": "Risk assessment",
+      "level": 1
+     },
+     {
+      "id": "agent:ops-travel-booking-agent",
+      "type": "agent",
+      "label": "Travel booking agent",
+      "status": "live"
+     },
+     {
+      "id": "agent:ops-onboarding-buddy-agent",
+      "type": "agent",
+      "label": "Onboarding buddy agent",
+      "status": "pilot"
+     },
+     {
+      "id": "template:ops-offsite-planning-template",
+      "type": "template",
+      "label": "Offsite planning template"
+     },
+     {
+      "id": "template:ops-onboarding-checklist",
+      "type": "template",
+      "label": "Onboarding checklist"
+     },
+     {
+      "id": "tool:ops-zapier",
+      "type": "tool",
+      "label": "Zapier"
+     },
+     {
+      "id": "tool:ops-notion",
+      "type": "tool",
+      "label": "Notion"
+     }
+    ]
+   },
+   {
+    "id": "dept:fin",
+    "type": "department",
+    "label": "Finance",
+    "children": [
+     {
+      "id": "proj:fin-annual-plan",
+      "type": "project",
+      "label": "Annual Plan",
+      "children": [
+       {
+        "id": "skill:fin-treasury",
+        "type": "skill",
+        "label": "Treasury",
+        "level": 4
+       },
+       {
+        "id": "skill:fin-cash-forecasting",
+        "type": "skill",
+        "label": "Cash forecasting",
+        "level": 2
+       },
+       {
+        "id": "agent:fin-variance-explainer-agent",
+        "type": "agent",
+        "label": "Variance explainer agent",
+        "status": "live"
+       },
+       {
+        "id": "template:fin-headcount-plan-template",
+        "type": "template",
+        "label": "Headcount plan template"
+       },
+       {
+        "id": "tool:fin-google-sheets",
+        "type": "tool",
+        "label": "Google Sheets"
+       },
+       {
+        "id": "tool:fin-brex",
+        "type": "tool",
+        "label": "Brex"
+       }
+      ]
+     },
+     {
+      "id": "proj:fin-billing-platform",
+      "type": "project",
+      "label": "Billing Platform",
+      "children": [
+       {
+        "id": "skill:fin-audit-readiness",
+        "type": "skill",
+        "label": "Audit readiness",
+        "level": 5
+       },
+       {
+        "id": "template:fin-investment-memo-template",
+        "type": "template",
+        "label": "Investment memo template"
+       },
+       {
+        "id": "template:fin-budget-template",
+        "type": "template",
+        "label": "Budget template"
+       },
+       {
+        "id": "tool:fin-anaplan",
+        "type": "tool",
+        "label": "Anaplan"
+       },
+       {
+        "id": "tool:fin-carta",
+        "type": "tool",
+        "label": "Carta"
+       }
+      ]
+     },
+     {
+      "id": "proj:fin-board-reporting",
+      "type": "project",
+      "label": "Board Reporting",
+      "children": [
+       {
+        "id": "skill:fin-tax",
+        "type": "skill",
+        "label": "Tax",
+        "level": 2
+       },
+       {
+        "id": "skill:fin-unit-economics",
+        "type": "skill",
+        "label": "Unit economics",
+        "level": 5
+       },
+       {
+        "id": "agent:fin-board-deck-drafter",
+        "type": "agent",
+        "label": "Board deck drafter",
+        "status": "live"
+       },
+       {
+        "id": "agent:fin-invoice-matcher-agent",
+        "type": "agent",
+        "label": "Invoice matcher agent",
+        "status": "pilot"
+       }
+      ]
+     },
+     {
+      "id": "skill:fin-revenue-recognition",
+      "type": "skill",
+      "label": "Revenue recognition",
+      "level": 5
+     },
+     {
+      "id": "skill:fin-fp-a-modelling",
+      "type": "skill",
+      "label": "FP&A modelling",
+      "level": 2
+     },
+     {
+      "id": "agent:fin-close-checklist-agent",
+      "type": "agent",
+      "label": "Close checklist agent",
+      "status": "idea"
+     },
+     {
+      "id": "agent:fin-expense-policy-agent",
+      "type": "agent",
+      "label": "Expense policy agent",
+      "status": "live"
+     },
+     {
+      "id": "template:fin-board-pack-template",
+      "type": "template",
+      "label": "Board pack template"
+     },
+     {
+      "id": "template:fin-month-end-close-checklist",
+      "type": "template",
+      "label": "Month-end close checklist"
+     },
+     {
+      "id": "tool:fin-stripe",
+      "type": "tool",
+      "label": "Stripe"
+     },
+     {
+      "id": "tool:fin-netsuite",
+      "type": "tool",
+      "label": "NetSuite"
+     }
+    ]
+   }
+  ]
+ },
+ "nodes": [
+  {
+   "id": "company:root",
+   "type": "company",
+   "label": "Northwind Labs",
+   "department": null,
+   "parent": null,
+   "depth": 0
+  },
+  {
+   "id": "dept:eng",
+   "type": "department",
+   "label": "Engineering",
+   "department": "dept:eng",
+   "parent": "company:root",
+   "depth": 1
+  },
+  {
+   "id": "proj:eng-platform",
+   "type": "project",
+   "label": "Platform",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "proj:eng-mobile-app",
+   "type": "project",
+   "label": "Mobile App",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "proj:eng-data-pipeline",
+   "type": "project",
+   "label": "Data Pipeline",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "proj:eng-developer-tools",
+   "type": "project",
+   "label": "Developer Tools",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "skill:eng-swift",
+   "type": "skill",
+   "label": "Swift",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2,
+   "level": 5
+  },
+  {
+   "id": "skill:eng-security-review",
+   "type": "skill",
+   "label": "Security review",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2,
+   "level": 2
+  },
+  {
+   "id": "skill:eng-kubernetes",
+   "type": "skill",
+   "label": "Kubernetes",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2,
+   "level": 1
+  },
+  {
+   "id": "skill:eng-stream-processing",
+   "type": "skill",
+   "label": "Stream processing",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2,
+   "level": 1
+  },
+  {
+   "id": "skill:eng-kotlin",
+   "type": "skill",
+   "label": "Kotlin",
+   "department": "dept:eng",
+   "parent": "proj:eng-mobile-app",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:eng-distributed-systems",
+   "type": "skill",
+   "label": "Distributed systems",
+   "department": "dept:eng",
+   "parent": "proj:eng-mobile-app",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "skill:eng-graphql",
+   "type": "skill",
+   "label": "GraphQL",
+   "department": "dept:eng",
+   "parent": "proj:eng-data-pipeline",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "skill:eng-typescript",
+   "type": "skill",
+   "label": "TypeScript",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "skill:eng-rust",
+   "type": "skill",
+   "label": "Rust",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "skill:eng-observability",
+   "type": "skill",
+   "label": "Observability",
+   "department": "dept:eng",
+   "parent": "proj:eng-mobile-app",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "skill:eng-go",
+   "type": "skill",
+   "label": "Go",
+   "department": "dept:eng",
+   "parent": "proj:eng-developer-tools",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "skill:eng-sql-tuning",
+   "type": "skill",
+   "label": "SQL tuning",
+   "department": "dept:eng",
+   "parent": "proj:eng-developer-tools",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "agent:eng-on-call-summariser",
+   "type": "agent",
+   "label": "On-call summariser",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:eng-migration-assistant",
+   "type": "agent",
+   "label": "Migration assistant",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:eng-code-review-agent",
+   "type": "agent",
+   "label": "Code review agent",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:eng-dependency-upgrader",
+   "type": "agent",
+   "label": "Dependency upgrader",
+   "department": "dept:eng",
+   "parent": "proj:eng-mobile-app",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:eng-flaky-test-hunter",
+   "type": "agent",
+   "label": "Flaky test hunter",
+   "department": "dept:eng",
+   "parent": "proj:eng-data-pipeline",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:eng-incident-triage-agent",
+   "type": "agent",
+   "label": "Incident triage agent",
+   "department": "dept:eng",
+   "parent": "proj:eng-developer-tools",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:eng-release-notes-agent",
+   "type": "agent",
+   "label": "Release notes agent",
+   "department": "dept:eng",
+   "parent": "proj:eng-mobile-app",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "template:eng-incident-runbook-template",
+   "type": "template",
+   "label": "Incident runbook template",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "template:eng-postmortem-template",
+   "type": "template",
+   "label": "Postmortem template",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "template:eng-rfc-template",
+   "type": "template",
+   "label": "RFC template",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3
+  },
+  {
+   "id": "template:eng-architecture-decision-record",
+   "type": "template",
+   "label": "Architecture decision record",
+   "department": "dept:eng",
+   "parent": "proj:eng-mobile-app",
+   "depth": 3
+  },
+  {
+   "id": "template:eng-api-changelog-template",
+   "type": "template",
+   "label": "API changelog template",
+   "department": "dept:eng",
+   "parent": "proj:eng-data-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "template:eng-service-readme-template",
+   "type": "template",
+   "label": "Service README template",
+   "department": "dept:eng",
+   "parent": "proj:eng-developer-tools",
+   "depth": 3
+  },
+  {
+   "id": "tool:eng-github-actions",
+   "type": "tool",
+   "label": "GitHub Actions",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "tool:eng-terraform",
+   "type": "tool",
+   "label": "Terraform",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "tool:eng-sentry",
+   "type": "tool",
+   "label": "Sentry",
+   "department": "dept:eng",
+   "parent": "dept:eng",
+   "depth": 2
+  },
+  {
+   "id": "tool:eng-dbt",
+   "type": "tool",
+   "label": "dbt",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3
+  },
+  {
+   "id": "tool:eng-datadog",
+   "type": "tool",
+   "label": "Datadog",
+   "department": "dept:eng",
+   "parent": "proj:eng-data-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "tool:eng-xcode",
+   "type": "tool",
+   "label": "Xcode",
+   "department": "dept:eng",
+   "parent": "proj:eng-data-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "tool:eng-grafana",
+   "type": "tool",
+   "label": "Grafana",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3
+  },
+  {
+   "id": "tool:eng-kafka",
+   "type": "tool",
+   "label": "Kafka",
+   "department": "dept:eng",
+   "parent": "proj:eng-platform",
+   "depth": 3
+  },
+  {
+   "id": "tool:eng-docker",
+   "type": "tool",
+   "label": "Docker",
+   "department": "dept:eng",
+   "parent": "proj:eng-data-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "dept:design",
+   "type": "department",
+   "label": "Design",
+   "department": "dept:design",
+   "parent": "company:root",
+   "depth": 1
+  },
+  {
+   "id": "proj:design-design-system",
+   "type": "project",
+   "label": "Design System",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "proj:design-onboarding-redesign",
+   "type": "project",
+   "label": "Onboarding Redesign",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "proj:design-brand-refresh",
+   "type": "project",
+   "label": "Brand Refresh",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "skill:design-user-research",
+   "type": "skill",
+   "label": "User research",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2,
+   "level": 5
+  },
+  {
+   "id": "skill:design-accessibility",
+   "type": "skill",
+   "label": "Accessibility",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2,
+   "level": 4
+  },
+  {
+   "id": "skill:design-motion-design",
+   "type": "skill",
+   "label": "Motion design",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2,
+   "level": 5
+  },
+  {
+   "id": "skill:design-typography",
+   "type": "skill",
+   "label": "Typography",
+   "department": "dept:design",
+   "parent": "proj:design-onboarding-redesign",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "skill:design-design-tokens",
+   "type": "skill",
+   "label": "Design tokens",
+   "department": "dept:design",
+   "parent": "proj:design-onboarding-redesign",
+   "depth": 3,
+   "level": 3
+  },
+  {
+   "id": "skill:design-prototyping",
+   "type": "skill",
+   "label": "Prototyping",
+   "department": "dept:design",
+   "parent": "proj:design-design-system",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "skill:design-interaction-design",
+   "type": "skill",
+   "label": "Interaction design",
+   "department": "dept:design",
+   "parent": "proj:design-design-system",
+   "depth": 3,
+   "level": 3
+  },
+  {
+   "id": "skill:design-illustration",
+   "type": "skill",
+   "label": "Illustration",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3,
+   "level": 3
+  },
+  {
+   "id": "agent:design-research-synthesis-agent",
+   "type": "agent",
+   "label": "Research synthesis agent",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2,
+   "status": "live"
+  },
+  {
+   "id": "agent:design-copy-polish-agent",
+   "type": "agent",
+   "label": "Copy polish agent",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:design-accessibility-audit-agent",
+   "type": "agent",
+   "label": "Accessibility audit agent",
+   "department": "dept:design",
+   "parent": "proj:design-onboarding-redesign",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:design-component-doc-generator",
+   "type": "agent",
+   "label": "Component doc generator",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:design-icon-variant-agent",
+   "type": "agent",
+   "label": "Icon variant agent",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "template:design-design-review-checklist",
+   "type": "template",
+   "label": "Design review checklist",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "template:design-usability-test-script",
+   "type": "template",
+   "label": "Usability test script",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "template:design-persona-template",
+   "type": "template",
+   "label": "Persona template",
+   "department": "dept:design",
+   "parent": "proj:design-onboarding-redesign",
+   "depth": 3
+  },
+  {
+   "id": "template:design-component-spec-template",
+   "type": "template",
+   "label": "Component spec template",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3
+  },
+  {
+   "id": "template:design-handoff-template",
+   "type": "template",
+   "label": "Handoff template",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3
+  },
+  {
+   "id": "tool:design-figma",
+   "type": "tool",
+   "label": "Figma",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "tool:design-storybook",
+   "type": "tool",
+   "label": "Storybook",
+   "department": "dept:design",
+   "parent": "dept:design",
+   "depth": 2
+  },
+  {
+   "id": "tool:design-zeroheight",
+   "type": "tool",
+   "label": "Zeroheight",
+   "department": "dept:design",
+   "parent": "proj:design-onboarding-redesign",
+   "depth": 3
+  },
+  {
+   "id": "tool:design-framer",
+   "type": "tool",
+   "label": "Framer",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3
+  },
+  {
+   "id": "tool:design-maze",
+   "type": "tool",
+   "label": "Maze",
+   "department": "dept:design",
+   "parent": "proj:design-brand-refresh",
+   "depth": 3
+  },
+  {
+   "id": "tool:design-lottie",
+   "type": "tool",
+   "label": "Lottie",
+   "department": "dept:design",
+   "parent": "proj:design-design-system",
+   "depth": 3
+  },
+  {
+   "id": "dept:mkt",
+   "type": "department",
+   "label": "Marketing",
+   "department": "dept:mkt",
+   "parent": "company:root",
+   "depth": 1
+  },
+  {
+   "id": "proj:mkt-q4-campaign",
+   "type": "project",
+   "label": "Q4 Campaign",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "proj:mkt-content-engine",
+   "type": "project",
+   "label": "Content Engine",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "proj:mkt-product-launch",
+   "type": "project",
+   "label": "Product Launch",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "proj:mkt-community",
+   "type": "project",
+   "label": "Community",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "skill:mkt-event-production",
+   "type": "skill",
+   "label": "Event production",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2,
+   "level": 3
+  },
+  {
+   "id": "skill:mkt-paid-social",
+   "type": "skill",
+   "label": "Paid social",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2,
+   "level": 3
+  },
+  {
+   "id": "skill:mkt-analytics",
+   "type": "skill",
+   "label": "Analytics",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2,
+   "level": 1
+  },
+  {
+   "id": "skill:mkt-seo",
+   "type": "skill",
+   "label": "SEO",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-q4-campaign",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:mkt-email-marketing",
+   "type": "skill",
+   "label": "Email marketing",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-product-launch",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "skill:mkt-video-editing",
+   "type": "skill",
+   "label": "Video editing",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-community",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "skill:mkt-lifecycle-marketing",
+   "type": "skill",
+   "label": "Lifecycle marketing",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-community",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:mkt-partnerships",
+   "type": "skill",
+   "label": "Partnerships",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-content-engine",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:mkt-brand-strategy",
+   "type": "skill",
+   "label": "Brand strategy",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-product-launch",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:mkt-copywriting",
+   "type": "skill",
+   "label": "Copywriting",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-product-launch",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "agent:mkt-social-scheduler-agent",
+   "type": "agent",
+   "label": "Social scheduler agent",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2,
+   "status": "idea"
+  },
+  {
+   "id": "agent:mkt-headline-tester",
+   "type": "agent",
+   "label": "Headline tester",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2,
+   "status": "live"
+  },
+  {
+   "id": "agent:mkt-competitor-watch-agent",
+   "type": "agent",
+   "label": "Competitor watch agent",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-q4-campaign",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:mkt-campaign-planner-agent",
+   "type": "agent",
+   "label": "Campaign planner agent",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-content-engine",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:mkt-newsletter-drafter",
+   "type": "agent",
+   "label": "Newsletter drafter",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-product-launch",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:mkt-webinar-follow-up-agent",
+   "type": "agent",
+   "label": "Webinar follow-up agent",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-q4-campaign",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "template:mkt-launch-checklist",
+   "type": "template",
+   "label": "Launch checklist",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "template:mkt-press-release-template",
+   "type": "template",
+   "label": "Press release template",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "template:mkt-landing-page-template",
+   "type": "template",
+   "label": "Landing page template",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-content-engine",
+   "depth": 3
+  },
+  {
+   "id": "template:mkt-case-study-template",
+   "type": "template",
+   "label": "Case study template",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-product-launch",
+   "depth": 3
+  },
+  {
+   "id": "template:mkt-campaign-brief-template",
+   "type": "template",
+   "label": "Campaign brief template",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-community",
+   "depth": 3
+  },
+  {
+   "id": "template:mkt-brand-voice-template",
+   "type": "template",
+   "label": "Brand voice template",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-community",
+   "depth": 3
+  },
+  {
+   "id": "tool:mkt-hubspot",
+   "type": "tool",
+   "label": "HubSpot",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "tool:mkt-google-analytics",
+   "type": "tool",
+   "label": "Google Analytics",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "tool:mkt-notion",
+   "type": "tool",
+   "label": "Notion",
+   "department": "dept:mkt",
+   "parent": "dept:mkt",
+   "depth": 2
+  },
+  {
+   "id": "tool:mkt-ahrefs",
+   "type": "tool",
+   "label": "Ahrefs",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-q4-campaign",
+   "depth": 3
+  },
+  {
+   "id": "tool:mkt-mailchimp",
+   "type": "tool",
+   "label": "Mailchimp",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-content-engine",
+   "depth": 3
+  },
+  {
+   "id": "tool:mkt-webflow",
+   "type": "tool",
+   "label": "Webflow",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-product-launch",
+   "depth": 3
+  },
+  {
+   "id": "tool:mkt-descript",
+   "type": "tool",
+   "label": "Descript",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-q4-campaign",
+   "depth": 3
+  },
+  {
+   "id": "tool:mkt-figma",
+   "type": "tool",
+   "label": "Figma",
+   "department": "dept:mkt",
+   "parent": "proj:mkt-content-engine",
+   "depth": 3
+  },
+  {
+   "id": "dept:sales",
+   "type": "department",
+   "label": "Sales",
+   "department": "dept:sales",
+   "parent": "company:root",
+   "depth": 1
+  },
+  {
+   "id": "proj:sales-enterprise-pipeline",
+   "type": "project",
+   "label": "Enterprise Pipeline",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "proj:sales-smb-self-serve",
+   "type": "project",
+   "label": "SMB Self-serve",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "proj:sales-partner-channel",
+   "type": "project",
+   "label": "Partner Channel",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "skill:sales-solution-demos",
+   "type": "skill",
+   "label": "Solution demos",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2,
+   "level": 2
+  },
+  {
+   "id": "skill:sales-forecasting",
+   "type": "skill",
+   "label": "Forecasting",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2,
+   "level": 5
+  },
+  {
+   "id": "skill:sales-procurement-navigation",
+   "type": "skill",
+   "label": "Procurement navigation",
+   "department": "dept:sales",
+   "parent": "proj:sales-enterprise-pipeline",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "skill:sales-discovery-calls",
+   "type": "skill",
+   "label": "Discovery calls",
+   "department": "dept:sales",
+   "parent": "proj:sales-partner-channel",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "skill:sales-negotiation",
+   "type": "skill",
+   "label": "Negotiation",
+   "department": "dept:sales",
+   "parent": "proj:sales-enterprise-pipeline",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "skill:sales-objection-handling",
+   "type": "skill",
+   "label": "Objection handling",
+   "department": "dept:sales",
+   "parent": "proj:sales-smb-self-serve",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "skill:sales-account-planning",
+   "type": "skill",
+   "label": "Account planning",
+   "department": "dept:sales",
+   "parent": "proj:sales-partner-channel",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "agent:sales-call-summary-agent",
+   "type": "agent",
+   "label": "Call summary agent",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:sales-lead-scoring-agent",
+   "type": "agent",
+   "label": "Lead scoring agent",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2,
+   "status": "idea"
+  },
+  {
+   "id": "agent:sales-renewal-risk-agent",
+   "type": "agent",
+   "label": "Renewal risk agent",
+   "department": "dept:sales",
+   "parent": "proj:sales-enterprise-pipeline",
+   "depth": 3,
+   "status": "idea"
+  },
+  {
+   "id": "agent:sales-proposal-drafter",
+   "type": "agent",
+   "label": "Proposal drafter",
+   "department": "dept:sales",
+   "parent": "proj:sales-partner-channel",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:sales-meeting-prep-agent",
+   "type": "agent",
+   "label": "Meeting prep agent",
+   "department": "dept:sales",
+   "parent": "proj:sales-partner-channel",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "template:sales-proposal-template",
+   "type": "template",
+   "label": "Proposal template",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "template:sales-discovery-call-template",
+   "type": "template",
+   "label": "Discovery call template",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "template:sales-qbr-deck-template",
+   "type": "template",
+   "label": "QBR deck template",
+   "department": "dept:sales",
+   "parent": "proj:sales-enterprise-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "template:sales-mutual-action-plan",
+   "type": "template",
+   "label": "Mutual action plan",
+   "department": "dept:sales",
+   "parent": "proj:sales-partner-channel",
+   "depth": 3
+  },
+  {
+   "id": "template:sales-security-questionnaire-pack",
+   "type": "template",
+   "label": "Security questionnaire pack",
+   "department": "dept:sales",
+   "parent": "proj:sales-enterprise-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "tool:sales-salesforce",
+   "type": "tool",
+   "label": "Salesforce",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "tool:sales-linkedin-sales-navigator",
+   "type": "tool",
+   "label": "LinkedIn Sales Navigator",
+   "department": "dept:sales",
+   "parent": "dept:sales",
+   "depth": 2
+  },
+  {
+   "id": "tool:sales-docusign",
+   "type": "tool",
+   "label": "DocuSign",
+   "department": "dept:sales",
+   "parent": "proj:sales-smb-self-serve",
+   "depth": 3
+  },
+  {
+   "id": "tool:sales-clari",
+   "type": "tool",
+   "label": "Clari",
+   "department": "dept:sales",
+   "parent": "proj:sales-smb-self-serve",
+   "depth": 3
+  },
+  {
+   "id": "tool:sales-gong",
+   "type": "tool",
+   "label": "Gong",
+   "department": "dept:sales",
+   "parent": "proj:sales-partner-channel",
+   "depth": 3
+  },
+  {
+   "id": "tool:sales-outreach",
+   "type": "tool",
+   "label": "Outreach",
+   "department": "dept:sales",
+   "parent": "proj:sales-enterprise-pipeline",
+   "depth": 3
+  },
+  {
+   "id": "dept:ops",
+   "type": "department",
+   "label": "Operations",
+   "department": "dept:ops",
+   "parent": "company:root",
+   "depth": 1
+  },
+  {
+   "id": "proj:ops-vendor-management",
+   "type": "project",
+   "label": "Vendor Management",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "proj:ops-office-remote",
+   "type": "project",
+   "label": "Office & Remote",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "proj:ops-compliance-program",
+   "type": "project",
+   "label": "Compliance Program",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "proj:ops-people-ops",
+   "type": "project",
+   "label": "People Ops",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "skill:ops-facilities",
+   "type": "skill",
+   "label": "Facilities",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2,
+   "level": 4
+  },
+  {
+   "id": "skill:ops-process-mapping",
+   "type": "skill",
+   "label": "Process mapping",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2,
+   "level": 3
+  },
+  {
+   "id": "skill:ops-risk-assessment",
+   "type": "skill",
+   "label": "Risk assessment",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2,
+   "level": 1
+  },
+  {
+   "id": "skill:ops-onboarding-design",
+   "type": "skill",
+   "label": "Onboarding design",
+   "department": "dept:ops",
+   "parent": "proj:ops-vendor-management",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:ops-soc-2-controls",
+   "type": "skill",
+   "label": "SOC 2 controls",
+   "department": "dept:ops",
+   "parent": "proj:ops-office-remote",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:ops-vendor-negotiation",
+   "type": "skill",
+   "label": "Vendor negotiation",
+   "department": "dept:ops",
+   "parent": "proj:ops-compliance-program",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:ops-procurement",
+   "type": "skill",
+   "label": "Procurement",
+   "department": "dept:ops",
+   "parent": "proj:ops-vendor-management",
+   "depth": 3,
+   "level": 1
+  },
+  {
+   "id": "skill:ops-change-management",
+   "type": "skill",
+   "label": "Change management",
+   "department": "dept:ops",
+   "parent": "proj:ops-office-remote",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "agent:ops-travel-booking-agent",
+   "type": "agent",
+   "label": "Travel booking agent",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2,
+   "status": "live"
+  },
+  {
+   "id": "agent:ops-onboarding-buddy-agent",
+   "type": "agent",
+   "label": "Onboarding buddy agent",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:ops-vendor-renewal-agent",
+   "type": "agent",
+   "label": "Vendor renewal agent",
+   "department": "dept:ops",
+   "parent": "proj:ops-office-remote",
+   "depth": 3,
+   "status": "idea"
+  },
+  {
+   "id": "agent:ops-policy-q-a-agent",
+   "type": "agent",
+   "label": "Policy Q&A agent",
+   "department": "dept:ops",
+   "parent": "proj:ops-office-remote",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:ops-ticket-router-agent",
+   "type": "agent",
+   "label": "Ticket router agent",
+   "department": "dept:ops",
+   "parent": "proj:ops-people-ops",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "agent:ops-access-review-agent",
+   "type": "agent",
+   "label": "Access review agent",
+   "department": "dept:ops",
+   "parent": "proj:ops-vendor-management",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "template:ops-offsite-planning-template",
+   "type": "template",
+   "label": "Offsite planning template",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "template:ops-onboarding-checklist",
+   "type": "template",
+   "label": "Onboarding checklist",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "template:ops-policy-template",
+   "type": "template",
+   "label": "Policy template",
+   "department": "dept:ops",
+   "parent": "proj:ops-vendor-management",
+   "depth": 3
+  },
+  {
+   "id": "template:ops-sop-template",
+   "type": "template",
+   "label": "SOP template",
+   "department": "dept:ops",
+   "parent": "proj:ops-compliance-program",
+   "depth": 3
+  },
+  {
+   "id": "template:ops-vendor-scorecard",
+   "type": "template",
+   "label": "Vendor scorecard",
+   "department": "dept:ops",
+   "parent": "proj:ops-compliance-program",
+   "depth": 3
+  },
+  {
+   "id": "template:ops-audit-evidence-template",
+   "type": "template",
+   "label": "Audit evidence template",
+   "department": "dept:ops",
+   "parent": "proj:ops-people-ops",
+   "depth": 3
+  },
+  {
+   "id": "tool:ops-zapier",
+   "type": "tool",
+   "label": "Zapier",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "tool:ops-notion",
+   "type": "tool",
+   "label": "Notion",
+   "department": "dept:ops",
+   "parent": "dept:ops",
+   "depth": 2
+  },
+  {
+   "id": "tool:ops-rippling",
+   "type": "tool",
+   "label": "Rippling",
+   "department": "dept:ops",
+   "parent": "proj:ops-office-remote",
+   "depth": 3
+  },
+  {
+   "id": "tool:ops-envoy",
+   "type": "tool",
+   "label": "Envoy",
+   "department": "dept:ops",
+   "parent": "proj:ops-compliance-program",
+   "depth": 3
+  },
+  {
+   "id": "tool:ops-okta",
+   "type": "tool",
+   "label": "Okta",
+   "department": "dept:ops",
+   "parent": "proj:ops-people-ops",
+   "depth": 3
+  },
+  {
+   "id": "tool:ops-vanta",
+   "type": "tool",
+   "label": "Vanta",
+   "department": "dept:ops",
+   "parent": "proj:ops-people-ops",
+   "depth": 3
+  },
+  {
+   "id": "tool:ops-jira-service-management",
+   "type": "tool",
+   "label": "Jira Service Management",
+   "department": "dept:ops",
+   "parent": "proj:ops-vendor-management",
+   "depth": 3
+  },
+  {
+   "id": "dept:fin",
+   "type": "department",
+   "label": "Finance",
+   "department": "dept:fin",
+   "parent": "company:root",
+   "depth": 1
+  },
+  {
+   "id": "proj:fin-annual-plan",
+   "type": "project",
+   "label": "Annual Plan",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "proj:fin-billing-platform",
+   "type": "project",
+   "label": "Billing Platform",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "proj:fin-board-reporting",
+   "type": "project",
+   "label": "Board Reporting",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "skill:fin-revenue-recognition",
+   "type": "skill",
+   "label": "Revenue recognition",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2,
+   "level": 5
+  },
+  {
+   "id": "skill:fin-fp-a-modelling",
+   "type": "skill",
+   "label": "FP&A modelling",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2,
+   "level": 2
+  },
+  {
+   "id": "skill:fin-treasury",
+   "type": "skill",
+   "label": "Treasury",
+   "department": "dept:fin",
+   "parent": "proj:fin-annual-plan",
+   "depth": 3,
+   "level": 4
+  },
+  {
+   "id": "skill:fin-audit-readiness",
+   "type": "skill",
+   "label": "Audit readiness",
+   "department": "dept:fin",
+   "parent": "proj:fin-billing-platform",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "skill:fin-tax",
+   "type": "skill",
+   "label": "Tax",
+   "department": "dept:fin",
+   "parent": "proj:fin-board-reporting",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "skill:fin-cash-forecasting",
+   "type": "skill",
+   "label": "Cash forecasting",
+   "department": "dept:fin",
+   "parent": "proj:fin-annual-plan",
+   "depth": 3,
+   "level": 2
+  },
+  {
+   "id": "skill:fin-unit-economics",
+   "type": "skill",
+   "label": "Unit economics",
+   "department": "dept:fin",
+   "parent": "proj:fin-board-reporting",
+   "depth": 3,
+   "level": 5
+  },
+  {
+   "id": "agent:fin-close-checklist-agent",
+   "type": "agent",
+   "label": "Close checklist agent",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2,
+   "status": "idea"
+  },
+  {
+   "id": "agent:fin-expense-policy-agent",
+   "type": "agent",
+   "label": "Expense policy agent",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2,
+   "status": "live"
+  },
+  {
+   "id": "agent:fin-variance-explainer-agent",
+   "type": "agent",
+   "label": "Variance explainer agent",
+   "department": "dept:fin",
+   "parent": "proj:fin-annual-plan",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:fin-board-deck-drafter",
+   "type": "agent",
+   "label": "Board deck drafter",
+   "department": "dept:fin",
+   "parent": "proj:fin-board-reporting",
+   "depth": 3,
+   "status": "live"
+  },
+  {
+   "id": "agent:fin-invoice-matcher-agent",
+   "type": "agent",
+   "label": "Invoice matcher agent",
+   "department": "dept:fin",
+   "parent": "proj:fin-board-reporting",
+   "depth": 3,
+   "status": "pilot"
+  },
+  {
+   "id": "template:fin-board-pack-template",
+   "type": "template",
+   "label": "Board pack template",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "template:fin-month-end-close-checklist",
+   "type": "template",
+   "label": "Month-end close checklist",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "template:fin-investment-memo-template",
+   "type": "template",
+   "label": "Investment memo template",
+   "department": "dept:fin",
+   "parent": "proj:fin-billing-platform",
+   "depth": 3
+  },
+  {
+   "id": "template:fin-budget-template",
+   "type": "template",
+   "label": "Budget template",
+   "department": "dept:fin",
+   "parent": "proj:fin-billing-platform",
+   "depth": 3
+  },
+  {
+   "id": "template:fin-headcount-plan-template",
+   "type": "template",
+   "label": "Headcount plan template",
+   "department": "dept:fin",
+   "parent": "proj:fin-annual-plan",
+   "depth": 3
+  },
+  {
+   "id": "tool:fin-stripe",
+   "type": "tool",
+   "label": "Stripe",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "tool:fin-netsuite",
+   "type": "tool",
+   "label": "NetSuite",
+   "department": "dept:fin",
+   "parent": "dept:fin",
+   "depth": 2
+  },
+  {
+   "id": "tool:fin-anaplan",
+   "type": "tool",
+   "label": "Anaplan",
+   "department": "dept:fin",
+   "parent": "proj:fin-billing-platform",
+   "depth": 3
+  },
+  {
+   "id": "tool:fin-carta",
+   "type": "tool",
+   "label": "Carta",
+   "department": "dept:fin",
+   "parent": "proj:fin-billing-platform",
+   "depth": 3
+  },
+  {
+   "id": "tool:fin-google-sheets",
+   "type": "tool",
+   "label": "Google Sheets",
+   "department": "dept:fin",
+   "parent": "proj:fin-annual-plan",
+   "depth": 3
+  },
+  {
+   "id": "tool:fin-brex",
+   "type": "tool",
+   "label": "Brex",
+   "department": "dept:fin",
+   "parent": "proj:fin-annual-plan",
+   "depth": 3
+  }
+ ],
+ "links": [
+  {
+   "source": "company:root",
+   "target": "dept:eng",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "proj:eng-platform",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "proj:eng-mobile-app",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "proj:eng-data-pipeline",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "proj:eng-developer-tools",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "skill:eng-swift",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "skill:eng-security-review",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "skill:eng-kubernetes",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "skill:eng-stream-processing",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-mobile-app",
+   "target": "skill:eng-kotlin",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-mobile-app",
+   "target": "skill:eng-distributed-systems",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-data-pipeline",
+   "target": "skill:eng-graphql",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "skill:eng-typescript",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "skill:eng-rust",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-mobile-app",
+   "target": "skill:eng-observability",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-developer-tools",
+   "target": "skill:eng-go",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-developer-tools",
+   "target": "skill:eng-sql-tuning",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "agent:eng-on-call-summariser",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "agent:eng-migration-assistant",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "agent:eng-code-review-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-mobile-app",
+   "target": "agent:eng-dependency-upgrader",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-data-pipeline",
+   "target": "agent:eng-flaky-test-hunter",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-developer-tools",
+   "target": "agent:eng-incident-triage-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-mobile-app",
+   "target": "agent:eng-release-notes-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "template:eng-incident-runbook-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "template:eng-postmortem-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "template:eng-rfc-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-mobile-app",
+   "target": "template:eng-architecture-decision-record",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-data-pipeline",
+   "target": "template:eng-api-changelog-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-developer-tools",
+   "target": "template:eng-service-readme-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "tool:eng-github-actions",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "tool:eng-terraform",
+   "relation": "child"
+  },
+  {
+   "source": "dept:eng",
+   "target": "tool:eng-sentry",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "tool:eng-dbt",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-data-pipeline",
+   "target": "tool:eng-datadog",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-data-pipeline",
+   "target": "tool:eng-xcode",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "tool:eng-grafana",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-platform",
+   "target": "tool:eng-kafka",
+   "relation": "child"
+  },
+  {
+   "source": "proj:eng-data-pipeline",
+   "target": "tool:eng-docker",
+   "relation": "child"
+  },
+  {
+   "source": "company:root",
+   "target": "dept:design",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "proj:design-design-system",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "proj:design-onboarding-redesign",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "proj:design-brand-refresh",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "skill:design-user-research",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "skill:design-accessibility",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "skill:design-motion-design",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-onboarding-redesign",
+   "target": "skill:design-typography",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-onboarding-redesign",
+   "target": "skill:design-design-tokens",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-design-system",
+   "target": "skill:design-prototyping",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-design-system",
+   "target": "skill:design-interaction-design",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "skill:design-illustration",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "agent:design-research-synthesis-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "agent:design-copy-polish-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-onboarding-redesign",
+   "target": "agent:design-accessibility-audit-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "agent:design-component-doc-generator",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "agent:design-icon-variant-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "template:design-design-review-checklist",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "template:design-usability-test-script",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-onboarding-redesign",
+   "target": "template:design-persona-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "template:design-component-spec-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "template:design-handoff-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "tool:design-figma",
+   "relation": "child"
+  },
+  {
+   "source": "dept:design",
+   "target": "tool:design-storybook",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-onboarding-redesign",
+   "target": "tool:design-zeroheight",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "tool:design-framer",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-brand-refresh",
+   "target": "tool:design-maze",
+   "relation": "child"
+  },
+  {
+   "source": "proj:design-design-system",
+   "target": "tool:design-lottie",
+   "relation": "child"
+  },
+  {
+   "source": "company:root",
+   "target": "dept:mkt",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "proj:mkt-q4-campaign",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "proj:mkt-content-engine",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "proj:mkt-product-launch",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "proj:mkt-community",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "skill:mkt-event-production",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "skill:mkt-paid-social",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "skill:mkt-analytics",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-q4-campaign",
+   "target": "skill:mkt-seo",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-product-launch",
+   "target": "skill:mkt-email-marketing",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-community",
+   "target": "skill:mkt-video-editing",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-community",
+   "target": "skill:mkt-lifecycle-marketing",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-content-engine",
+   "target": "skill:mkt-partnerships",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-product-launch",
+   "target": "skill:mkt-brand-strategy",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-product-launch",
+   "target": "skill:mkt-copywriting",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "agent:mkt-social-scheduler-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "agent:mkt-headline-tester",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-q4-campaign",
+   "target": "agent:mkt-competitor-watch-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-content-engine",
+   "target": "agent:mkt-campaign-planner-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-product-launch",
+   "target": "agent:mkt-newsletter-drafter",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-q4-campaign",
+   "target": "agent:mkt-webinar-follow-up-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "template:mkt-launch-checklist",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "template:mkt-press-release-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-content-engine",
+   "target": "template:mkt-landing-page-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-product-launch",
+   "target": "template:mkt-case-study-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-community",
+   "target": "template:mkt-campaign-brief-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-community",
+   "target": "template:mkt-brand-voice-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "tool:mkt-hubspot",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "tool:mkt-google-analytics",
+   "relation": "child"
+  },
+  {
+   "source": "dept:mkt",
+   "target": "tool:mkt-notion",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-q4-campaign",
+   "target": "tool:mkt-ahrefs",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-content-engine",
+   "target": "tool:mkt-mailchimp",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-product-launch",
+   "target": "tool:mkt-webflow",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-q4-campaign",
+   "target": "tool:mkt-descript",
+   "relation": "child"
+  },
+  {
+   "source": "proj:mkt-content-engine",
+   "target": "tool:mkt-figma",
+   "relation": "child"
+  },
+  {
+   "source": "company:root",
+   "target": "dept:sales",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "proj:sales-enterprise-pipeline",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "proj:sales-smb-self-serve",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "proj:sales-partner-channel",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "skill:sales-solution-demos",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "skill:sales-forecasting",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-enterprise-pipeline",
+   "target": "skill:sales-procurement-navigation",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-partner-channel",
+   "target": "skill:sales-discovery-calls",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-enterprise-pipeline",
+   "target": "skill:sales-negotiation",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-smb-self-serve",
+   "target": "skill:sales-objection-handling",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-partner-channel",
+   "target": "skill:sales-account-planning",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "agent:sales-call-summary-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "agent:sales-lead-scoring-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-enterprise-pipeline",
+   "target": "agent:sales-renewal-risk-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-partner-channel",
+   "target": "agent:sales-proposal-drafter",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-partner-channel",
+   "target": "agent:sales-meeting-prep-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "template:sales-proposal-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "template:sales-discovery-call-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-enterprise-pipeline",
+   "target": "template:sales-qbr-deck-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-partner-channel",
+   "target": "template:sales-mutual-action-plan",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-enterprise-pipeline",
+   "target": "template:sales-security-questionnaire-pack",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "tool:sales-salesforce",
+   "relation": "child"
+  },
+  {
+   "source": "dept:sales",
+   "target": "tool:sales-linkedin-sales-navigator",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-smb-self-serve",
+   "target": "tool:sales-docusign",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-smb-self-serve",
+   "target": "tool:sales-clari",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-partner-channel",
+   "target": "tool:sales-gong",
+   "relation": "child"
+  },
+  {
+   "source": "proj:sales-enterprise-pipeline",
+   "target": "tool:sales-outreach",
+   "relation": "child"
+  },
+  {
+   "source": "company:root",
+   "target": "dept:ops",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "proj:ops-vendor-management",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "proj:ops-office-remote",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "proj:ops-compliance-program",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "proj:ops-people-ops",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "skill:ops-facilities",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "skill:ops-process-mapping",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "skill:ops-risk-assessment",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-vendor-management",
+   "target": "skill:ops-onboarding-design",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-office-remote",
+   "target": "skill:ops-soc-2-controls",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-compliance-program",
+   "target": "skill:ops-vendor-negotiation",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-vendor-management",
+   "target": "skill:ops-procurement",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-office-remote",
+   "target": "skill:ops-change-management",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "agent:ops-travel-booking-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "agent:ops-onboarding-buddy-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-office-remote",
+   "target": "agent:ops-vendor-renewal-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-office-remote",
+   "target": "agent:ops-policy-q-a-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-people-ops",
+   "target": "agent:ops-ticket-router-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-vendor-management",
+   "target": "agent:ops-access-review-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "template:ops-offsite-planning-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "template:ops-onboarding-checklist",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-vendor-management",
+   "target": "template:ops-policy-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-compliance-program",
+   "target": "template:ops-sop-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-compliance-program",
+   "target": "template:ops-vendor-scorecard",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-people-ops",
+   "target": "template:ops-audit-evidence-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "tool:ops-zapier",
+   "relation": "child"
+  },
+  {
+   "source": "dept:ops",
+   "target": "tool:ops-notion",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-office-remote",
+   "target": "tool:ops-rippling",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-compliance-program",
+   "target": "tool:ops-envoy",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-people-ops",
+   "target": "tool:ops-okta",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-people-ops",
+   "target": "tool:ops-vanta",
+   "relation": "child"
+  },
+  {
+   "source": "proj:ops-vendor-management",
+   "target": "tool:ops-jira-service-management",
+   "relation": "child"
+  },
+  {
+   "source": "company:root",
+   "target": "dept:fin",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "proj:fin-annual-plan",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "proj:fin-billing-platform",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "proj:fin-board-reporting",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "skill:fin-revenue-recognition",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "skill:fin-fp-a-modelling",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-annual-plan",
+   "target": "skill:fin-treasury",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-billing-platform",
+   "target": "skill:fin-audit-readiness",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-board-reporting",
+   "target": "skill:fin-tax",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-annual-plan",
+   "target": "skill:fin-cash-forecasting",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-board-reporting",
+   "target": "skill:fin-unit-economics",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "agent:fin-close-checklist-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "agent:fin-expense-policy-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-annual-plan",
+   "target": "agent:fin-variance-explainer-agent",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-board-reporting",
+   "target": "agent:fin-board-deck-drafter",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-board-reporting",
+   "target": "agent:fin-invoice-matcher-agent",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "template:fin-board-pack-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "template:fin-month-end-close-checklist",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-billing-platform",
+   "target": "template:fin-investment-memo-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-billing-platform",
+   "target": "template:fin-budget-template",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-annual-plan",
+   "target": "template:fin-headcount-plan-template",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "tool:fin-stripe",
+   "relation": "child"
+  },
+  {
+   "source": "dept:fin",
+   "target": "tool:fin-netsuite",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-billing-platform",
+   "target": "tool:fin-anaplan",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-billing-platform",
+   "target": "tool:fin-carta",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-annual-plan",
+   "target": "tool:fin-google-sheets",
+   "relation": "child"
+  },
+  {
+   "source": "proj:fin-annual-plan",
+   "target": "tool:fin-brex",
+   "relation": "child"
+  }
+ ]
+}

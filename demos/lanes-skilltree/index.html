@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lanes Skill-tree</title>
+<!--
+  Graph Gallery demo (structured group): D3 SVG — "Lanes skill-tree".
+  One horizontal swimlane per department; a left-to-right tech tree per lane (company → department → project → typed leaves).
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js   (UMD -> window.d3)
+  Data: ../../shared/org.json via loadOrg()   Chrome: ../../shared/hud.js + theme.css
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  body { background: radial-gradient(ellipse at 30% 40%, #0c1020 0%, #07080f 55%, #05060b 100%); }
+  svg#c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+  svg#c:active { cursor: grabbing; }
+  .lane .sep { stroke: rgba(255,255,255,0.09); stroke-width: 1; }
+  .lane-title { font: 600 11px var(--font); letter-spacing: .18em; text-transform: uppercase; fill: var(--fg); }
+  .lane-sub { font: 10px var(--mono); fill: var(--muted); }
+  .no-fills .lane .fill, .no-fills .lane .sep { opacity: 0; }
+  .node { cursor: pointer; transition: opacity .25s; }
+  .node path, .node circle { pointer-events: all; }
+  .node text { font: 11px var(--font); fill: var(--fg); pointer-events: none; }
+  .node .leaf-label { font-size: 10px; fill: var(--muted); opacity: 0; transition: opacity .3s; }
+  .spread .node .leaf-label { opacity: 1; }
+  .node .badge { font: 600 9px var(--mono); fill: var(--muted); text-anchor: middle; }
+  .node .company-label { font: 600 12px var(--font); letter-spacing: .14em; text-transform: uppercase; text-anchor: middle; }
+  .link, .rail { fill: none; transition: opacity .25s; }
+  .link.dim, .rail.dim { opacity: .12; }
+  .node.dim { opacity: .22; }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); letter-spacing: .02em; white-space: nowrap; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+</head>
+<body>
+<svg id="c">
+  <defs>
+    <filter id="blur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="bloom" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+</svg>
+<div class="hint hud">scroll = pan lanes · ctrl/⌘ + wheel = zoom · drag · hover a node for type + path · click department / project to collapse · double-click empty to reset</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

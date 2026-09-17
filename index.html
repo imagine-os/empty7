@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Graph Gallery</title>
-<meta name="description" content="Nine live demos of graph visualization libraries on one shared film-studio dataset, so we can pick the ones worth leading with.">
+<meta name="description" content="Fifteen live demos of graph visualization libraries in two groups: network views of one film-studio dataset, and structured tree views of a department model, so we can pick the ones worth leading with.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='10' r='5' fill='%235ec8ff'/%3E%3Ccircle cx='23' cy='14' r='5' fill='%23ff5f8f'/%3E%3Ccircle cx='13' cy='24' r='5' fill='%23f5b642'/%3E%3Cpath d='M9 10L23 14L13 24Z' fill='none' stroke='%23e8eaf2' stroke-opacity='.6' stroke-width='1.5'/%3E%3C/svg%3E">
 <style>
   /* Palette mirrors shared/theme.css (type colours from shared/data.json meta.type_colors). */
@@ -163,10 +163,52 @@
   .btn.npm:hover { color: var(--fg); }
   .btn.primary::after { content: "\2192"; }
 
+  /* Mini-nav (sticky anchor links to the two groups and the tables) ---------- */
+  .subnav {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center;
+    margin: 0 -16px 28px; padding: 10px 16px;
+    background: rgba(7, 8, 15, 0.82); border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .subnav a {
+    font: 600 11.5px/1 var(--mono); letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; padding: 7px 10px; border-radius: 999px;
+    transition: color .15s, background .15s;
+  }
+  .subnav a:hover { color: var(--fg); background: rgba(255,255,255,0.07); }
+  .subnav a i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; background: var(--dot, #fff); box-shadow: 0 0 6px var(--dot, #fff); }
+  .subnav a.n-network i { --dot: var(--c-person); }
+  .subnav a.n-structured i { --dot: var(--c-studio); }
+  .subnav a.n-table i { --dot: var(--c-genre); }
+  .subnav a.n-findings i { --dot: var(--c-award); }
+
   /* Sections ---------------------------------------------------------------- */
   section { margin-top: 64px; }
   section h2 { font-size: 26px; letter-spacing: -0.02em; margin: 0 0 6px; }
   section .lede { margin: 0 0 18px; color: var(--muted); max-width: 720px; font-size: 14.5px; }
+  section.group { margin-top: 56px; scroll-margin-top: 56px; }
+  section#network { margin-top: 0; }
+  section.group h2 { font-size: 24px; }
+  section.group .lede { max-width: 820px; }
+  section.group .lede b { color: var(--fg); font-weight: 600; }
+  .compare { margin: -6px 0 18px; padding: 0; list-style: none; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .compare li { padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: rgba(10, 12, 20, 0.6); font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .compare li b { color: var(--fg); font-weight: 600; }
+
+  /* Type legend row for the structured group (shape + colour per node type) - */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center;
+    margin: 0 0 18px; padding: 11px 14px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    font: 600 11.5px/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+  }
+  .legend .k { color: var(--faint); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.08em; }
+  .legend span.t { display: inline-flex; align-items: center; gap: 7px; }
+  .legend span.t svg { width: 14px; height: 14px; filter: drop-shadow(0 0 4px currentColor); }
+  .legend .sep { width: 1px; height: 18px; background: var(--line-2); }
+  .legend .hue { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .hue i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--h); box-shadow: 0 0 6px var(--h); }
   .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); -webkit-overflow-scrolling: touch; }
   table { border-collapse: collapse; width: 100%; min-width: 960px; font-size: 13px; }
   th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
@@ -215,15 +257,27 @@
       Graph visualization bake-off
     </div>
     <h1>Graph Gallery</h1>
-    <p class="intro">Nine live demos of graph visualization libraries on one shared film-studio dataset, so we can pick the ones worth leading with.</p>
+    <p class="intro">Fifteen live demos of graph visualization libraries in two groups: <a href="#network">network views</a> of one shared film-studio dataset, and <a href="#structured">structured views</a> that keep every branch of a department tree separate. Same colours, same interactions, so we can pick the ones worth leading with.</p>
     <div class="howto">
-      <b>How to compare.</b> Every demo loads the same 85-node / 361-link dataset, uses the same type colours (studio, film, person, genre, award) and offers the same basic interactions (hover, click to focus, drag, zoom). Judge <b>label legibility</b>, <b>motion quality</b>, <b>hover feel</b>, and how much of the beauty is <b>default vs. custom code</b> (the effort meter on each card). Press <kbd>H</kbd> in any demo to hide the HUD for a clean look.
+      <b>How to compare.</b> Within a group every demo loads the same dataset, uses the same type colours and offers the same basic interactions (hover, click to focus, drag, zoom). Judge <b>label legibility</b>, <b>motion quality</b>, <b>hover feel</b>, and how much of the beauty is <b>default vs. custom code</b> (the effort meter on each card). Press <kbd>H</kbd> in any demo to hide the HUD for a clean look.
     </div>
   </header>
 
-  <!-- One card per demo, in research.md shortlist order; Studio Graph (the SQL-driven original) last.
+  <nav class="subnav" aria-label="Sections">
+    <a class="n-network" href="#network"><i></i>Network views</a>
+    <a class="n-structured" href="#structured"><i></i>Structured views</a>
+    <a class="n-table" href="#comparison"><i></i>Comparison</a>
+    <a class="n-findings" href="#findings"><i></i>Findings</a>
+  </nav>
+
+  <main>
+
+  <!-- Group 1: one card per network demo, in research.md shortlist order; Studio Graph (the SQL-driven original) last.
        To add a library: copy an <article class="card"> block and point it at demos/<slug>/ (see README). -->
-  <main class="grid" id="cards">
+  <section class="group" id="network">
+    <h2>Network views: one dataset, eight libraries</h2>
+    <p class="lede">A fictional film-studio catalog (<b>85 nodes / 361 links</b>: studios, films, people, genres, awards) rendered as a force-directed network by eight libraries, plus the SQL-driven original it was built to beat. Everything connects to everything; the question is which library makes that cluster beautiful and readable.</p>
+  <div class="grid" id="cards">
 
     <article class="card" data-slug="three-nebula">
       <span class="rank">01</span>
@@ -396,6 +450,155 @@
       </div>
     </article>
 
+  </div>
+  </section>
+
+  <!-- Group 2: structured (branching) views of shared/org.json. Brief and per-demo notes in plan-structured.md. -->
+  <section class="group" id="structured">
+    <h2>Structured views: branches that stay separate</h2>
+    <p class="lede">The second dataset is a fictional company, <b>Northwind Labs</b>: the company sits at the root, six departments branch off it, each department owns a few projects, and the projects (and departments) hold typed leaves: <b>skills</b>, <b>agents</b>, <b>templates</b> and <b>tools</b> (189 nodes). Every demo here is a <b>tree</b>, not a force cluster: each department gets its own lane or sector with a visible gap, so you can follow one branch outward without crossing another. Node <b>type</b> is shown three ways (shape, colour, and the legend in the HUD); the <b>department</b> shows as an accent hue on the branch edges. Skills carry a 1–5 level, agents a live / pilot / idea status.</p>
+    <ul class="compare">
+      <li><b>Separation clarity.</b> Can you tell the six departments apart at a glance and trace one branch to its leaves without crossing another?</li>
+      <li><b>Type legibility.</b> Are shape and colour readable at leaf size, and do skill level and agent status survive?</li>
+      <li><b>Scaling to 1000+ leaves.</b> Radial layouts run out of circumference; lanes scroll; sunbursts thin out; 3D instances but hides labels. Where is collapse/focus required, not just nice?</li>
+    </ul>
+    <div class="legend" aria-label="Node types: shape and colour">
+      <span class="k">type</span>
+      <span class="t" style="color:#ffffff"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="currentColor"/></svg>company</span>
+      <span class="t" style="color:#f5b642"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5L13.6 4.75V11.25L8 14.5L2.4 11.25V4.75Z" fill="currentColor"/></svg>department</span>
+      <span class="t" style="color:#ff5f8f"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="1" fill="currentColor"/></svg>project</span>
+      <span class="t" style="color:#5ec8ff"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="currentColor"/></svg>skill</span>
+      <span class="t" style="color:#8dff9e"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1L15 8L8 15L1 8Z" fill="currentColor"/></svg>agent</span>
+      <span class="t" style="color:#e6c3ff"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5L15 14H1Z" fill="currentColor"/></svg>template</span>
+      <span class="t" style="color:#4fd1c5"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0.8L10 5.9L15.4 6.3L11.2 9.8L12.5 15.1L8 12.2L3.5 15.1L4.8 9.8L0.6 6.3L6 5.9Z" fill="currentColor"/></svg>tool</span>
+      <span class="sep" aria-hidden="true"></span>
+      <span class="k">department accent</span>
+      <span class="hue" style="--h:#ff7a45"><i></i>Engineering</span>
+      <span class="hue" style="--h:#ffd166"><i></i>Design</span>
+      <span class="hue" style="--h:#4fd1c5"><i></i>Marketing</span>
+      <span class="hue" style="--h:#5ec8ff"><i></i>Sales</span>
+      <span class="hue" style="--h:#b48cff"><i></i>Operations</span>
+      <span class="hue" style="--h:#ff5f8f"><i></i>Finance</span>
+    </div>
+    <div class="grid" id="cards-structured">
+
+    <article class="card" data-slug="radial-tree-d3">
+      <span class="rank">10</span>
+      <div class="thumb"><img src="demos/radial-tree-d3/thumb.jpg" alt="Radial Tree: D3 tidy tree with six department sectors" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/radial-tree-d3/">Radial Tree</a></h2>
+        <p class="lib"><b>D3</b> 7.9.0 (d3-hierarchy, d3-shape, d3-zoom)</p>
+        <div class="badges">
+          <span class="badge r-svg">SVG</span>
+          <span class="badge lic">ISC</span>
+          <span class="effort" data-effort="high" title="d3.tree runs per department inside a hand-computed sector; glyphs, halos, arc labels and collapse are all custom"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Company at the centre, six department sectors with gap wedges between them; typed glyphs on the rim, department-tinted spokes, arc labels, click a branch to collapse it.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/radial-tree-d3/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/d3" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="lanes-skilltree">
+      <span class="rank">11</span>
+      <div class="thumb"><img src="demos/lanes-skilltree/thumb.jpg" alt="Lanes Skill-tree: one D3 swimlane per department" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/lanes-skilltree/">Lanes Skill-tree</a></h2>
+        <p class="lib"><b>D3</b> 7.9.0 (SVG swimlanes, d3-shape, d3-zoom)</p>
+        <div class="badges">
+          <span class="badge r-svg">SVG</span>
+          <span class="badge lic">ISC</span>
+          <span class="effort" data-effort="high" title="Lane packing, connectors, level rings and status badges are hand-written; D3 supplies selections, curves and zoom"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">One horizontal lane per department and a left-to-right tech tree inside it: skill level rings, agent status badges, and lanes that grow downward instead of crowding.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/lanes-skilltree/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/d3" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="three-radial-3d">
+      <span class="rank">12</span>
+      <div class="thumb"><img src="demos/three-radial-3d/thumb.jpg" alt="Radial 3D: three.js company sphere with six department limbs" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/three-radial-3d/">Radial 3D</a></h2>
+        <p class="lib"><b>three.js</b> 0.186.0 (OrbitControls, UnrealBloom)</p>
+        <div class="badges">
+          <span class="badge r-webgl3d">WebGL 3D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="high" title="Custom scene: 3D layout, tube limbs, instanced glyphs, raycast hover and camera fly-in all hand-written"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Six department limbs jut out of a white company sphere along separate axes; projects sit in cones around each limb, leaves are instanced typed glyphs, and a click flies the camera into a branch.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/three-radial-3d/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/three" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="g6-mindmap">
+      <span class="rank">13</span>
+      <div class="thumb"><img src="demos/g6-mindmap/thumb.jpg" alt="Mindmap: AntV G6 mindmap layout, three departments left and three right" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/g6-mindmap/">Mindmap</a></h2>
+        <p class="lib"><b>AntV G6</b> 5.1.1 (mindmap, dendrogram, compact-box)</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="low" title="Tree layouts, typed node shapes, collapse-expand and animated layout switching ship with the library"><i><b></b></i><span>low</span></span>
+        </div>
+        <p class="look">Three departments branch left, three right. Typed node shapes, collapse-expand and hover come from the library, plus an animated switch to a radial dendrogram or compact box.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/g6-mindmap/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/@antv/g6" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="echarts-radial-tree">
+      <span class="rank">14</span>
+      <div class="thumb"><img src="demos/echarts-radial-tree/thumb.jpg" alt="ECharts Radial Tree: series.type tree in radial layout" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/echarts-radial-tree/">ECharts Radial Tree</a></h2>
+        <p class="lib"><b>Apache ECharts</b> 6.1.0 (series.type tree)</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">Apache-2.0</span>
+          <span class="effort" data-effort="low" title="Radial tree, per-type symbols, collapse and roam are option flags; the sector gaps are a small data trick"><i><b></b></i><span>low</span></span>
+        </div>
+        <p class="look">The built-in radial tree with invisible spacer branches to keep angular gaps between departments; per-type symbols, department-tinted lines, and a one-call flip to an orthogonal layout.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/echarts-radial-tree/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/echarts" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="sunburst-d3">
+      <span class="rank">15</span>
+      <div class="thumb"><img src="demos/sunburst-d3/thumb.jpg" alt="Sunburst: D3 zoomable partition, rings by depth, gaps between departments" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/sunburst-d3/">Sunburst</a></h2>
+        <p class="lib"><b>D3</b> 7.9.0 (d3-hierarchy partition, d3-shape arc)</p>
+        <div class="badges">
+          <span class="badge r-svg">SVG</span>
+          <span class="badge lic">ISC</span>
+          <span class="effort" data-effort="medium" title="Partition and arc generators are built in; the zoom tween, rims, glyphs and breadcrumb are custom"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">Zoomable partition: rings by depth, arcs coloured by type and rimmed with the department hue, gap wedges between sectors. Click a department to zoom it to a full circle; never crosses, but leaves become slivers.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/sunburst-d3/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/d3" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    </div>
+  </section>
+
   </main>
 
   <section id="comparison">
@@ -440,8 +643,8 @@
   </section>
 
   <footer>
-    <span><a href="https://github.com/imagine-os/empty7" target="_blank" rel="noopener">imagine-os/empty7</a> on GitHub · <a href="research.md">research.md</a> · <a href="plan.md">plan.md</a></span>
-    <span>dataset: fictional film-studio catalog, <code>85 nodes / 361 links</code> (<code>shared/data.json</code>)</span>
+    <span><a href="https://github.com/imagine-os/empty7" target="_blank" rel="noopener">imagine-os/empty7</a> on GitHub · <a href="research.md">research.md</a> · <a href="plan.md">plan.md</a> · <a href="plan-structured.md">plan-structured.md</a></span>
+    <span>datasets: fictional film-studio catalog, <code>85 nodes / 361 links</code> (<code>shared/data.json</code>) · Northwind Labs org tree, <code>189 nodes / 188 links</code> (<code>shared/org.json</code>, regenerate with <code>shared/build-org.py</code>)</span>
   </footer>
 </div>
 </body>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radial 3D — three.js</title>
+<!--
+  Graph Gallery · structured group · three-radial-3d: three.js scene of shared/org.json as a 3D radial tree.
+  Company sphere at the centre, six department limbs jutting out along octahedral directions (90° apart), projects in a
+  cone around each limb, typed instanced glyph leaves, department-tinted tube edges, UnrealBloom, fog, auto-orbit.
+  CDN URLs used (all pinned via the import map below):
+    https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js      (import map "three"; pulls build/three.core.js)
+    https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/              (import map "three/addons/")
+      -> controls/OrbitControls.js, postprocessing/{EffectComposer,RenderPass,UnrealBloomPass,OutputPass}.js,
+         utils/BufferGeometryUtils.js (+ their relative imports: Pass.js, MaskPass.js, shaders/*.js)
+  Data: ../../shared/org.json · chrome: ../../shared/hud.js + theme.css · scene code: ./main.js
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  body { background: #04050c; }
+  #app { position: fixed; inset: 0; opacity: 0; transition: opacity 1.2s ease-out; }
+  #app.in { opacity: 1; }
+  #app canvas { display: block; }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); letter-spacing: .02em; white-space: nowrap; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="app"></div>
+<div class="hint hud">hover · click a department to fly in (again to collapse its leaves) · double-click empty to reset · drag to orbit</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

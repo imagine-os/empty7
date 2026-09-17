@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunburst — D3 zoomable partition by department</title>
+<!--
+  Graph Gallery · sunburst-d3 (structured group)
+  Library: D3 7.9.0 (d3-hierarchy partition, d3-shape arc/symbol, d3-transition), SVG renderer in ./main.js.
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js
+  Data: ../../shared/org.json via loadOrg() · Chrome: ../../shared/hud.js (+ theme.css)
+  Rings = depth (departments, projects, leaves). Arc fill = type colour, outer rim = department hue,
+  angular gaps between department sectors, click a department to zoom it to a full circle.
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  #c { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; display: block; }
+  .arc { stroke-width: .7; cursor: pointer; transition: opacity .25s; }
+  .arc.leaf { cursor: default; }
+  .arc.status-pilot { stroke-dasharray: 3 2; }
+  .rim { stroke: none; pointer-events: none; }
+  .glyph { fill: #07080f; fill-opacity: .82; pointer-events: none; }
+  .label { fill: #07080f; font-size: 10.5px; font-weight: 600; pointer-events: none; }
+  .label.department { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
+  #c.no-glyphs .glyph, #c.no-labels .label { display: none; }
+  #c.hovering .arc:not(.on) { opacity: .28; }
+  .centre { cursor: pointer; }
+  .centre circle { fill: rgba(255,255,255,.035); stroke-width: 1.5; }
+  .centre text { fill: #e8eaf2; text-anchor: middle; pointer-events: none; }
+  .centre .c-title { font-size: 15px; font-weight: 600; }
+  .centre .c-sub { font-size: 11px; fill: rgba(232,234,242,.55); letter-spacing: .08em; text-transform: uppercase; }
+  .crumb { position: fixed; z-index: 20; bottom: 16px; left: 50%; transform: translateX(-50%); padding: 7px 14px; white-space: nowrap;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 999px; backdrop-filter: blur(10px); font-size: 12px; color: var(--muted); }
+  .crumb b { color: var(--fg); font-weight: 500; }
+  .crumb .sep { margin: 0 6px; opacity: .5; }
+  .crumb .type { margin-left: 10px; padding: 1px 8px; border-radius: 999px; font-size: 11px; color: #07080f; font-weight: 600; text-transform: capitalize; }
+  .hud-hidden .crumb { display: none !important; }
+</style>
+</head>
+<body>
+<svg id="c"></svg>
+<div class="crumb" id="crumb"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

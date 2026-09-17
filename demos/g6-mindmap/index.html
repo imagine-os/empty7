@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mindmap — G6</title>
+<!--
+  Graph Gallery · structured group · g6-mindmap: AntV G6 v5 `mindmap` tree layout of shared/org.json.
+  Three departments jut left, three right (getSide); typed nodes (hexagon / rect / circle / diamond / triangle / star),
+  branch edges tinted by department hue, collapse-expand on click, animated switch to radial dendrogram / compact-box.
+  CDN URLs used (pinned):
+    https://cdn.jsdelivr.net/npm/@antv/g6@5.1.1/dist/g6.min.js        (UMD -> window.G6)
+  Data: ../../shared/org.json · chrome: ../../shared/hud.js + theme.css
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  :root { --bg: #0b0d14; }
+  body { background: radial-gradient(ellipse at 50% 45%, #141827 0%, #0b0d14 60%, #07080d 100%); }
+  #app { position: fixed; inset: 0; opacity: 0; transition: opacity 1.2s ease-out; }
+  #app.in { opacity: 1; }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); letter-spacing: .02em; white-space: nowrap; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@antv/g6@5.1.1/dist/g6.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<div class="hint hud">hover · click department / project to collapse or expand · double-click empty to expand all · drag · wheel</div>
+<script type="module">
+import { loadOrg, mountHud, tooltipHtml } from '../../shared/hud.js';
+
+const { Graph, treeToGraphData } = window.G6;
+const org = await loadOrg();
+const { byId, deptOf, meta } = org;
+const DEPTS = meta.departments;
+const N = id => byId.get(id);
+const side = id => { const d = deptOf(id) || N(id); return DEPTS.indexOf(d?.id) < 3 ? 'left' : 'right'; };
+const hueOf = id => (N(id).type === 'department' ? N(id) : deptOf(id))?.hue || '#ffffff';
+const hasKids = id => (org.childrenOf.get(id) || []).length > 0;
+const pathOf = id => { const p = []; for (let n = N(id); n; n = n.parent ? N(n.parent) : null) p.unshift(n.label); return p.join(' › '); };
+
+// ---- data: nested tree -> G6 graph data; node.data is the org node (type, label, level, status, hue …) --------------
+const data = treeToGraphData(org.tree, {
+  getNodeData: (d, depth) => ({ id: d.id, depth, data: N(d.id), children: (d.children || []).map(c => c.id) }),
+  getEdgeData: (s, t) => ({ id: `${s.id}->${t.id}`, source: s.id, target: t.id }),
+});
+// Boundary leaves of every department subtree get extra vertical gap -> visible gutter between departments.
+const edgeLeaves = new Set();
+for (const dept of DEPTS) {
+  const leaves = []; (function walk(id) { const k = org.childrenOf.get(id) || []; if (!k.length) leaves.push(id); k.forEach(walk); })(dept);
+  edgeLeaves.add(leaves[0]); edgeLeaves.add(leaves[leaves.length - 1]);
+}
+
+// ---- typed node styling ----------------------------------------------------------------------------------------------
+const SHAPE = { company: 'circle', department: 'hexagon', project: 'rect', skill: 'circle', agent: 'diamond', template: 'triangle', tool: 'star' };
+const SIZE = { company: 46, department: 30, project: 16, skill: 11, agent: 13, template: 12, tool: 13 };
+const STATUS = { live: '#8dff9e', pilot: '#ffd166', idea: '#8a90a8' };
+const isBig = n => n.type === 'company' || n.type === 'department' || n.type === 'project';
+const state = { layout: 'mindmap', leafLabels: false, collapsed: false };
+const labelSide = id => state.layout === 'mindmap' ? side(id) : (state.layout === 'radial' ? 'bottom' : 'right');
+
+const nodeStyle = {
+  size: n => SIZE[n.data.type],
+  fill: n => n.data.color, fillOpacity: n => n.data.status === 'idea' ? 0.3 : 0.95,
+  stroke: n => n.data.type === 'company' ? '#ffffff' : hueOf(n.id), lineWidth: n => isBig(n.data) ? 2 : 1.2,
+  lineDash: n => n.data.status === 'pilot' ? [3, 2] : 0,
+  halo: n => n.data.type === 'company' || n.data.type === 'department', haloStroke: n => n.data.type === 'company' ? '#ffffff' : hueOf(n.id),
+  haloLineWidth: n => n.data.type === 'company' ? 26 : 14, haloStrokeOpacity: 0.22,
+  label: n => isBig(n.data) || state.leafLabels, labelText: n => n.data.type === 'department' ? n.data.label.toUpperCase() : n.data.label,
+  labelFill: n => n.data.type === 'department' ? hueOf(n.id) : n.data.type === 'company' ? '#ffffff' : '#d9dcea',
+  labelFontSize: n => ({ company: 15, department: 13, project: 11 })[n.data.type] || 9, labelFontWeight: n => isBig(n.data) ? 700 : 400,
+  labelLetterSpacing: n => n.data.type === 'department' ? 2 : 0, labelOpacity: n => isBig(n.data) ? 1 : 0.75,
+  labelPlacement: n => n.data.type === 'company' ? 'bottom' : labelSide(n.id), labelOffsetX: 4,
+  labelBackground: n => isBig(n.data), labelBackgroundFill: 'rgba(11,13,20,0.7)', labelBackgroundRadius: 4, labelPadding: [1, 5],
+  badge: true,
+  badges: n => n.data.type === 'skill' ? [{ text: 'L' + n.data.level, placement: 'right-top', backgroundFill: '#5ec8ff', fill: '#031522', fontSize: 7, fontWeight: 700, padding: [0, 3], offsetX: -2 }]
+    : n.data.type === 'agent' ? [{ text: n.data.status === 'idea' ? '○' : '●', placement: 'right-top', backgroundFill: 'transparent', fill: STATUS[n.data.status], fontSize: 9, offsetX: -3 }] : [],
+  ports: [], innerR: 3, direction: 'up', cursor: n => hasKids(n.id) ? 'pointer' : 'default',
+};
+
+const graph = new Graph({
+  container: 'app', autoResize: true, background: 'transparent', animation: { duration: 1800, easing: 'ease-in-out' },
+  data,
+  node: { type: n => SHAPE[n.data.type], style: nodeStyle,
+    state: { active: { lineWidth: 2.5, stroke: '#ffffff', label: true, labelOpacity: 1, halo: true, haloStroke: n => hueOf(n.id), haloStrokeOpacity: 0.3, zIndex: 3 },
+      inactive: { fillOpacity: 0.12, strokeOpacity: 0.15, labelOpacity: 0.1, badgeBackgroundOpacity: 0.1, badgeOpacity: 0.1, haloStrokeOpacity: 0.05 } },
+    animation: { enter: [{ fields: ['opacity'], duration: 900 }], update: [{ fields: ['x', 'y'], shape: 'key' }, { fields: ['opacity'] }] } },
+  edge: { type: 'cubic-horizontal',
+    style: { stroke: e => hueOf(e.target), strokeOpacity: 0.55, lineWidth: e => ({ department: 3, project: 2 })[N(e.target).type] || 1.1, curveOffset: 40 },
+    state: { active: { strokeOpacity: 1, lineWidth: e => (({ department: 3, project: 2 })[N(e.target).type] || 1.1) + 1, zIndex: 2 }, inactive: { strokeOpacity: 0.06 } },
+    animation: { enter: [{ fields: ['opacity'], duration: 1400, delay: 200 }] } },
+  layout: mindmapLayout(),
+  behaviors: ['drag-canvas', { type: 'zoom-canvas', sensitivity: 1.1 },
+    { type: 'collapse-expand', key: 'ce', trigger: 'click', animation: true, enable: e => hasKids(e.target.id) && N(e.target.id).type !== 'company',
+      onCollapse: id => afterToggle(id), onExpand: id => afterToggle(id) }],
+});
+
+// ---- three tree layouts (mindmap default) ---------------------------------------------------------------------------
+function mindmapLayout() {
+  return { type: 'mindmap', direction: 'H', getSide: n => side(n.id),
+    getHeight: n => ({ company: 46, department: 34, project: 18 })[N(n.id).type] || 10,
+    getWidth: n => ({ company: 60, department: 120, project: 90 })[N(n.id).type] || 70,
+    getVGap: n => (edgeLeaves.has(n.id) ? 30 : 0) + (({ department: 14, project: 6 })[N(n.id).type] || 2.2),
+    getHGap: n => ({ company: 150, department: 100, project: 50 })[N(n.id).type] || 26 };
+}
+const LAYOUTS = {
+  mindmap: mindmapLayout,
+  radial: () => ({ type: 'dendrogram', direction: 'LR', radial: true, nodeSep: 22, rankSep: 150 }),
+  compact: () => ({ type: 'compact-box', direction: 'LR', getHeight: () => 14, getWidth: n => ({ company: 60, department: 120, project: 90 })[N(n.id).type] || 70,
+    getVGap: n => (edgeLeaves.has(n.id) ? 30 : 0) + 3, getHGap: () => 40 }),
+};
+async function switchLayout(name) {
+  state.layout = name;
+  for (const k of ['radial', 'compact']) hud.setToggle(k, k === name);
+  graph.setEdge({ type: name === 'radial' ? 'cubic-radial' : 'cubic-horizontal', style: { curveOffset: name === 'mindmap' ? 40 : 20 } });
+  graph.setLayout(LAYOUTS[name]());
+  await graph.layout();                                     // animated: nodes travel from their old positions
+  await graph.draw();                                       // relabel placement / edge type
+  await graph.fitView({ when: 'always' }, { duration: 600, easing: 'ease-in-out' });
+}
+
+// ---- HUD, hover path highlight, click focus, reset -----------------------------------------------------------------
+const hud = mountHud({
+  title: 'Mindmap', library: 'AntV G6', version: '5.1.1 · mindmap / dendrogram / compact-box', typeColors: meta.type_colors,
+  toggles: [
+    { id: 'radial', label: 'Radial', on: false, onChange: on => switchLayout(on ? 'radial' : 'mindmap') },
+    { id: 'compact', label: 'Compact box', on: false, onChange: on => switchLayout(on ? 'compact' : 'mindmap') },
+    { id: 'collapse', label: 'Collapse all', on: false, onChange: async on => { state.collapsed = on; for (const d of DEPTS) await (on ? graph.collapseElement(d, false) : graph.expandElement(d, false)); await graph.fitView({ when: 'always' }, { duration: 500 }); } },
+    { id: 'leafLabels', label: 'Leaf labels', on: false, onChange: async on => { state.leafLabels = on; await graph.draw(); } },
+  ],
+});
+const visible = id => !graph.getAncestorsData(id, 'tree').some(a => a.style?.collapsed);
+const clearStates = () => { const s = {}; for (const n of data.nodes) if (visible(n.id)) s[n.id] = []; for (const e of data.edges) if (visible(e.target)) s[e.id] = []; return graph.setElementState(s, false); };
+function hoverPath(id) {
+  const path = new Set(); for (let n = N(id); n; n = n.parent ? N(n.parent) : null) path.add(n.id);
+  const s = {};
+  for (const n of data.nodes) if (visible(n.id)) s[n.id] = path.has(n.id) ? ['active'] : ['inactive'];
+  for (const e of data.edges) if (visible(e.target)) s[e.id] = path.has(e.target) && path.has(e.source) ? ['active'] : ['inactive'];
+  return graph.setElementState(s, false);
+}
+const kvFor = n => ({ type: n.type, path: pathOf(n.id), level: n.level ? `${n.level} / 5` : null, status: n.status, department: n.type === 'department' ? `${org.childrenOf.get(n.id).length} children` : null });
+let hover = null;
+const showTip = e => { const n = N(e.target.id); if (!n) return; hud.showTooltip(tooltipHtml(n.label, kvFor(n)), e.client.x, e.client.y); if (hover !== n.id) { hover = n.id; hoverPath(n.id); } };
+graph.on('node:pointerenter', showTip); graph.on('node:pointermove', showTip);
+graph.on('node:pointerleave', () => { hud.hideTooltip(); hover = null; clearStates(); });
+const collapsedIds = () => graph.getNodeData().filter(n => n.style?.collapsed).map(n => n.id);
+async function afterToggle(id) {                       // after collapse/expand: refocus the toggled branch
+  hud.hideTooltip(); hover = null;
+  await graph.focusElement(id, { duration: 600, easing: 'ease-in-out' });
+}
+graph.on('canvas:dblclick', async () => {
+  for (const id of collapsedIds()) await graph.expandElement(id, false);
+  state.collapsed = false; hud.setToggle('collapse', false);
+  await clearStates(); await graph.fitView({ when: 'always' }, { duration: 700, easing: 'ease-in-out' });
+});
+graph.on('canvas:pointerdown', () => hud.hideTooltip());
+
+// ---- test hooks + render (unfurl: G6 tree layouts animate every node out from the root) -----------------------------
+window.__demo = { graph, org, hud, state, ready: false,
+  get hoverNode() { return hover ? N(hover) : null; },
+  screenPos: id => { const p = graph.getElementPosition(id); const v = graph.getCanvas().getClientByCanvas([p[0], p[1]]); return Array.isArray(v) ? { x: v[0], y: v[1] } : { x: v.x, y: v.y }; },
+  hoverState: () => ({ active: graph.getElementDataByState('node', 'active').length, inactive: graph.getElementDataByState('node', 'inactive').length }),
+  clickState: () => ({ collapsed: collapsedIds(), zoom: +graph.getZoom().toFixed(2), visibleNodes: data.nodes.filter(n => visible(n.id)).length }),
+  toggleState: () => ({ layout: graph.getLayout().type, edge: graph.getOptions().edge.type, leafLabels: state.leafLabels, collapsed: collapsedIds().length }),
+  layoutBounds: () => Object.fromEntries(DEPTS.map(d => { const ys = data.nodes.filter(n => (deptOf(n.id) || N(n.id)).id === d).map(n => graph.getElementPosition(n.id)[1]); return [d, [Math.round(Math.min(...ys)), Math.round(Math.max(...ys))]]; })),
+  reset: async () => { await clearStates(); await graph.fitView({ when: 'always' }, { duration: 500 }); }, settle: () => {},
+};
+document.getElementById('app').classList.add('in');
+await graph.render();
+await graph.fitView({ when: 'always' });
+window.__demo.ready = true;
+</script>
+</body>
+</html>
