@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nebula — three.js</title>
+<!--
+  Graph Gallery · three-nebula · three.js 0.186.0 custom scene (InstancedMesh + UnrealBloom) + d3-force-3d 3.0.6 layout.
+  CDN URLs used (all pinned via the import map below; verify once from a normal machine):
+    https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js          (import map "three"; pulls build/three.core.js)
+    https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/                  (import map "three/addons/")
+      -> controls/OrbitControls.js, postprocessing/{EffectComposer,RenderPass,UnrealBloomPass,OutputPass}.js,
+         utils/BufferGeometryUtils.js (+ their relative imports: Pass.js, MaskPass.js, shaders/*.js)
+    https://cdn.jsdelivr.net/npm/d3-force-3d@3.0.6/+esm                        (import map "d3-force-3d")
+  Data: ../../shared/data.json · chrome: ../../shared/hud.js + theme.css · scene code: ./main.js
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  body { background: #02030a; }
+  #app { position: fixed; inset: 0; opacity: 0; transition: opacity 1.4s ease-out; }
+  #app.in { opacity: 1; }
+  #app canvas { display: block; }
+  .fallback { position: fixed; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 14px; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/",
+  "d3-force-3d": "https://cdn.jsdelivr.net/npm/d3-force-3d@3.0.6/+esm"
+} }
+</script>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

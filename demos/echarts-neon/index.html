@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECharts Neon</title>
+<!--
+  Graph Gallery demo: Apache ECharts graph + echarts-gl graphGL — "Neon dashboard".
+  CDN URLs used (pinned, verify on a normal machine):
+    https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js        (UMD -> window.echarts)
+    https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min.js  (UMD, registers series.type 'graphGL')
+  Data: ../../shared/data.json   Stress set: ../../shared/stress.js   Chrome: ../../shared/hud.js + theme.css
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  :root { --bg: #070a12; }
+  body { background: radial-gradient(ellipse at 50% 45%, #0e1424 0%, #070a12 60%, #04060c 100%); }
+  #chart { position: fixed; inset: 0; animation: fade 1.2s ease-out both; }
+  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+  .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); letter-spacing: .02em; }
+  .stat { margin-top: 6px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .stat b { color: var(--fg); font-weight: 600; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<div class="hint hud">drag · wheel · hover isolates the neighbourhood · click to focus · double-click empty to reset</div>
+<script type="module">
+import { loadData, linkColor, mountHud, tooltipHtml, GOLD, TYPE_COLORS } from '../../shared/hud.js';
+import { makeStress } from '../../shared/stress.js';
+
+const d = await loadData();
+const TYPES = Object.keys(d.meta.type_colors);
+const state = { glow: true, curved: true, labels: false, gpu: false };
+let focused = null, tipHtml = '';
+
+// ---- shared semantics -------------------------------------------------------------------------
+const radius = n => {
+  let r = 3 + Math.sqrt(n.degree) * 2;
+  if (n.type === 'film' && n.gross_musd) r += Math.sqrt(n.gross_musd) * 0.2;
+  if (n.type === 'person' && n.wins) r += n.wins * 1.2;
+  return r;
+};
+const isFaint = r => r === 'genre' || r === 'produced_by';
+const isGold = l => l.relation === 'won' || (l.relation === 'nominee' && l.won);
+const isHub = n => n.type === 'studio' || n.type === 'award' || n.degree >= 9;
+
+const nodes = d.nodes.map(n => ({
+  id: n.id, name: n.label, category: TYPES.indexOf(n.type), symbolSize: radius(n) * 2, value: n.degree,
+  itemStyle: { color: n.color, shadowColor: n.color, borderColor: 'rgba(255,255,255,0.85)', borderWidth: 0.6 },
+  ...(isHub(n) ? { label: { show: true, fontSize: n.type === 'studio' || n.type === 'award' ? 12 : 11, fontWeight: n.type === 'studio' ? 600 : 400 } } : {}),
+}));
+const links = d.links.map(l => ({
+  source: l.source, target: l.target,
+  lineStyle: { color: linkColor(l), width: isGold(l) ? 2 : 1, opacity: isFaint(l.relation) ? 1 : (isGold(l) ? 0.85 : 0.45),
+    ...(isGold(l) ? { shadowBlur: 10, shadowColor: GOLD } : {}), ...(l.relation === 'genre' ? { type: 'dashed' } : {}) },
+  ...(l.relation === 'won' ? { symbol: ['none', 'arrow'], symbolSize: [0, 8] } : {}),
+}));
+
+const graphSeries = () => ({
+  type: 'graph', layout: 'force', roam: true, draggable: true, zoom: 1, animationDurationUpdate: 600,
+  categories: TYPES.map(t => ({ name: t, itemStyle: { color: TYPE_COLORS[t] } })),
+  data: nodes, links,
+  itemStyle: { shadowBlur: state.glow ? 26 : 0, borderColor: '#fff', borderWidth: 0.5 },
+  lineStyle: { curveness: state.curved ? 0.25 : 0, opacity: 0.4, cap: 'round' },
+  label: { show: state.labels, position: 'right', distance: 6, color: '#e8eaf2', fontSize: 11, fontFamily: 'inherit',
+    textBorderColor: 'rgba(7,10,18,0.95)', textBorderWidth: 3 },
+  emphasis: { focus: 'adjacency', scale: 1.25, itemStyle: { shadowBlur: state.glow ? 48 : 0, borderWidth: 1.5 },
+    lineStyle: { width: 3, opacity: 1 }, label: { show: true, fontSize: 12 } },
+  blur: { itemStyle: { opacity: 0.07 }, lineStyle: { opacity: 0.025 }, label: { opacity: 0 } },
+  select: { disabled: true },
+  force: { repulsion: 240, edgeLength: [40, 120], gravity: 0.08, friction: 0.15, layoutAnimation: true, initLayout: 'circular' },
+});
+const baseOption = () => ({
+  backgroundColor: 'transparent', animationDuration: 1500, animationEasing: 'cubicOut', animationDurationUpdate: 600,
+  tooltip: { show: false }, legend: { show: false }, series: [graphSeries()],
+});
+
+// ---- GPU mode: 50k-node synthetic set rendered by echarts-gl graphGL with forceAtlas2 on the GPU ---
+const NEON = ['#ff5f8f', '#5ec8ff', '#8dff9e', '#f5b642', '#e6c3ff', '#4fd1c5', '#b48cff', '#ffd166', '#ff8f5f', '#5effd6', '#ff5fd2', '#9ecbff'];
+let stress = null;
+const gpuOption = () => {
+  stress ??= makeStress(+new URLSearchParams(location.search).get('stress') || 50000, 3, 7);   // ?stress=N for slow test machines
+  return {
+    backgroundColor: 'transparent', color: NEON, tooltip: { show: false }, animation: false,
+    series: [{
+      type: 'graphGL', roam: true, zoom: 1,
+      nodes: stress.nodes.map(n => ({ name: n.id, x: n.x, y: n.y, symbolSize: n.size * 1.6, value: n.size })),
+      edges: stress.links.map(l => ({ source: l.source, target: l.target })),
+      modularity: { resolution: 2, sort: true },
+      lineStyle: { color: 'rgba(255,255,255,0.10)' },
+      itemStyle: { opacity: 0.95, borderWidth: 0 },
+      forceAtlas2: { GPU: true, steps: 5, stopThreshold: 1, jitterTolerence: 10, edgeWeight: [0.2, 1], gravity: 5, edgeWeightInfluence: 0, scaling: 1 },
+    }],
+  };
+};
+
+// ---- chart --------------------------------------------------------------------------------------
+const el = document.getElementById('chart');
+const chart = echarts.init(el, null, { renderer: 'canvas', useDirtyRect: false });
+chart.setOption(baseOption());
+addEventListener('resize', () => chart.resize());
+
+const hud = mountHud({
+  title: 'ECharts Neon', library: 'Apache ECharts', version: '6.1.0 · echarts-gl 2.1.0', typeColors: d.meta.type_colors,
+  toggles: [
+    { id: 'glow', label: 'Neon glow', on: true, onChange: on => { state.glow = on; if (!state.gpu) chart.setOption({ series: [{ itemStyle: { shadowBlur: on ? 26 : 0 }, emphasis: { itemStyle: { shadowBlur: on ? 48 : 0 } } }] }); } },
+    { id: 'curved', label: 'Curved edges', on: true, onChange: on => { state.curved = on; if (!state.gpu) chart.setOption({ series: [{ lineStyle: { curveness: on ? 0.25 : 0 } }] }); } },
+    { id: 'labels', label: 'All labels', on: false, onChange: on => { state.labels = on; if (!state.gpu) chart.setOption({ series: [{ label: { show: on } }] }); } },
+    { id: 'gpu', label: 'GPU mode · 50k', on: false, onChange: on => setGpu(on) },
+  ],
+});
+const stat = document.createElement('div'); stat.className = 'stat';
+hud.root.querySelector('.hud--tl').appendChild(stat);
+const setStat = () => { stat.innerHTML = state.gpu
+  ? `graphGL · <b>${stress.nodes.length.toLocaleString()}</b> nodes · <b>${stress.links.length.toLocaleString()}</b> edges · forceAtlas2 GPU · modularity colours`
+  : `graph · <b>${d.nodes.length}</b> nodes · <b>${d.links.length}</b> edges · canvas force layout`; };
+setStat();
+
+function setGpu(on) {
+  state.gpu = on; focused = null; hud.hideTooltip();
+  chart.clear();
+  chart.setOption(on ? gpuOption() : baseOption(), { notMerge: true });
+  setStat();
+}
+
+// ---- interactions: shared tooltip, adjacency focus on click, reset on double-click ---------------
+const kvFor = n => ({
+  type: n.type, degree: n.degree, year: n.year, 'gross $M': n.gross_musd, 'budget $M': n.budget_musd, roi: n.roi, wins: n.wins,
+  born: n.born, nationality: n.nationality, films: n.film_count, founded: n.founded, country: n.country, category: n.category,
+});
+chart.on('mouseover', p => {
+  if (p.dataType !== 'node' || state.gpu) return;
+  const n = d.byId.get(p.data.id); if (!n) return;
+  tipHtml = tooltipHtml(n.label, kvFor(n));
+  hud.showTooltip(tipHtml, p.event.event.clientX, p.event.event.clientY);
+});
+chart.on('mouseout', p => {
+  if (p.dataType !== 'node') return;
+  tipHtml = ''; hud.hideTooltip();
+  if (focused != null) setTimeout(() => chart.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: focused }), 0);
+});
+chart.getZr().on('mousemove', e => { if (tipHtml) hud.showTooltip(tipHtml, e.event.clientX, e.event.clientY); });
+chart.on('click', p => {
+  if (p.dataType !== 'node' || state.gpu) return;
+  focused = p.dataIndex;
+  chart.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: focused });
+  const z = chart.getOption().series[0].zoom || 1;
+  if (z < 1.8) chart.dispatchAction({ type: 'graphRoam', seriesIndex: 0, zoom: 1.8 / z, originX: p.event.offsetX, originY: p.event.offsetY });
+});
+chart.getZr().on('dblclick', e => {
+  if (e.target) return;                       // only on empty canvas
+  focused = null; tipHtml = ''; hud.hideTooltip();
+  if (state.gpu) return chart.setOption({ series: [{ zoom: 1, center: null }] });
+  chart.dispatchAction({ type: 'downplay', seriesIndex: 0 });
+  chart.dispatchAction({ type: 'restore' });  // replays the force entrance from the original option
+});
+
+// test hooks
+window.__demo = { chart, state, ready: true,
+  nodeScreenPos: id => { const sm = chart.getModel().getSeriesByIndex(0); const data = sm.getData(); const idx = nodes.findIndex(n => n.id === id);
+    const [x, y] = sm.coordinateSystem.dataToPoint(data.getItemLayout(idx)); const r = el.getBoundingClientRect(); return { x: x + r.left, y: y + r.top }; },
+  hoverState: () => ({ tooltip: !!tipHtml, focused }),
+  clickState: () => ({ focused, zoom: +(chart.getOption().series[0].zoom || 1).toFixed(2) }),
+  resetState: () => ({ focused, zoom: +(chart.getOption().series[0].zoom || 1).toFixed(2) }),
+  toggleState: () => ({ gpu: state.gpu, seriesType: chart.getOption().series[0].type, nodes: state.gpu ? stress?.nodes.length : nodes.length,
+    shadowBlur: chart.getOption().series[0].itemStyle?.shadowBlur, curveness: chart.getOption().series[0].lineStyle?.curveness, labels: chart.getOption().series[0].label?.show }),
+};
+</script>
+</body>
+</html>

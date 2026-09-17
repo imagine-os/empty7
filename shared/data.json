@@ -1,0 +1,2881 @@
+{
+ "meta": {
+  "source": "graph-app/seed.sql (fictional film-studio universe)",
+  "node_types": {
+   "award": 4,
+   "film": 25,
+   "genre": 10,
+   "person": 40,
+   "studio": 6
+  },
+  "relation_types": {
+   "actor": 88,
+   "composer": 25,
+   "director": 25,
+   "genre": 51,
+   "nominated": 26,
+   "nominee": 34,
+   "produced_by": 25,
+   "producer": 27,
+   "won": 19,
+   "writer": 41
+  },
+  "type_colors": {
+   "studio": "#f5b642",
+   "film": "#ff5f8f",
+   "person": "#5ec8ff",
+   "genre": "#8dff9e",
+   "award": "#e6c3ff"
+  }
+ },
+ "nodes": [
+  {
+   "id": "studio:1",
+   "type": "studio",
+   "label": "Halcyon Pictures",
+   "founded": 1931,
+   "country": "United States",
+   "degree": 5
+  },
+  {
+   "id": "studio:2",
+   "type": "studio",
+   "label": "Meridian Bay Studios",
+   "founded": 1962,
+   "country": "United States",
+   "degree": 4
+  },
+  {
+   "id": "studio:3",
+   "type": "studio",
+   "label": "Northlight Films",
+   "founded": 1978,
+   "country": "Sweden",
+   "degree": 6
+  },
+  {
+   "id": "studio:4",
+   "type": "studio",
+   "label": "Saltmarsh Productions",
+   "founded": 1994,
+   "country": "United Kingdom",
+   "degree": 3
+  },
+  {
+   "id": "studio:5",
+   "type": "studio",
+   "label": "Orbital Lantern",
+   "founded": 2006,
+   "country": "South Korea",
+   "degree": 4
+  },
+  {
+   "id": "studio:6",
+   "type": "studio",
+   "label": "Redwood & Vale",
+   "founded": 2011,
+   "country": "Canada",
+   "degree": 3
+  },
+  {
+   "id": "film:1",
+   "type": "film",
+   "label": "The Cartographer's Daughter",
+   "year": 1998,
+   "runtime_min": 128,
+   "budget_musd": 22.0,
+   "gross_musd": 61.4,
+   "roi": 2.79,
+   "degree": 13,
+   "wins": 1
+  },
+  {
+   "id": "film:2",
+   "type": "film",
+   "label": "Salt and Static",
+   "year": 2000,
+   "runtime_min": 104,
+   "budget_musd": 9.0,
+   "gross_musd": 14.2,
+   "roi": 1.58,
+   "degree": 10,
+   "wins": 0
+  },
+  {
+   "id": "film:3",
+   "type": "film",
+   "label": "Meridian Noon",
+   "year": 2001,
+   "runtime_min": 141,
+   "budget_musd": 48.0,
+   "gross_musd": 132.7,
+   "roi": 2.76,
+   "degree": 16,
+   "wins": 2
+  },
+  {
+   "id": "film:4",
+   "type": "film",
+   "label": "A Lantern for Ghosts",
+   "year": 2003,
+   "runtime_min": 97,
+   "budget_musd": 6.0,
+   "gross_musd": 18.9,
+   "roi": 3.15,
+   "degree": 14,
+   "wins": 1
+  },
+  {
+   "id": "film:5",
+   "type": "film",
+   "label": "Ninety Fathoms",
+   "year": 2004,
+   "runtime_min": 118,
+   "budget_musd": 35.0,
+   "gross_musd": 88.3,
+   "roi": 2.52,
+   "degree": 12,
+   "wins": 0
+  },
+  {
+   "id": "film:6",
+   "type": "film",
+   "label": "Grand Hotel Anomaly",
+   "year": 2006,
+   "runtime_min": 112,
+   "budget_musd": 19.0,
+   "gross_musd": 47.6,
+   "roi": 2.51,
+   "degree": 11,
+   "wins": 0
+  },
+  {
+   "id": "film:7",
+   "type": "film",
+   "label": "The Orbital Gardener",
+   "year": 2007,
+   "runtime_min": 133,
+   "budget_musd": 62.0,
+   "gross_musd": 210.5,
+   "roi": 3.4,
+   "degree": 13,
+   "wins": 1
+  },
+  {
+   "id": "film:8",
+   "type": "film",
+   "label": "Corvid Season",
+   "year": 2008,
+   "runtime_min": 109,
+   "budget_musd": 14.0,
+   "gross_musd": 38.1,
+   "roi": 2.72,
+   "degree": 13,
+   "wins": 1
+  },
+  {
+   "id": "film:9",
+   "type": "film",
+   "label": "Rust Belt Sonata",
+   "year": 2009,
+   "runtime_min": 124,
+   "budget_musd": 28.0,
+   "gross_musd": 52.0,
+   "roi": 1.86,
+   "degree": 14,
+   "wins": 2
+  },
+  {
+   "id": "film:10",
+   "type": "film",
+   "label": "Paper Kingdoms",
+   "year": 2010,
+   "runtime_min": 92,
+   "budget_musd": 40.0,
+   "gross_musd": 156.8,
+   "roi": 3.92,
+   "degree": 12,
+   "wins": 0
+  },
+  {
+   "id": "film:11",
+   "type": "film",
+   "label": "The Weight of Wires",
+   "year": 2011,
+   "runtime_min": 138,
+   "budget_musd": 55.0,
+   "gross_musd": 121.2,
+   "roi": 2.2,
+   "degree": 16,
+   "wins": 0
+  },
+  {
+   "id": "film:12",
+   "type": "film",
+   "label": "Lindqvist / Lindqvist",
+   "year": 2012,
+   "runtime_min": 86,
+   "budget_musd": 3.0,
+   "gross_musd": 7.7,
+   "roi": 2.57,
+   "degree": 9,
+   "wins": 0
+  },
+  {
+   "id": "film:13",
+   "type": "film",
+   "label": "Hemisphere",
+   "year": 2013,
+   "runtime_min": 151,
+   "budget_musd": 95.0,
+   "gross_musd": 402.3,
+   "roi": 4.23,
+   "degree": 16,
+   "wins": 4
+  },
+  {
+   "id": "film:14",
+   "type": "film",
+   "label": "The Invisible Auditor",
+   "year": 2014,
+   "runtime_min": 101,
+   "budget_musd": 17.0,
+   "gross_musd": 44.9,
+   "roi": 2.64,
+   "degree": 12,
+   "wins": 0
+  },
+  {
+   "id": "film:15",
+   "type": "film",
+   "label": "Coastline Elegy",
+   "year": 2015,
+   "runtime_min": 119,
+   "budget_musd": 21.0,
+   "gross_musd": 33.5,
+   "roi": 1.6,
+   "degree": 13,
+   "wins": 1
+  },
+  {
+   "id": "film:16",
+   "type": "film",
+   "label": "Terminal Velocity of Love",
+   "year": 2016,
+   "runtime_min": 108,
+   "budget_musd": 30.0,
+   "gross_musd": 97.6,
+   "roi": 3.25,
+   "degree": 11,
+   "wins": 0
+  },
+  {
+   "id": "film:17",
+   "type": "film",
+   "label": "Deepwater Concord",
+   "year": 2017,
+   "runtime_min": 146,
+   "budget_musd": 110.0,
+   "gross_musd": 388.0,
+   "roi": 3.53,
+   "degree": 15,
+   "wins": 2
+  },
+  {
+   "id": "film:18",
+   "type": "film",
+   "label": "Winter Apiary",
+   "year": 2018,
+   "runtime_min": 96,
+   "budget_musd": 8.0,
+   "gross_musd": 21.3,
+   "roi": 2.66,
+   "degree": 14,
+   "wins": 0
+  },
+  {
+   "id": "film:19",
+   "type": "film",
+   "label": "The Lantern Protocol",
+   "year": 2019,
+   "runtime_min": 127,
+   "budget_musd": 75.0,
+   "gross_musd": 245.1,
+   "roi": 3.27,
+   "degree": 13,
+   "wins": 0
+  },
+  {
+   "id": "film:20",
+   "type": "film",
+   "label": "Small Gods of Kensal Rise",
+   "year": 2020,
+   "runtime_min": 113,
+   "budget_musd": 12.0,
+   "gross_musd": 29.8,
+   "roi": 2.48,
+   "degree": 11,
+   "wins": 0
+  },
+  {
+   "id": "film:21",
+   "type": "film",
+   "label": "Ferrante",
+   "year": 2021,
+   "runtime_min": 134,
+   "budget_musd": 45.0,
+   "gross_musd": 118.4,
+   "roi": 2.63,
+   "degree": 15,
+   "wins": 2
+  },
+  {
+   "id": "film:22",
+   "type": "film",
+   "label": "Every Version of You",
+   "year": 2022,
+   "runtime_min": 105,
+   "budget_musd": 38.0,
+   "gross_musd": 141.0,
+   "roi": 3.71,
+   "degree": 13,
+   "wins": 1
+  },
+  {
+   "id": "film:23",
+   "type": "film",
+   "label": "Shore Leave",
+   "year": 2023,
+   "runtime_min": 99,
+   "budget_musd": 26.0,
+   "gross_musd": 73.2,
+   "roi": 2.82,
+   "degree": 13,
+   "wins": 0
+  },
+  {
+   "id": "film:24",
+   "type": "film",
+   "label": "The Hollow Orchard",
+   "year": 2024,
+   "runtime_min": 117,
+   "budget_musd": 20.0,
+   "gross_musd": 58.6,
+   "roi": 2.93,
+   "degree": 15,
+   "wins": 1
+  },
+  {
+   "id": "film:25",
+   "type": "film",
+   "label": "Gravity Well",
+   "year": 2025,
+   "runtime_min": 142,
+   "budget_musd": 130.0,
+   "gross_musd": 410.9,
+   "roi": 3.16,
+   "degree": 13,
+   "wins": 0
+  },
+  {
+   "id": "person:1",
+   "type": "person",
+   "label": "Ines Okonkwo-Reyes",
+   "born": 1968,
+   "nationality": "Nigerian-Mexican",
+   "degree": 11,
+   "film_count": 7,
+   "wins": 2
+  },
+  {
+   "id": "person:2",
+   "type": "person",
+   "label": "Tobias Lindqvist",
+   "born": 1961,
+   "nationality": "Swedish",
+   "degree": 10,
+   "film_count": 9,
+   "wins": 1
+  },
+  {
+   "id": "person:3",
+   "type": "person",
+   "label": "Marguerite Achebe",
+   "born": 1979,
+   "nationality": "French",
+   "degree": 6,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:4",
+   "type": "person",
+   "label": "Dae-hyun Seo",
+   "born": 1975,
+   "nationality": "South Korean",
+   "degree": 7,
+   "film_count": 4,
+   "wins": 1
+  },
+  {
+   "id": "person:5",
+   "type": "person",
+   "label": "Rowan Castellanos",
+   "born": 1985,
+   "nationality": "Canadian",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:6",
+   "type": "person",
+   "label": "Hollis Baird",
+   "born": 1957,
+   "nationality": "British",
+   "degree": 3,
+   "film_count": 2,
+   "wins": 1
+  },
+  {
+   "id": "person:7",
+   "type": "person",
+   "label": "Priya Venkataraman",
+   "born": 1972,
+   "nationality": "Indian",
+   "degree": 8,
+   "film_count": 8,
+   "wins": 0
+  },
+  {
+   "id": "person:8",
+   "type": "person",
+   "label": "Callum Oyelaran",
+   "born": 1980,
+   "nationality": "British",
+   "degree": 6,
+   "film_count": 6,
+   "wins": 0
+  },
+  {
+   "id": "person:9",
+   "type": "person",
+   "label": "Sigrid Halvorsen",
+   "born": 1966,
+   "nationality": "Norwegian",
+   "degree": 7,
+   "film_count": 7,
+   "wins": 0
+  },
+  {
+   "id": "person:10",
+   "type": "person",
+   "label": "Mateo Brandt",
+   "born": 1983,
+   "nationality": "Argentine",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:11",
+   "type": "person",
+   "label": "Yuki Amamiya",
+   "born": 1977,
+   "nationality": "Japanese",
+   "degree": 5,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:12",
+   "type": "person",
+   "label": "Odessa Kline",
+   "born": 1990,
+   "nationality": "American",
+   "degree": 6,
+   "film_count": 6,
+   "wins": 0
+  },
+  {
+   "id": "person:13",
+   "type": "person",
+   "label": "Leonora Vasquez",
+   "born": 1976,
+   "nationality": "Spanish",
+   "degree": 8,
+   "film_count": 6,
+   "wins": 1
+  },
+  {
+   "id": "person:14",
+   "type": "person",
+   "label": "Emeka Adichie",
+   "born": 1974,
+   "nationality": "Nigerian",
+   "degree": 9,
+   "film_count": 6,
+   "wins": 1
+  },
+  {
+   "id": "person:15",
+   "type": "person",
+   "label": "Freya Solberg",
+   "born": 1988,
+   "nationality": "Swedish",
+   "degree": 11,
+   "film_count": 7,
+   "wins": 1
+  },
+  {
+   "id": "person:16",
+   "type": "person",
+   "label": "Jonah Whitlock",
+   "born": 1970,
+   "nationality": "American",
+   "degree": 5,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:17",
+   "type": "person",
+   "label": "Hana Kobayashi-Marsh",
+   "born": 1984,
+   "nationality": "Japanese-British",
+   "degree": 5,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:18",
+   "type": "person",
+   "label": "Rafael Duarte",
+   "born": 1965,
+   "nationality": "Brazilian",
+   "degree": 3,
+   "film_count": 3,
+   "wins": 0
+  },
+  {
+   "id": "person:19",
+   "type": "person",
+   "label": "Mira Sandoval",
+   "born": 1992,
+   "nationality": "Chilean",
+   "degree": 6,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:20",
+   "type": "person",
+   "label": "Desmond Achterberg",
+   "born": 1959,
+   "nationality": "Dutch",
+   "degree": 5,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:21",
+   "type": "person",
+   "label": "Soo-jin Park",
+   "born": 1981,
+   "nationality": "South Korean",
+   "degree": 7,
+   "film_count": 5,
+   "wins": 1
+  },
+  {
+   "id": "person:22",
+   "type": "person",
+   "label": "Bartholomew Nkemelu",
+   "born": 1978,
+   "nationality": "Nigerian",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:23",
+   "type": "person",
+   "label": "Clementine Faraday",
+   "born": 1995,
+   "nationality": "British",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:24",
+   "type": "person",
+   "label": "Ansel Moreau",
+   "born": 1969,
+   "nationality": "French",
+   "degree": 4,
+   "film_count": 3,
+   "wins": 0
+  },
+  {
+   "id": "person:25",
+   "type": "person",
+   "label": "Ingrid Vollmer",
+   "born": 1973,
+   "nationality": "German",
+   "degree": 3,
+   "film_count": 3,
+   "wins": 0
+  },
+  {
+   "id": "person:26",
+   "type": "person",
+   "label": "Theo Abernathy",
+   "born": 1986,
+   "nationality": "Irish",
+   "degree": 6,
+   "film_count": 6,
+   "wins": 0
+  },
+  {
+   "id": "person:27",
+   "type": "person",
+   "label": "Nadia Farouk",
+   "born": 1980,
+   "nationality": "Egyptian",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:28",
+   "type": "person",
+   "label": "Wendell Osei",
+   "born": 1962,
+   "nationality": "Ghanaian",
+   "degree": 3,
+   "film_count": 3,
+   "wins": 0
+  },
+  {
+   "id": "person:29",
+   "type": "person",
+   "label": "Lucia Ferrante",
+   "born": 1991,
+   "nationality": "Italian",
+   "degree": 4,
+   "film_count": 3,
+   "wins": 1
+  },
+  {
+   "id": "person:30",
+   "type": "person",
+   "label": "Kwame Delacroix",
+   "born": 1975,
+   "nationality": "Haitian-American",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:31",
+   "type": "person",
+   "label": "Beatrix Lindqvist",
+   "born": 1989,
+   "nationality": "Swedish",
+   "degree": 5,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:32",
+   "type": "person",
+   "label": "Oscar Tanaka",
+   "born": 1968,
+   "nationality": "Japanese-American",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:33",
+   "type": "person",
+   "label": "Anouk Verstraeten",
+   "born": 1971,
+   "nationality": "Belgian",
+   "degree": 8,
+   "film_count": 7,
+   "wins": 1
+  },
+  {
+   "id": "person:34",
+   "type": "person",
+   "label": "Silas Mbeki",
+   "born": 1979,
+   "nationality": "South African",
+   "degree": 11,
+   "film_count": 8,
+   "wins": 2
+  },
+  {
+   "id": "person:35",
+   "type": "person",
+   "label": "Runa Eiriksdottir",
+   "born": 1984,
+   "nationality": "Icelandic",
+   "degree": 9,
+   "film_count": 5,
+   "wins": 2
+  },
+  {
+   "id": "person:36",
+   "type": "person",
+   "label": "Elias Wren",
+   "born": 1960,
+   "nationality": "American",
+   "degree": 6,
+   "film_count": 5,
+   "wins": 0
+  },
+  {
+   "id": "person:37",
+   "type": "person",
+   "label": "Constance Adeyemi",
+   "born": 1963,
+   "nationality": "British",
+   "degree": 7,
+   "film_count": 7,
+   "wins": 0
+  },
+  {
+   "id": "person:38",
+   "type": "person",
+   "label": "Harlan Voss",
+   "born": 1955,
+   "nationality": "American",
+   "degree": 8,
+   "film_count": 8,
+   "wins": 0
+  },
+  {
+   "id": "person:39",
+   "type": "person",
+   "label": "Min-seo Kang",
+   "born": 1976,
+   "nationality": "South Korean",
+   "degree": 4,
+   "film_count": 4,
+   "wins": 0
+  },
+  {
+   "id": "person:40",
+   "type": "person",
+   "label": "Greta Lindqvist",
+   "born": 1958,
+   "nationality": "Swedish",
+   "degree": 6,
+   "film_count": 6,
+   "wins": 0
+  },
+  {
+   "id": "genre:1",
+   "type": "genre",
+   "label": "Drama",
+   "degree": 10
+  },
+  {
+   "id": "genre:2",
+   "type": "genre",
+   "label": "Thriller",
+   "degree": 8
+  },
+  {
+   "id": "genre:3",
+   "type": "genre",
+   "label": "Science Fiction",
+   "degree": 6
+  },
+  {
+   "id": "genre:4",
+   "type": "genre",
+   "label": "Comedy",
+   "degree": 6
+  },
+  {
+   "id": "genre:5",
+   "type": "genre",
+   "label": "Romance",
+   "degree": 5
+  },
+  {
+   "id": "genre:6",
+   "type": "genre",
+   "label": "Crime",
+   "degree": 4
+  },
+  {
+   "id": "genre:7",
+   "type": "genre",
+   "label": "Documentary",
+   "degree": 1
+  },
+  {
+   "id": "genre:8",
+   "type": "genre",
+   "label": "Animation",
+   "degree": 1
+  },
+  {
+   "id": "genre:9",
+   "type": "genre",
+   "label": "Horror",
+   "degree": 3
+  },
+  {
+   "id": "genre:10",
+   "type": "genre",
+   "label": "Adventure",
+   "degree": 7
+  },
+  {
+   "id": "award:1",
+   "type": "award",
+   "label": "Golden Meridian – Best Picture",
+   "award": "Golden Meridian",
+   "category": "Best Picture",
+   "degree": 11
+  },
+  {
+   "id": "award:2",
+   "type": "award",
+   "label": "Golden Meridian – Best Director",
+   "award": "Golden Meridian",
+   "category": "Best Director",
+   "degree": 20
+  },
+  {
+   "id": "award:3",
+   "type": "award",
+   "label": "Golden Meridian – Best Lead Performance",
+   "award": "Golden Meridian",
+   "category": "Best Lead Performance",
+   "degree": 30
+  },
+  {
+   "id": "award:4",
+   "type": "award",
+   "label": "Northern Lights Prize – Best Original Score",
+   "award": "Northern Lights Prize",
+   "category": "Best Original Score",
+   "degree": 18
+  }
+ ],
+ "links": [
+  {
+   "source": "film:1",
+   "target": "studio:1",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:2",
+   "target": "studio:3",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:3",
+   "target": "studio:2",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:4",
+   "target": "studio:3",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:5",
+   "target": "studio:1",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:6",
+   "target": "studio:4",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:7",
+   "target": "studio:5",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:8",
+   "target": "studio:3",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:9",
+   "target": "studio:2",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:10",
+   "target": "studio:6",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:11",
+   "target": "studio:1",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:12",
+   "target": "studio:3",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:13",
+   "target": "studio:5",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:14",
+   "target": "studio:4",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:15",
+   "target": "studio:6",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:16",
+   "target": "studio:2",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:17",
+   "target": "studio:1",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:18",
+   "target": "studio:3",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:19",
+   "target": "studio:5",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:20",
+   "target": "studio:4",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:21",
+   "target": "studio:6",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:22",
+   "target": "studio:2",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:23",
+   "target": "studio:1",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:24",
+   "target": "studio:3",
+   "relation": "produced_by"
+  },
+  {
+   "source": "film:25",
+   "target": "studio:5",
+   "relation": "produced_by"
+  },
+  {
+   "source": "person:1",
+   "target": "film:1",
+   "relation": "director"
+  },
+  {
+   "source": "person:7",
+   "target": "film:1",
+   "relation": "writer"
+  },
+  {
+   "source": "person:13",
+   "target": "film:1",
+   "relation": "actor",
+   "character": "Elena Marchetti"
+  },
+  {
+   "source": "person:14",
+   "target": "film:1",
+   "relation": "actor",
+   "character": "Dr. Kwesi Boateng"
+  },
+  {
+   "source": "person:16",
+   "target": "film:1",
+   "relation": "actor",
+   "character": "Captain Hale"
+  },
+  {
+   "source": "person:36",
+   "target": "film:1",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:1",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:2",
+   "relation": "director"
+  },
+  {
+   "source": "person:9",
+   "target": "film:2",
+   "relation": "writer"
+  },
+  {
+   "source": "person:15",
+   "target": "film:2",
+   "relation": "actor",
+   "character": "Ylva"
+  },
+  {
+   "source": "person:20",
+   "target": "film:2",
+   "relation": "actor",
+   "character": "Old Bram"
+  },
+  {
+   "source": "person:25",
+   "target": "film:2",
+   "relation": "actor",
+   "character": "Frau Keller"
+  },
+  {
+   "source": "person:33",
+   "target": "film:2",
+   "relation": "composer"
+  },
+  {
+   "source": "person:40",
+   "target": "film:2",
+   "relation": "producer"
+  },
+  {
+   "source": "person:6",
+   "target": "film:3",
+   "relation": "director"
+  },
+  {
+   "source": "person:8",
+   "target": "film:3",
+   "relation": "writer"
+  },
+  {
+   "source": "person:7",
+   "target": "film:3",
+   "relation": "writer"
+  },
+  {
+   "source": "person:16",
+   "target": "film:3",
+   "relation": "actor",
+   "character": "Sheriff Dunmore"
+  },
+  {
+   "source": "person:18",
+   "target": "film:3",
+   "relation": "actor",
+   "character": "Ezequiel Rojas"
+  },
+  {
+   "source": "person:13",
+   "target": "film:3",
+   "relation": "actor",
+   "character": "Rosa Delgado"
+  },
+  {
+   "source": "person:28",
+   "target": "film:3",
+   "relation": "actor",
+   "character": "Judge Amankwah"
+  },
+  {
+   "source": "person:36",
+   "target": "film:3",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:3",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:4",
+   "relation": "director"
+  },
+  {
+   "source": "person:9",
+   "target": "film:4",
+   "relation": "writer"
+  },
+  {
+   "source": "person:11",
+   "target": "film:4",
+   "relation": "writer"
+  },
+  {
+   "source": "person:15",
+   "target": "film:4",
+   "relation": "actor",
+   "character": "Sigrun"
+  },
+  {
+   "source": "person:31",
+   "target": "film:4",
+   "relation": "actor",
+   "character": "Young Sigrun"
+  },
+  {
+   "source": "person:20",
+   "target": "film:4",
+   "relation": "actor",
+   "character": "The Ferryman"
+  },
+  {
+   "source": "person:33",
+   "target": "film:4",
+   "relation": "composer"
+  },
+  {
+   "source": "person:40",
+   "target": "film:4",
+   "relation": "producer"
+  },
+  {
+   "source": "person:1",
+   "target": "film:5",
+   "relation": "director"
+  },
+  {
+   "source": "person:7",
+   "target": "film:5",
+   "relation": "writer"
+  },
+  {
+   "source": "person:14",
+   "target": "film:5",
+   "relation": "actor",
+   "character": "Commander Boateng"
+  },
+  {
+   "source": "person:13",
+   "target": "film:5",
+   "relation": "actor",
+   "character": "Mara Vance"
+  },
+  {
+   "source": "person:22",
+   "target": "film:5",
+   "relation": "actor",
+   "character": "Chief Engineer Ude"
+  },
+  {
+   "source": "person:34",
+   "target": "film:5",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:5",
+   "relation": "producer"
+  },
+  {
+   "source": "person:3",
+   "target": "film:6",
+   "relation": "director"
+  },
+  {
+   "source": "person:8",
+   "target": "film:6",
+   "relation": "writer"
+  },
+  {
+   "source": "person:17",
+   "target": "film:6",
+   "relation": "actor",
+   "character": "Concierge Ito"
+  },
+  {
+   "source": "person:24",
+   "target": "film:6",
+   "relation": "actor",
+   "character": "Monsieur Levasseur"
+  },
+  {
+   "source": "person:23",
+   "target": "film:6",
+   "relation": "actor",
+   "character": "Poppy Ashcombe"
+  },
+  {
+   "source": "person:26",
+   "target": "film:6",
+   "relation": "actor",
+   "character": "The Bellhop"
+  },
+  {
+   "source": "person:33",
+   "target": "film:6",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:6",
+   "relation": "producer"
+  },
+  {
+   "source": "person:4",
+   "target": "film:7",
+   "relation": "director"
+  },
+  {
+   "source": "person:11",
+   "target": "film:7",
+   "relation": "writer"
+  },
+  {
+   "source": "person:21",
+   "target": "film:7",
+   "relation": "actor",
+   "character": "Yoon Ha-eun"
+  },
+  {
+   "source": "person:32",
+   "target": "film:7",
+   "relation": "actor",
+   "character": "Dr. Tanaka"
+  },
+  {
+   "source": "person:19",
+   "target": "film:7",
+   "relation": "actor",
+   "character": "Lucía Ibarra"
+  },
+  {
+   "source": "person:34",
+   "target": "film:7",
+   "relation": "composer"
+  },
+  {
+   "source": "person:39",
+   "target": "film:7",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:8",
+   "relation": "director"
+  },
+  {
+   "source": "person:9",
+   "target": "film:8",
+   "relation": "writer"
+  },
+  {
+   "source": "person:15",
+   "target": "film:8",
+   "relation": "actor",
+   "character": "Anja"
+  },
+  {
+   "source": "person:25",
+   "target": "film:8",
+   "relation": "actor",
+   "character": "The Widow Keller"
+  },
+  {
+   "source": "person:20",
+   "target": "film:8",
+   "relation": "actor",
+   "character": "Pastor Lund"
+  },
+  {
+   "source": "person:31",
+   "target": "film:8",
+   "relation": "actor",
+   "character": "Kari"
+  },
+  {
+   "source": "person:35",
+   "target": "film:8",
+   "relation": "composer"
+  },
+  {
+   "source": "person:40",
+   "target": "film:8",
+   "relation": "producer"
+  },
+  {
+   "source": "person:1",
+   "target": "film:9",
+   "relation": "director"
+  },
+  {
+   "source": "person:10",
+   "target": "film:9",
+   "relation": "writer"
+  },
+  {
+   "source": "person:7",
+   "target": "film:9",
+   "relation": "writer"
+  },
+  {
+   "source": "person:14",
+   "target": "film:9",
+   "relation": "actor",
+   "character": "Isaiah Cole"
+  },
+  {
+   "source": "person:16",
+   "target": "film:9",
+   "relation": "actor",
+   "character": "Frank Mueller"
+  },
+  {
+   "source": "person:27",
+   "target": "film:9",
+   "relation": "actor",
+   "character": "Layla Haddad"
+  },
+  {
+   "source": "person:30",
+   "target": "film:9",
+   "relation": "actor",
+   "character": "Reggie Pierre"
+  },
+  {
+   "source": "person:36",
+   "target": "film:9",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:9",
+   "relation": "producer"
+  },
+  {
+   "source": "person:5",
+   "target": "film:10",
+   "relation": "director"
+  },
+  {
+   "source": "person:12",
+   "target": "film:10",
+   "relation": "writer"
+  },
+  {
+   "source": "person:23",
+   "target": "film:10",
+   "relation": "actor",
+   "character": "Wren (voice)"
+  },
+  {
+   "source": "person:26",
+   "target": "film:10",
+   "relation": "actor",
+   "character": "Hob (voice)"
+  },
+  {
+   "source": "person:29",
+   "target": "film:10",
+   "relation": "actor",
+   "character": "Queen Ottilie (voice)"
+  },
+  {
+   "source": "person:35",
+   "target": "film:10",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:10",
+   "relation": "producer"
+  },
+  {
+   "source": "person:1",
+   "target": "film:11",
+   "relation": "director"
+  },
+  {
+   "source": "person:7",
+   "target": "film:11",
+   "relation": "writer"
+  },
+  {
+   "source": "person:10",
+   "target": "film:11",
+   "relation": "writer"
+  },
+  {
+   "source": "person:13",
+   "target": "film:11",
+   "relation": "actor",
+   "character": "Senator Marchetti"
+  },
+  {
+   "source": "person:22",
+   "target": "film:11",
+   "relation": "actor",
+   "character": "Agent Ude"
+  },
+  {
+   "source": "person:18",
+   "target": "film:11",
+   "relation": "actor",
+   "character": "Don Rojas"
+  },
+  {
+   "source": "person:19",
+   "target": "film:11",
+   "relation": "actor",
+   "character": "Camila Ortiz"
+  },
+  {
+   "source": "person:34",
+   "target": "film:11",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:11",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:12",
+   "relation": "director"
+  },
+  {
+   "source": "person:9",
+   "target": "film:12",
+   "relation": "writer"
+  },
+  {
+   "source": "person:31",
+   "target": "film:12",
+   "relation": "actor",
+   "character": "Herself"
+  },
+  {
+   "source": "person:15",
+   "target": "film:12",
+   "relation": "actor",
+   "character": "Herself"
+  },
+  {
+   "source": "person:33",
+   "target": "film:12",
+   "relation": "composer"
+  },
+  {
+   "source": "person:40",
+   "target": "film:12",
+   "relation": "producer"
+  },
+  {
+   "source": "person:4",
+   "target": "film:13",
+   "relation": "director"
+  },
+  {
+   "source": "person:11",
+   "target": "film:13",
+   "relation": "writer"
+  },
+  {
+   "source": "person:8",
+   "target": "film:13",
+   "relation": "writer"
+  },
+  {
+   "source": "person:21",
+   "target": "film:13",
+   "relation": "actor",
+   "character": "Captain Yoon"
+  },
+  {
+   "source": "person:17",
+   "target": "film:13",
+   "relation": "actor",
+   "character": "Navigator Ito"
+  },
+  {
+   "source": "person:32",
+   "target": "film:13",
+   "relation": "actor",
+   "character": "Admiral Tanaka"
+  },
+  {
+   "source": "person:30",
+   "target": "film:13",
+   "relation": "actor",
+   "character": "Colonel Pierre"
+  },
+  {
+   "source": "person:34",
+   "target": "film:13",
+   "relation": "composer"
+  },
+  {
+   "source": "person:39",
+   "target": "film:13",
+   "relation": "producer"
+  },
+  {
+   "source": "person:3",
+   "target": "film:14",
+   "relation": "director"
+  },
+  {
+   "source": "person:8",
+   "target": "film:14",
+   "relation": "writer"
+  },
+  {
+   "source": "person:24",
+   "target": "film:14",
+   "relation": "actor",
+   "character": "Inspector Levasseur"
+  },
+  {
+   "source": "person:17",
+   "target": "film:14",
+   "relation": "actor",
+   "character": "Ms. Ito"
+  },
+  {
+   "source": "person:26",
+   "target": "film:14",
+   "relation": "actor",
+   "character": "Dougal Finch"
+  },
+  {
+   "source": "person:27",
+   "target": "film:14",
+   "relation": "actor",
+   "character": "Zainab Rashid"
+  },
+  {
+   "source": "person:33",
+   "target": "film:14",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:14",
+   "relation": "producer"
+  },
+  {
+   "source": "person:5",
+   "target": "film:15",
+   "relation": "director"
+  },
+  {
+   "source": "person:12",
+   "target": "film:15",
+   "relation": "writer"
+  },
+  {
+   "source": "person:9",
+   "target": "film:15",
+   "relation": "writer"
+  },
+  {
+   "source": "person:29",
+   "target": "film:15",
+   "relation": "actor",
+   "character": "Giulia"
+  },
+  {
+   "source": "person:23",
+   "target": "film:15",
+   "relation": "actor",
+   "character": "Marnie"
+  },
+  {
+   "source": "person:28",
+   "target": "film:15",
+   "relation": "actor",
+   "character": "Kofi Amankwah"
+  },
+  {
+   "source": "person:35",
+   "target": "film:15",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:15",
+   "relation": "producer"
+  },
+  {
+   "source": "person:3",
+   "target": "film:16",
+   "relation": "director"
+  },
+  {
+   "source": "person:10",
+   "target": "film:16",
+   "relation": "writer"
+  },
+  {
+   "source": "person:19",
+   "target": "film:16",
+   "relation": "actor",
+   "character": "Valentina"
+  },
+  {
+   "source": "person:26",
+   "target": "film:16",
+   "relation": "actor",
+   "character": "Theo Byrne"
+  },
+  {
+   "source": "person:13",
+   "target": "film:16",
+   "relation": "actor",
+   "character": "Aunt Pilar"
+  },
+  {
+   "source": "person:36",
+   "target": "film:16",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:16",
+   "relation": "producer"
+  },
+  {
+   "source": "person:1",
+   "target": "film:17",
+   "relation": "director"
+  },
+  {
+   "source": "person:7",
+   "target": "film:17",
+   "relation": "writer"
+  },
+  {
+   "source": "person:14",
+   "target": "film:17",
+   "relation": "actor",
+   "character": "Admiral Boateng"
+  },
+  {
+   "source": "person:21",
+   "target": "film:17",
+   "relation": "actor",
+   "character": "Dr. Park"
+  },
+  {
+   "source": "person:16",
+   "target": "film:17",
+   "relation": "actor",
+   "character": "Secretary Hale"
+  },
+  {
+   "source": "person:22",
+   "target": "film:17",
+   "relation": "actor",
+   "character": "Ude"
+  },
+  {
+   "source": "person:34",
+   "target": "film:17",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:17",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:18",
+   "relation": "director"
+  },
+  {
+   "source": "person:9",
+   "target": "film:18",
+   "relation": "writer"
+  },
+  {
+   "source": "person:12",
+   "target": "film:18",
+   "relation": "writer"
+  },
+  {
+   "source": "person:15",
+   "target": "film:18",
+   "relation": "actor",
+   "character": "Ylva, older"
+  },
+  {
+   "source": "person:20",
+   "target": "film:18",
+   "relation": "actor",
+   "character": "Bram, older"
+  },
+  {
+   "source": "person:31",
+   "target": "film:18",
+   "relation": "actor",
+   "character": "Ylva, younger"
+  },
+  {
+   "source": "person:35",
+   "target": "film:18",
+   "relation": "composer"
+  },
+  {
+   "source": "person:40",
+   "target": "film:18",
+   "relation": "producer"
+  },
+  {
+   "source": "person:4",
+   "target": "film:19",
+   "relation": "director"
+  },
+  {
+   "source": "person:11",
+   "target": "film:19",
+   "relation": "writer"
+  },
+  {
+   "source": "person:21",
+   "target": "film:19",
+   "relation": "actor",
+   "character": "Yoon Ha-eun"
+  },
+  {
+   "source": "person:32",
+   "target": "film:19",
+   "relation": "actor",
+   "character": "Tanaka"
+  },
+  {
+   "source": "person:30",
+   "target": "film:19",
+   "relation": "actor",
+   "character": "Pierre"
+  },
+  {
+   "source": "person:17",
+   "target": "film:19",
+   "relation": "actor",
+   "character": "Ito"
+  },
+  {
+   "source": "person:34",
+   "target": "film:19",
+   "relation": "composer"
+  },
+  {
+   "source": "person:39",
+   "target": "film:19",
+   "relation": "producer"
+  },
+  {
+   "source": "person:6",
+   "target": "film:20",
+   "relation": "director"
+  },
+  {
+   "source": "person:8",
+   "target": "film:20",
+   "relation": "writer"
+  },
+  {
+   "source": "person:24",
+   "target": "film:20",
+   "relation": "actor",
+   "character": "Father Levasseur"
+  },
+  {
+   "source": "person:27",
+   "target": "film:20",
+   "relation": "actor",
+   "character": "Amal"
+  },
+  {
+   "source": "person:23",
+   "target": "film:20",
+   "relation": "actor",
+   "character": "Poppy"
+  },
+  {
+   "source": "person:28",
+   "target": "film:20",
+   "relation": "actor",
+   "character": "Mr. Amankwah"
+  },
+  {
+   "source": "person:33",
+   "target": "film:20",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:20",
+   "relation": "producer"
+  },
+  {
+   "source": "person:3",
+   "target": "film:21",
+   "relation": "director"
+  },
+  {
+   "source": "person:10",
+   "target": "film:21",
+   "relation": "writer"
+  },
+  {
+   "source": "person:12",
+   "target": "film:21",
+   "relation": "writer"
+  },
+  {
+   "source": "person:29",
+   "target": "film:21",
+   "relation": "actor",
+   "character": "Lucia Ferrante"
+  },
+  {
+   "source": "person:18",
+   "target": "film:21",
+   "relation": "actor",
+   "character": "Papa Ferrante"
+  },
+  {
+   "source": "person:13",
+   "target": "film:21",
+   "relation": "actor",
+   "character": "Signora Ferrante"
+  },
+  {
+   "source": "person:36",
+   "target": "film:21",
+   "relation": "composer"
+  },
+  {
+   "source": "person:37",
+   "target": "film:21",
+   "relation": "producer"
+  },
+  {
+   "source": "person:5",
+   "target": "film:22",
+   "relation": "director"
+  },
+  {
+   "source": "person:12",
+   "target": "film:22",
+   "relation": "writer"
+  },
+  {
+   "source": "person:19",
+   "target": "film:22",
+   "relation": "actor",
+   "character": "June"
+  },
+  {
+   "source": "person:26",
+   "target": "film:22",
+   "relation": "actor",
+   "character": "June's husbands"
+  },
+  {
+   "source": "person:17",
+   "target": "film:22",
+   "relation": "actor",
+   "character": "The Archivist"
+  },
+  {
+   "source": "person:35",
+   "target": "film:22",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:22",
+   "relation": "producer"
+  },
+  {
+   "source": "person:1",
+   "target": "film:23",
+   "relation": "director"
+  },
+  {
+   "source": "person:7",
+   "target": "film:23",
+   "relation": "writer"
+  },
+  {
+   "source": "person:8",
+   "target": "film:23",
+   "relation": "writer"
+  },
+  {
+   "source": "person:14",
+   "target": "film:23",
+   "relation": "actor",
+   "character": "Boateng"
+  },
+  {
+   "source": "person:22",
+   "target": "film:23",
+   "relation": "actor",
+   "character": "Ude"
+  },
+  {
+   "source": "person:27",
+   "target": "film:23",
+   "relation": "actor",
+   "character": "Haddad"
+  },
+  {
+   "source": "person:30",
+   "target": "film:23",
+   "relation": "actor",
+   "character": "Pierre"
+  },
+  {
+   "source": "person:34",
+   "target": "film:23",
+   "relation": "composer"
+  },
+  {
+   "source": "person:38",
+   "target": "film:23",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:24",
+   "relation": "director"
+  },
+  {
+   "source": "person:9",
+   "target": "film:24",
+   "relation": "writer"
+  },
+  {
+   "source": "person:15",
+   "target": "film:24",
+   "relation": "actor",
+   "character": "Anja Lund"
+  },
+  {
+   "source": "person:31",
+   "target": "film:24",
+   "relation": "actor",
+   "character": "Kari Lund"
+  },
+  {
+   "source": "person:25",
+   "target": "film:24",
+   "relation": "actor",
+   "character": "Grandmother Keller"
+  },
+  {
+   "source": "person:20",
+   "target": "film:24",
+   "relation": "actor",
+   "character": "Pastor Lund"
+  },
+  {
+   "source": "person:33",
+   "target": "film:24",
+   "relation": "composer"
+  },
+  {
+   "source": "person:40",
+   "target": "film:24",
+   "relation": "producer"
+  },
+  {
+   "source": "person:4",
+   "target": "film:25",
+   "relation": "director"
+  },
+  {
+   "source": "person:11",
+   "target": "film:25",
+   "relation": "writer"
+  },
+  {
+   "source": "person:7",
+   "target": "film:25",
+   "relation": "writer"
+  },
+  {
+   "source": "person:21",
+   "target": "film:25",
+   "relation": "actor",
+   "character": "Yoon"
+  },
+  {
+   "source": "person:32",
+   "target": "film:25",
+   "relation": "actor",
+   "character": "Tanaka"
+  },
+  {
+   "source": "person:14",
+   "target": "film:25",
+   "relation": "actor",
+   "character": "Boateng"
+  },
+  {
+   "source": "person:19",
+   "target": "film:25",
+   "relation": "actor",
+   "character": "Ibarra"
+  },
+  {
+   "source": "person:34",
+   "target": "film:25",
+   "relation": "composer"
+  },
+  {
+   "source": "person:39",
+   "target": "film:25",
+   "relation": "producer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:4",
+   "relation": "writer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:12",
+   "relation": "writer"
+  },
+  {
+   "source": "person:2",
+   "target": "film:24",
+   "relation": "writer"
+  },
+  {
+   "source": "person:3",
+   "target": "film:21",
+   "relation": "writer"
+  },
+  {
+   "source": "person:26",
+   "target": "film:22",
+   "relation": "writer"
+  },
+  {
+   "source": "person:1",
+   "target": "film:23",
+   "relation": "producer"
+  },
+  {
+   "source": "person:15",
+   "target": "film:18",
+   "relation": "producer"
+  },
+  {
+   "source": "person:5",
+   "target": "film:10",
+   "relation": "writer"
+  },
+  {
+   "source": "person:12",
+   "target": "film:16",
+   "relation": "actor",
+   "character": "Barista"
+  },
+  {
+   "source": "film:1",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:1",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:2",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:2",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:3",
+   "target": "genre:6",
+   "relation": "genre"
+  },
+  {
+   "source": "film:3",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:4",
+   "target": "genre:9",
+   "relation": "genre"
+  },
+  {
+   "source": "film:4",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:5",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:5",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:6",
+   "target": "genre:4",
+   "relation": "genre"
+  },
+  {
+   "source": "film:6",
+   "target": "genre:5",
+   "relation": "genre"
+  },
+  {
+   "source": "film:7",
+   "target": "genre:3",
+   "relation": "genre"
+  },
+  {
+   "source": "film:7",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:8",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:8",
+   "target": "genre:9",
+   "relation": "genre"
+  },
+  {
+   "source": "film:9",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:10",
+   "target": "genre:8",
+   "relation": "genre"
+  },
+  {
+   "source": "film:10",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:10",
+   "target": "genre:4",
+   "relation": "genre"
+  },
+  {
+   "source": "film:11",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:11",
+   "target": "genre:6",
+   "relation": "genre"
+  },
+  {
+   "source": "film:12",
+   "target": "genre:7",
+   "relation": "genre"
+  },
+  {
+   "source": "film:13",
+   "target": "genre:3",
+   "relation": "genre"
+  },
+  {
+   "source": "film:13",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:14",
+   "target": "genre:6",
+   "relation": "genre"
+  },
+  {
+   "source": "film:14",
+   "target": "genre:4",
+   "relation": "genre"
+  },
+  {
+   "source": "film:15",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:15",
+   "target": "genre:5",
+   "relation": "genre"
+  },
+  {
+   "source": "film:16",
+   "target": "genre:5",
+   "relation": "genre"
+  },
+  {
+   "source": "film:16",
+   "target": "genre:4",
+   "relation": "genre"
+  },
+  {
+   "source": "film:17",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:17",
+   "target": "genre:3",
+   "relation": "genre"
+  },
+  {
+   "source": "film:17",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:18",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:18",
+   "target": "genre:5",
+   "relation": "genre"
+  },
+  {
+   "source": "film:19",
+   "target": "genre:3",
+   "relation": "genre"
+  },
+  {
+   "source": "film:19",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:20",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:20",
+   "target": "genre:4",
+   "relation": "genre"
+  },
+  {
+   "source": "film:21",
+   "target": "genre:6",
+   "relation": "genre"
+  },
+  {
+   "source": "film:21",
+   "target": "genre:1",
+   "relation": "genre"
+  },
+  {
+   "source": "film:22",
+   "target": "genre:3",
+   "relation": "genre"
+  },
+  {
+   "source": "film:22",
+   "target": "genre:5",
+   "relation": "genre"
+  },
+  {
+   "source": "film:23",
+   "target": "genre:4",
+   "relation": "genre"
+  },
+  {
+   "source": "film:23",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:24",
+   "target": "genre:9",
+   "relation": "genre"
+  },
+  {
+   "source": "film:24",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:25",
+   "target": "genre:3",
+   "relation": "genre"
+  },
+  {
+   "source": "film:25",
+   "target": "genre:10",
+   "relation": "genre"
+  },
+  {
+   "source": "film:25",
+   "target": "genre:2",
+   "relation": "genre"
+  },
+  {
+   "source": "film:1",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 1999
+  },
+  {
+   "source": "film:1",
+   "target": "award:2",
+   "relation": "nominated",
+   "year": 1999
+  },
+  {
+   "source": "person:1",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 1999,
+   "won": false
+  },
+  {
+   "source": "film:1",
+   "target": "award:3",
+   "relation": "won",
+   "year": 1999
+  },
+  {
+   "source": "person:13",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 1999,
+   "won": true
+  },
+  {
+   "source": "film:3",
+   "target": "award:1",
+   "relation": "won",
+   "year": 2002
+  },
+  {
+   "source": "film:3",
+   "target": "award:2",
+   "relation": "won",
+   "year": 2002
+  },
+  {
+   "source": "person:6",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2002,
+   "won": true
+  },
+  {
+   "source": "film:3",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2002
+  },
+  {
+   "source": "person:16",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2002,
+   "won": false
+  },
+  {
+   "source": "film:3",
+   "target": "award:4",
+   "relation": "nominated",
+   "year": 2002
+  },
+  {
+   "source": "person:36",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2002,
+   "won": false
+  },
+  {
+   "source": "film:4",
+   "target": "award:4",
+   "relation": "won",
+   "year": 2004
+  },
+  {
+   "source": "person:33",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2004,
+   "won": true
+  },
+  {
+   "source": "film:4",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2004
+  },
+  {
+   "source": "person:15",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2004,
+   "won": false
+  },
+  {
+   "source": "film:5",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 2005
+  },
+  {
+   "source": "film:5",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2005
+  },
+  {
+   "source": "person:14",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2005,
+   "won": false
+  },
+  {
+   "source": "film:7",
+   "target": "award:2",
+   "relation": "nominated",
+   "year": 2008
+  },
+  {
+   "source": "person:4",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2008,
+   "won": false
+  },
+  {
+   "source": "film:7",
+   "target": "award:4",
+   "relation": "won",
+   "year": 2008
+  },
+  {
+   "source": "person:34",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2008,
+   "won": true
+  },
+  {
+   "source": "film:7",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 2008
+  },
+  {
+   "source": "film:8",
+   "target": "award:3",
+   "relation": "won",
+   "year": 2009
+  },
+  {
+   "source": "person:15",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2009,
+   "won": true
+  },
+  {
+   "source": "film:8",
+   "target": "award:4",
+   "relation": "nominated",
+   "year": 2009
+  },
+  {
+   "source": "person:35",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2009,
+   "won": false
+  },
+  {
+   "source": "film:9",
+   "target": "award:1",
+   "relation": "won",
+   "year": 2010
+  },
+  {
+   "source": "film:9",
+   "target": "award:2",
+   "relation": "won",
+   "year": 2010
+  },
+  {
+   "source": "person:1",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2010,
+   "won": true
+  },
+  {
+   "source": "film:9",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2010
+  },
+  {
+   "source": "person:14",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2010,
+   "won": false
+  },
+  {
+   "source": "film:11",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 2012
+  },
+  {
+   "source": "film:11",
+   "target": "award:2",
+   "relation": "nominated",
+   "year": 2012
+  },
+  {
+   "source": "person:1",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2012,
+   "won": false
+  },
+  {
+   "source": "film:11",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2012
+  },
+  {
+   "source": "person:13",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2012,
+   "won": false
+  },
+  {
+   "source": "film:11",
+   "target": "award:4",
+   "relation": "nominated",
+   "year": 2012
+  },
+  {
+   "source": "person:34",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2012,
+   "won": false
+  },
+  {
+   "source": "film:13",
+   "target": "award:1",
+   "relation": "won",
+   "year": 2014
+  },
+  {
+   "source": "film:13",
+   "target": "award:2",
+   "relation": "won",
+   "year": 2014
+  },
+  {
+   "source": "person:4",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2014,
+   "won": true
+  },
+  {
+   "source": "film:13",
+   "target": "award:3",
+   "relation": "won",
+   "year": 2014
+  },
+  {
+   "source": "person:21",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2014,
+   "won": true
+  },
+  {
+   "source": "film:13",
+   "target": "award:4",
+   "relation": "won",
+   "year": 2014
+  },
+  {
+   "source": "person:34",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2014,
+   "won": true
+  },
+  {
+   "source": "film:14",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2015
+  },
+  {
+   "source": "person:24",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2015,
+   "won": false
+  },
+  {
+   "source": "film:15",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 2016
+  },
+  {
+   "source": "film:15",
+   "target": "award:4",
+   "relation": "won",
+   "year": 2016
+  },
+  {
+   "source": "person:35",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2016,
+   "won": true
+  },
+  {
+   "source": "film:17",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 2018
+  },
+  {
+   "source": "film:17",
+   "target": "award:2",
+   "relation": "won",
+   "year": 2018
+  },
+  {
+   "source": "person:1",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2018,
+   "won": true
+  },
+  {
+   "source": "film:17",
+   "target": "award:3",
+   "relation": "won",
+   "year": 2018
+  },
+  {
+   "source": "person:14",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2018,
+   "won": true
+  },
+  {
+   "source": "film:18",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2019
+  },
+  {
+   "source": "person:15",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2019,
+   "won": false
+  },
+  {
+   "source": "film:18",
+   "target": "award:4",
+   "relation": "nominated",
+   "year": 2019
+  },
+  {
+   "source": "person:35",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2019,
+   "won": false
+  },
+  {
+   "source": "film:19",
+   "target": "award:2",
+   "relation": "nominated",
+   "year": 2020
+  },
+  {
+   "source": "person:4",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2020,
+   "won": false
+  },
+  {
+   "source": "film:19",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2020
+  },
+  {
+   "source": "person:21",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2020,
+   "won": false
+  },
+  {
+   "source": "film:21",
+   "target": "award:1",
+   "relation": "won",
+   "year": 2022
+  },
+  {
+   "source": "film:21",
+   "target": "award:3",
+   "relation": "won",
+   "year": 2022
+  },
+  {
+   "source": "person:29",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2022,
+   "won": true
+  },
+  {
+   "source": "film:21",
+   "target": "award:2",
+   "relation": "nominated",
+   "year": 2022
+  },
+  {
+   "source": "person:3",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2022,
+   "won": false
+  },
+  {
+   "source": "film:22",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2023
+  },
+  {
+   "source": "person:19",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2023,
+   "won": false
+  },
+  {
+   "source": "film:22",
+   "target": "award:4",
+   "relation": "won",
+   "year": 2023
+  },
+  {
+   "source": "person:35",
+   "target": "award:4",
+   "relation": "nominee",
+   "year": 2023,
+   "won": true
+  },
+  {
+   "source": "film:24",
+   "target": "award:1",
+   "relation": "nominated",
+   "year": 2025
+  },
+  {
+   "source": "film:24",
+   "target": "award:2",
+   "relation": "won",
+   "year": 2025
+  },
+  {
+   "source": "person:2",
+   "target": "award:2",
+   "relation": "nominee",
+   "year": 2025,
+   "won": true
+  },
+  {
+   "source": "film:24",
+   "target": "award:3",
+   "relation": "nominated",
+   "year": 2025
+  },
+  {
+   "source": "person:15",
+   "target": "award:3",
+   "relation": "nominee",
+   "year": 2025,
+   "won": false
+  }
+ ]
+}

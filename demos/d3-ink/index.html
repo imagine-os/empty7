@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ink &amp; Neon — d3-force custom Canvas</title>
+<!--
+  Graph Gallery · d3-ink
+  Library: D3 7.9.0 (d3-force + d3-zoom + d3-drag), hand-drawn Canvas 2D renderer in ./main.js.
+  CDN URLs used (pinned; verify once on a machine with normal internet):
+    https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js
+    https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap  (display font; optional)
+  Data: ../../shared/data.json · Chrome: ../../shared/hud.js (+ theme.css, auto-injected)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  html, body { background: #0a0a0f; }
+  #c { position: fixed; inset: 0; z-index: 1; display: block; cursor: crosshair; touch-action: none; }
+  #c.grab { cursor: grab; }
+  .hud h1 { font-family: Fraunces, Georgia, serif; font-weight: 500; font-style: italic; font-size: 17px; letter-spacing: 0.01em; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<!--
+  cosmos-galaxy — cosmos.gl @cosmos.gl/graph@3.4.1 (GPU 2D, WebGL2 required)
+  CDN URLs used (pinned, verify on a normal machine):
+    https://cdn.jsdelivr.net/npm/@cosmos.gl/graph@3.4.1/dist/index.min.js   (UMD -> globalThis.Cosmos, MIT)
+  Local modules: ./main.js, ../../shared/hud.js, ../../shared/stress.js, ../../shared/theme.css, ../../shared/data.json
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Living Galaxy · cosmos.gl</title>
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <style>
+    body { background: #05060f; }
+    #graph { position: fixed; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+    #graph.in { opacity: 1; }
+    #graph canvas { display: block; }
+    /* vignette + faint nebula haze behind the GPU canvas */
+    #haze { position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(94,200,255,0.06), transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 80%, rgba(245,182,66,0.05), transparent 70%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%); }
+    #graph { z-index: 1; }
+    #labels { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+    .lbl { position: absolute; transform: translate(-50%, 0); white-space: nowrap; font-size: 12px; font-weight: 500;
+      letter-spacing: 0.01em; color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 10px rgba(0,0,0,.8);
+      transition: opacity .25s; will-change: transform; }
+    .lbl.hub { font-size: 13px; font-weight: 600; }
+    #fallback { position: fixed; inset: 0; display: none; place-items: center; z-index: 50; text-align: center; color: var(--fg); }
+    #fallback.show { display: grid; }
+    #fallback p { max-width: 420px; color: var(--muted); }
+    #hint { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 20; color: var(--muted);
+      font-size: 11.5px; letter-spacing: .02em; opacity: 0; transition: opacity 1s; pointer-events: none; }
+    #hint.show { opacity: .8; }
+    .hud-hidden #hint { display: none; }
+  </style>
+</head>
+<body>
+  <div id="haze"></div>
+  <div id="graph"></div>
+  <div id="labels"></div>
+  <div id="hint">move the cursor to stir the galaxy · hover to highlight · click to focus · double-click to reset</div>
+  <div id="fallback"><div><h2>WebGL2 is required</h2><p>cosmos.gl runs its force simulation on the GPU and needs a WebGL2 context. Enable hardware acceleration or try another browser.</p></div></div>
+  <script src="https://cdn.jsdelivr.net/npm/@cosmos.gl/graph@3.4.1/dist/index.min.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -4,25 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Graph Gallery</title>
-<meta name="description" content="Live demos of graph visualization libraries on one shared dataset, to pick the ones worth leading with.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='10' r='5' fill='%233987e5'/%3E%3Ccircle cx='23' cy='14' r='5' fill='%23d95926'/%3E%3Ccircle cx='13' cy='24' r='5' fill='%23199e70'/%3E%3Cpath d='M9 10L23 14L13 24Z' fill='none' stroke='%23c3c2b7' stroke-width='1.5'/%3E%3C/svg%3E">
+<meta name="description" content="Nine live demos of graph visualization libraries on one shared film-studio dataset, so we can pick the ones worth leading with.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='10' r='5' fill='%235ec8ff'/%3E%3Ccircle cx='23' cy='14' r='5' fill='%23ff5f8f'/%3E%3Ccircle cx='13' cy='24' r='5' fill='%23f5b642'/%3E%3Cpath d='M9 10L23 14L13 24Z' fill='none' stroke='%23e8eaf2' stroke-opacity='.6' stroke-width='1.5'/%3E%3C/svg%3E">
 <style>
+  /* Palette mirrors shared/theme.css (type colours from shared/data.json meta.type_colors). */
   :root {
     color-scheme: dark;
-    --bg: #0d0d0d;
-    --surface: #141416;
-    --surface-2: #1c1c1f;
-    --border: rgba(255, 255, 255, 0.10);
-    --border-strong: rgba(255, 255, 255, 0.22);
-    --text: #f4f4f2;
-    --text-2: #c3c2b7;
-    --muted: #898781;
-    --accent: #3987e5;
-    --accent-soft: rgba(57, 135, 229, 0.16);
-    --s1: #3987e5; --s2: #d95926; --s3: #199e70;
-    --radius: 10px;
-    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --c-studio: #f5b642;
+    --c-film:   #ff5f8f;
+    --c-person: #5ec8ff;
+    --c-genre:  #8dff9e;
+    --c-award:  #e6c3ff;
+    --c-gold:   #ffd166;
+    --bg:       #07080f;
+    --surface:  #0d0f18;
+    --surface-2:#131626;
+    --fg:       #e8eaf2;
+    --muted:    rgba(232, 234, 242, 0.55);
+    --faint:    rgba(232, 234, 242, 0.32);
+    --line:     rgba(255, 255, 255, 0.08);
+    --line-2:   rgba(255, 255, 255, 0.18);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --radius: 12px;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -30,115 +34,414 @@
     min-height: 100vh;
     background: var(--bg);
     background-image:
-      radial-gradient(900px 480px at 15% -10%, rgba(57,135,229,0.16), transparent 60%),
-      radial-gradient(700px 420px at 95% 10%, rgba(217,89,38,0.10), transparent 60%);
-    color: var(--text);
+      radial-gradient(900px 520px at 10% -10%, rgba(94, 200, 255, 0.10), transparent 60%),
+      radial-gradient(800px 480px at 95% 5%, rgba(255, 95, 143, 0.08), transparent 60%),
+      radial-gradient(600px 400px at 50% 100%, rgba(245, 182, 66, 0.05), transparent 60%);
+    color: var(--fg);
     font: 15px/1.5 var(--font);
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 16px 40px; }
+  a { color: inherit; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 16px 40px; }
 
-  header { margin-bottom: 40px; }
+  /* Hero ------------------------------------------------------------------- */
+  header { margin-bottom: 36px; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    font: 600 11.5px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--text-2);
+    font: 600 11.5px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
   }
   .eyebrow svg { width: 18px; height: 18px; }
-  h1 { font-size: clamp(32px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.02em; margin: 14px 0 12px; }
-  .intro { color: var(--text-2); font-size: 17px; max-width: 620px; margin: 0; }
+  h1 { font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.025em; margin: 14px 0 12px; }
+  .intro { color: var(--muted); font-size: 17px; max-width: 680px; margin: 0; }
+  .howto {
+    margin-top: 22px; padding: 14px 16px; max-width: 760px;
+    background: rgba(10, 12, 20, 0.72); border: 1px solid var(--line); border-radius: 10px;
+    font-size: 13.5px; color: var(--muted); line-height: 1.55;
+  }
+  .howto b { color: var(--fg); font-weight: 600; }
+  .howto kbd {
+    font: 600 11px/1 var(--mono); color: var(--fg); background: rgba(255,255,255,0.08);
+    border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px; padding: 3px 6px;
+  }
 
+  /* Card grid --------------------------------------------------------------- */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
   }
   .card {
-    display: flex; flex-direction: column; gap: 12px;
-    padding: 22px 22px 20px;
+    position: relative;
+    display: flex; flex-direction: column;
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
-    color: inherit; text-decoration: none;
-    transition: border-color .15s ease, background .15s ease, transform .15s ease;
-  }
-  .card:hover, .card:focus-visible {
-    background: var(--surface-2);
-    border-color: var(--border-strong);
-    transform: translateY(-1px);
-    outline: none;
-  }
-  .card:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
-  .card .thumb {
-    height: 120px; border-radius: 6px;
-    background: #101013;
-    border: 1px solid var(--border);
-    display: grid; place-items: center;
     overflow: hidden;
+    transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
   }
-  .card .thumb svg { width: 100%; height: 100%; }
-  .card h2 { font-size: 18px; line-height: 1.25; margin: 0; letter-spacing: -0.01em; }
-  .card h2 small { display: block; font-weight: 500; font-size: 13px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
-  .card p { margin: 0; color: var(--text-2); font-size: 14px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; }
-  .tag {
-    font: 600 11px/1 var(--mono); letter-spacing: 0.04em;
-    color: var(--text-2);
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 6px 9px;
+  .card:hover, .card:focus-within {
+    border-color: var(--line-2);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   }
-  .card .cta { color: var(--accent); font-weight: 600; font-size: 13.5px; }
-  .card .cta::after { content: " \2192"; }
+  .card .rank {
+    position: absolute; top: 10px; left: 10px; z-index: 2;
+    font: 600 11px/1 var(--mono); color: var(--fg);
+    background: rgba(7, 8, 15, 0.7); border: 1px solid var(--line-2);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    padding: 5px 7px; border-radius: 999px;
+  }
+  .thumb {
+    display: block; aspect-ratio: 16 / 10; width: 100%;
+    background: #0a0b14;
+    border-bottom: 1px solid var(--line);
+  }
+  .thumb img {
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    transition: transform .6s ease;
+  }
+  .card:hover .thumb img { transform: scale(1.03); }
+  .thumb.placeholder {
+    display: grid; place-items: center; text-align: center;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(94, 200, 255, 0.10), transparent 70%),
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 100% 40px,
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 40px 100%,
+      #0a0b14;
+  }
+  .thumb.placeholder span { font: 600 22px/1.2 var(--font); letter-spacing: -0.01em; }
+  .thumb.placeholder small { display: block; margin-top: 6px; font: 12px/1 var(--mono); color: var(--muted); }
+
+  .body { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px 16px; flex: 1; }
+  .card h2 { font-size: 19px; line-height: 1.2; margin: 0; letter-spacing: -0.012em; }
+  .card h2 a { text-decoration: none; }
+  /* Whole card clickable: the title link's ::after covers the card; buttons sit above it. */
+  .card h2 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+  .lib { margin: 0; font: 12.5px/1.4 var(--mono); color: var(--muted); }
+  .lib b { color: var(--fg); font-weight: 600; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: 600 11px/1 var(--mono); letter-spacing: 0.03em;
+    color: var(--fg);
+    border: 1px solid var(--line-2); border-radius: 999px;
+    padding: 5px 9px; white-space: nowrap;
+  }
+  .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--dot, #fff); box-shadow: 0 0 6px var(--dot, #fff); }
+  .badge.r-webgl3d { --dot: var(--c-film); }
+  .badge.r-gpu2d   { --dot: var(--c-person); }
+  .badge.r-webgl2d { --dot: var(--c-award); }
+  .badge.r-canvas  { --dot: var(--c-genre); }
+  .badge.r-svg     { --dot: var(--c-studio); }
+  .badge.lic { --dot: var(--c-gold); color: var(--muted); }
+  .effort {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    font: 600 11px/1 var(--mono); letter-spacing: 0.03em; color: var(--muted);
+  }
+  .effort i { display: inline-flex; gap: 3px; }
+  .effort i::before, .effort i::after, .effort i b {
+    content: ""; display: block; width: 14px; height: 5px; border-radius: 2px; background: rgba(255,255,255,0.10);
+  }
+  .effort[data-effort="low"]    i::before { background: var(--c-genre); box-shadow: 0 0 6px var(--c-genre); }
+  .effort[data-effort="medium"] i::before, .effort[data-effort="medium"] i b { background: var(--c-studio); box-shadow: 0 0 6px var(--c-studio); }
+  .effort[data-effort="high"]   i::before, .effort[data-effort="high"] i b, .effort[data-effort="high"] i::after { background: var(--c-film); box-shadow: 0 0 6px var(--c-film); }
+  .effort span::before { content: "custom code: "; color: var(--faint); font-weight: 500; }
+  .card p.look { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .actions { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; position: relative; z-index: 2; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: 600 13px/1 var(--font); text-decoration: none;
+    padding: 9px 13px; border-radius: 8px;
+    border: 1px solid var(--line-2); color: var(--fg);
+    background: rgba(255, 255, 255, 0.05);
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .btn:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255,255,255,0.35); }
+  .btn.primary { background: var(--fg); color: #0a0b14; border-color: var(--fg); }
+  .btn.primary:hover { background: #fff; }
+  .btn.npm { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .btn.npm:hover { color: var(--fg); }
+  .btn.primary::after { content: "\2192"; }
+
+  /* Sections ---------------------------------------------------------------- */
+  section { margin-top: 64px; }
+  section h2 { font-size: 26px; letter-spacing: -0.02em; margin: 0 0 6px; }
+  section .lede { margin: 0 0 18px; color: var(--muted); max-width: 720px; font-size: 14.5px; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; min-width: 960px; font-size: 13px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font: 600 11px/1.3 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.03); position: sticky; top: 0; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover td { background: rgba(255,255,255,0.025); }
+  td.lib-cell { white-space: nowrap; font-weight: 600; }
+  td.lib-cell small { display: block; font: 11.5px/1.4 var(--mono); color: var(--muted); font-weight: 400; }
+  td .tag { display: inline-block; font: 600 10.5px/1 var(--mono); letter-spacing: 0.04em; padding: 4px 7px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted); white-space: nowrap; }
+  td .tag.demo { color: var(--c-genre); border-color: rgba(141, 255, 158, 0.4); }
+  td .tag.survey { color: var(--c-studio); border-color: rgba(245, 182, 66, 0.4); }
+  tr.survey td { color: var(--muted); }
+  tr.survey td.lib-cell { color: var(--fg); }
+  td.verdict { min-width: 260px; }
+
+  .findings { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .findings li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .findings li b { display: block; color: var(--fg); margin-bottom: 4px; font-weight: 600; }
+  .findings code { font: 12px var(--mono); color: var(--fg); background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 4px; }
 
   footer {
-    margin-top: 48px; padding-top: 20px;
-    border-top: 1px solid var(--border);
+    margin-top: 64px; padding-top: 20px;
+    border-top: 1px solid var(--line);
     color: var(--muted); font-size: 13.5px;
-    display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between;
+    display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between;
   }
-  footer code { font-family: var(--mono); color: var(--text-2); font-size: 12.5px; }
+  footer a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+  footer a:hover { border-color: var(--fg); }
+  footer code { font-family: var(--mono); color: var(--fg); font-size: 12.5px; }
+
+  @media (max-width: 480px) {
+    .wrap { padding-top: 40px; }
+    .grid { grid-template-columns: 1fr; }
+    .effort { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card, .thumb img { transition: none; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="eyebrow">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="9" cy="10" r="5" fill="#3987e5"/><circle cx="23" cy="14" r="5" fill="#d95926"/><circle cx="13" cy="24" r="5" fill="#199e70"/><path d="M9 10L23 14L13 24Z" fill="none" stroke="#c3c2b7" stroke-width="1.5"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="9" cy="10" r="5" fill="#5ec8ff"/><circle cx="23" cy="14" r="5" fill="#ff5f8f"/><circle cx="13" cy="24" r="5" fill="#f5b642"/><path d="M9 10L23 14L13 24Z" fill="none" stroke="#e8eaf2" stroke-opacity=".6" stroke-width="1.5"/></svg>
       Graph visualization bake-off
     </div>
     <h1>Graph Gallery</h1>
-    <p class="intro">Live demos of graph visualization libraries on one shared dataset, to pick the ones worth leading with.</p>
+    <p class="intro">Nine live demos of graph visualization libraries on one shared film-studio dataset, so we can pick the ones worth leading with.</p>
+    <div class="howto">
+      <b>How to compare.</b> Every demo loads the same 85-node / 361-link dataset, uses the same type colours (studio, film, person, genre, award) and offers the same basic interactions (hover, click to focus, drag, zoom). Judge <b>label legibility</b>, <b>motion quality</b>, <b>hover feel</b>, and how much of the beauty is <b>default vs. custom code</b> (the effort meter on each card). Press <kbd>H</kbd> in any demo to hide the HUD for a clean look.
+    </div>
   </header>
 
-  <!-- One card per demo. To add a library: copy a <a class="card"> block and point it at demos/<name>/ -->
-  <main class="grid">
-    <a class="card" href="demos/studio-graph/">
-      <div class="thumb" aria-hidden="true">
-        <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice">
-          <g stroke="rgba(195,194,183,0.35)" stroke-width="1">
-            <line x1="60" y1="40" x2="120" y2="70"/><line x1="120" y1="70" x2="180" y2="35"/>
-            <line x1="180" y1="35" x2="240" y2="80"/><line x1="120" y1="70" x2="150" y2="105"/>
-            <line x1="60" y1="40" x2="40" y2="95"/><line x1="180" y1="35" x2="230" y2="20"/>
-            <line x1="150" y1="105" x2="240" y2="80"/><line x1="40" y1="95" x2="150" y2="105"/>
-          </g>
-          <circle cx="60" cy="40" r="7" fill="#3987e5"/><circle cx="120" cy="70" r="10" fill="#d95926"/>
-          <circle cx="180" cy="35" r="8" fill="#199e70"/><circle cx="240" cy="80" r="6" fill="#c98500"/>
-          <circle cx="150" cy="105" r="5" fill="#d55181"/><circle cx="40" cy="95" r="5" fill="#9085e9"/>
-          <circle cx="230" cy="20" r="4" fill="#3987e5"/>
-        </svg>
+  <!-- One card per demo, in research.md shortlist order; Studio Graph (the SQL-driven original) last.
+       To add a library: copy an <article class="card"> block and point it at demos/<slug>/ (see README). -->
+  <main class="grid" id="cards">
+
+    <article class="card" data-slug="three-nebula">
+      <span class="rank">01</span>
+      <div class="thumb"><img src="demos/three-nebula/thumb.jpg" alt="Nebula: three.js custom 3D scene with bloom" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/three-nebula/">Nebula</a></h2>
+        <p class="lib"><b>three.js</b> 0.186.0 · d3-force-3d 3.0.6</p>
+        <div class="badges">
+          <span class="badge r-webgl3d">WebGL 3D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="high" title="Custom scene: instancing, tube edges, post-processing all hand-written"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Instanced glowing spheres, Bezier tube edges, UnrealBloom and depth fog: the film-title-sequence look.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/three-nebula/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/three" target="_blank" rel="noopener">npm</a>
+        </div>
       </div>
-      <h2>Studio Graph <small>3d-force-graph (three.js) + sql.js</small></h2>
-      <p>A real SQLite database in the browser, rendered as a live 3D force graph. Switch between schema and data views, run SQL, and watch results light up the graph.</p>
-      <div class="tags"><span class="tag">3D</span><span class="tag">WebGL</span><span class="tag">SQL-driven</span></div>
-      <span class="cta">Open demo</span>
-    </a>
+    </article>
+
+    <article class="card" data-slug="cosmos-galaxy">
+      <span class="rank">02</span>
+      <div class="thumb"><img src="demos/cosmos-galaxy/thumb.jpg" alt="Living Galaxy: cosmos.gl GPU force layout" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/cosmos-galaxy/">Living Galaxy</a></h2>
+        <p class="lib"><b>cosmos.gl</b> @cosmos.gl/graph 3.4.1</p>
+        <div class="badges">
+          <span class="badge r-gpu2d">GPU 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="medium" title="Engine does the motion; labels are a hand-built HTML overlay"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">A GPU force simulation you can stir with the cursor; curved links, hover rings and GPU colour transitions make it the most alive 2D graph.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/cosmos-galaxy/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/@cosmos.gl/graph" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="force3d-bloom">
+      <span class="rank">03</span>
+      <div class="thumb"><img src="demos/force3d-bloom/thumb.jpg" alt="Constellation: 3d-force-graph with bloom and link particles" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/force3d-bloom/">Constellation</a></h2>
+        <p class="lib"><b>3d-force-graph</b> 1.80.0 · three-spritetext 1.10.0</p>
+        <div class="badges">
+          <span class="badge r-webgl3d">WebGL 3D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="low" title="Bloom, particles and camera fly-to are built in"><i><b></b></i><span>low</span></span>
+        </div>
+        <p class="look">Eighty percent of Nebula's wow for a tenth of the code: bloom, directional link particles and camera fly-to, all built in.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/force3d-bloom/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/3d-force-graph" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="sigma-editorial">
+      <span class="rank">04</span>
+      <div class="thumb"><img src="demos/sigma-editorial/thumb.jpg" alt="Editorial Dark: Sigma.js ForceAtlas2 with halos" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/sigma-editorial/">Editorial Dark</a></h2>
+        <p class="lib"><b>Sigma.js</b> 3.0.3 · graphology 0.26.0</p>
+        <div class="badges">
+          <span class="badge r-webgl2d">WebGL 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="medium" title="Reducers for hover dimming and ESM satellite programs for curves and borders"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">Gephi-quality ForceAtlas2 with node halos, curved edges, community colours and hover dimming: the most designed 2D look.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/sigma-editorial/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/sigma" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="g6-studio">
+      <span class="rank">05</span>
+      <div class="thumb"><img src="demos/g6-studio/thumb.jpg" alt="G6 Studio: AntV G6 dark theme with bubble sets" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/g6-studio/">G6 Studio</a></h2>
+        <p class="lib"><b>AntV G6</b> 5.1.1 · g6-extension-3d 0.1.23</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="low" title="Dark theme, palettes, plugins and animations ship with the library"><i><b></b></i><span>low</span></span>
+        </div>
+        <p class="look">Product-grade UI out of the box: dark theme, bubble sets around studios, edge bundling, minimap and animated transitions.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/g6-studio/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/@antv/g6" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="echarts-neon">
+      <span class="rank">06</span>
+      <div class="thumb"><img src="demos/echarts-neon/thumb.jpg" alt="ECharts Neon: glowing graph with adjacency focus" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/echarts-neon/">ECharts Neon</a></h2>
+        <p class="lib"><b>Apache ECharts</b> 6.1.0 · echarts-gl 2.1.0</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">Apache-2.0</span>
+          <span class="effort" data-effort="low" title="Glow, focus fade and force layout are option flags"><i><b></b></i><span>low</span></span>
+        </div>
+        <p class="look">Neon glow and adjacency-focus fade that dashboards love; a graphGL toggle runs GPU ForceAtlas2 on a 50k-node stress set.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/echarts-neon/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/echarts" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="cytoscape-blueprint">
+      <span class="rank">07</span>
+      <div class="thumb"><img src="demos/cytoscape-blueprint/thumb.jpg" alt="Blueprint: Cytoscape.js compound nodes on a grid" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/cytoscape-blueprint/">Blueprint</a></h2>
+        <p class="lib"><b>Cytoscape.js</b> 3.34.3 · cytoscape-fcose 2.2.0</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="medium" title="A long CSS-like stylesheet does the styling; layout is built in"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">Crisp compound-node blueprint with an animated fcose layout: the precise, analytical counterpoint to the glow demos.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/cytoscape-blueprint/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/cytoscape" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="d3-ink">
+      <span class="rank">08</span>
+      <div class="thumb"><img src="demos/d3-ink/thumb.jpg" alt="Ink and Neon: hand-drawn D3 canvas graph" loading="lazy" width="1280" height="800"></div>
+      <div class="body">
+        <h2><a href="demos/d3-ink/">Ink &amp; Neon</a></h2>
+        <p class="lib"><b>D3</b> 7.9.0 (d3-force, d3-zoom, d3-drag)</p>
+        <div class="badges">
+          <span class="badge r-canvas">Canvas 2D</span>
+          <span class="badge lic">ISC</span>
+          <span class="effort" data-effort="high" title="D3 only does layout and zoom; every pixel is hand-drawn"><i><b></b></i><span>high</span></span>
+        </div>
+        <p class="look">Hand-drawn Canvas: radial gradients, arced edges and a staged entrance animation. Proof of what custom Canvas can do for small graphs.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/d3-ink/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/d3" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-slug="studio-graph">
+      <span class="rank">09</span>
+      <div class="thumb placeholder" aria-hidden="true"><div><span>Studio Graph</span><small>3d-force-graph + sql.js</small></div></div>
+      <div class="body">
+        <h2><a href="demos/studio-graph/">Studio Graph</a></h2>
+        <p class="lib"><b>3d-force-graph</b> (latest) · sql.js 1.10.3</p>
+        <div class="badges">
+          <span class="badge r-webgl3d">WebGL 3D</span>
+          <span class="badge lic">MIT</span>
+          <span class="effort" data-effort="medium" title="Default 3d-force-graph look plus a full SQL console and schema browser"><i><b></b></i><span>medium</span></span>
+        </div>
+        <p class="look">The SQL-driven original: a real SQLite database in the browser, rendered as a live 3D force graph. Run queries and watch results light up.</p>
+        <div class="actions">
+          <a class="btn primary" href="demos/studio-graph/">Open demo</a>
+          <a class="btn npm" href="https://www.npmjs.com/package/sql.js" target="_blank" rel="noopener">npm</a>
+        </div>
+      </div>
+    </article>
+
   </main>
 
+  <section id="comparison">
+    <h2>Comparison</h2>
+    <p class="lede">Condensed from <a href="research.md">research.md</a>. Versions and licences were read from the npm tarballs on 2026-09-17. Libraries marked <em>survey only</em> were assessed but not demoed (commercial, licence-restricted, or not loadable from a static page).</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Library</th><th>Renderer</th><th>2D / 3D</th><th>Licence</th><th>Sweet-spot scale</th><th>Standout visuals</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="lib-cell">three.js custom<small>three@0.186.0 <span class="tag demo">demo 01</span></small></td><td>WebGL(2) / WebGPU</td><td>3D</td><td>MIT</td><td>1k–50k (InstancedMesh)</td><td>Instanced spheres, UnrealBloom, tube/Bezier edges, fog, particles</td><td class="verdict">Maximum wow ceiling; most work. The one that looks like a film title sequence.</td></tr>
+          <tr><td class="lib-cell">cosmos.gl<small>@cosmos.gl/graph@3.4.1 <span class="tag demo">demo 02</span></small></td><td>WebGL2 (luma.gl), GPU force layout</td><td>2D</td><td>MIT</td><td>10k–1M+</td><td>Real-time GPU simulation, curved links, hover/focus rings, GPU transitions</td><td class="verdict">The most visually alive 2D graph you can put on a page. No built-in labels; WebGL2 required.</td></tr>
+          <tr><td class="lib-cell">3d-force-graph<small>3d-force-graph@1.80.0 <span class="tag demo">demo 03</span></small></td><td>three.js WebGL</td><td>3D (2D/1D via numDimensions)</td><td>MIT</td><td>1k–20k</td><td>Bloom composer, directional link particles, link curvature, camera fly-to, DAG modes</td><td class="verdict">Quickest route to a jaw-dropping 3D scene; good by default, spectacular with bloom.</td></tr>
+          <tr><td class="lib-cell">Sigma.js v3<small>sigma@3.0.3 + graphology@0.26.0 <span class="tag demo">demo 04</span></small></td><td>WebGL 2D, Canvas labels</td><td>2D</td><td>MIT</td><td>5k–200k</td><td>ForceAtlas2 worker, node borders/halos, curved edges, reducers for hover dimming</td><td class="verdict">The editorial (Gephi-style) WebGL look. Best 2D balance of beauty, scale and control.</td></tr>
+          <tr><td class="lib-cell">AntV G6 v5<small>@antv/g6@5.1.1 <span class="tag demo">demo 05</span></small></td><td>Canvas / SVG / WebGL (@antv/g); 3D extension</td><td>2D (+3D)</td><td>MIT</td><td>1k–10k</td><td>Light/dark themes, 20 palettes, bubble sets, edge bundling, fisheye, minimap, legend</td><td class="verdict">Most product-grade UI feel; the plugins are unique. 3D extension is young.</td></tr>
+          <tr><td class="lib-cell">Apache ECharts graph<small>echarts@6.1.0 + echarts-gl@2.1.0 <span class="tag demo">demo 06</span></small></td><td>Canvas/SVG (graph), WebGL + GPU FA2 (graphGL)</td><td>2D</td><td>Apache-2.0 (gl: MIT)</td><td>≤3k (graph) / 100k+ (graphGL)</td><td>shadowBlur glow, adjacency focus with fade, curveness, categories legend</td><td class="verdict">Dashboard-friendly neon-on-dark look; graphGL is a hidden gem for big graphs.</td></tr>
+          <tr><td class="lib-cell">Cytoscape.js<small>cytoscape@3.34.3 + cytoscape-fcose@2.2.0 <span class="tag demo">demo 07</span></small></td><td>Canvas 2D</td><td>2D</td><td>MIT</td><td>≤5k</td><td>CSS-like stylesheet, compound nodes, fcose/cola layouts, bezier/haystack/taxi edges</td><td class="verdict">Clean, precise, scientific-diagram aesthetic; not flashy but extremely controllable.</td></tr>
+          <tr><td class="lib-cell">D3-force custom<small>d3@7.9.0 <span class="tag demo">demo 08</span></small></td><td>Canvas 2D or SVG (you write it)</td><td>2D</td><td>ISC</td><td>≤5k (Canvas)</td><td>Anything you can draw: gradients, glow, arcs, entrance animation, label collision</td><td class="verdict">Hand-crafted ink-and-neon look; unbounded polish per unit effort for small graphs.</td></tr>
+          <tr><td class="lib-cell">3d-force-graph + sql.js<small>Studio Graph <span class="tag demo">demo 09</span></small></td><td>three.js WebGL + SQLite (WASM)</td><td>3D</td><td>MIT</td><td>1k–20k</td><td>Schema and data views of a live in-browser database; SQL results highlighted in the graph</td><td class="verdict">The original SQL-driven prototype; the baseline the eight library demos were built to beat.</td></tr>
+          <tr class="survey"><td class="lib-cell">vis-network<small>vis-network@10.1.2 <span class="tag survey">survey only</span></small></td><td>Canvas 2D</td><td>2D</td><td>Apache-2.0 or MIT</td><td>≤2k</td><td>Physics solvers, smooth edges, shadows, clustering, hierarchical layout</td><td class="verdict">Solid and friendly but the default look is dated; needs heavy theming to compete.</td></tr>
+          <tr class="survey"><td class="lib-cell">deck.gl<small>deck.gl@9.4.0 <span class="tag survey">survey only</span></small></td><td>WebGL2 / WebGPU (luma.gl)</td><td>2D / 2.5D</td><td>MIT</td><td>100k+</td><td>Scatterplot/Line/Arc layers; no graph layout built in (graph.gl is abandoned)</td><td class="verdict">Great geo-graph renderer; for pure networks it is more work than cosmos.gl for a similar look.</td></tr>
+          <tr class="survey"><td class="lib-cell">Cosmograph<small>@cosmograph/cosmograph@2.5.1 <span class="tag survey">survey only</span></small></td><td>cosmos.gl engine + DuckDB-WASM UI kit</td><td>2D</td><td>CC-BY-NC-4.0</td><td>1M+</td><td>Timeline, histograms, legends, search, cluster labels</td><td class="verdict">The most spectacular app, but non-commercial licence and no browser bundle. Use its MIT engine instead.</td></tr>
+          <tr class="survey"><td class="lib-cell">NVL (Neo4j)<small>@neo4j-nvl/base@2.0.0 <span class="tag survey">survey only</span></small></td><td>WebGL 2D</td><td>2D</td><td>Proprietary (Neo4j products only)</td><td>10k+</td><td>Bloom-style nodes with captions, rings, worker layouts</td><td class="verdict">Looks great, but the licence forbids standalone use.</td></tr>
+          <tr class="survey"><td class="lib-cell">KeyLines / ReGraph<small>Cambridge Intelligence <span class="tag survey">survey only</span></small></td><td>Canvas / WebGL</td><td>2D (+ maps, time bar)</td><td>Commercial</td><td>10k+</td><td>Time bar, combos, link-analysis styling</td><td class="verdict">Enterprise link-analysis gold standard; trial on request, pricing on request.</td></tr>
+          <tr class="survey"><td class="lib-cell">Ogma<small>Linkurious <span class="tag survey">survey only</span></small></td><td>WebGL / Canvas / SVG</td><td>2D (+ geo)</td><td>Commercial</td><td>100k+</td><td>Very polished styling, geo mode, graph-DB integrations</td><td class="verdict">Beautiful and huge feature set; 30-day trial, pricing on request.</td></tr>
+          <tr class="survey"><td class="lib-cell">yFiles for HTML<small>yWorks <span class="tag survey">survey only</span></small></td><td>SVG / Canvas / WebGL2</td><td>2D</td><td>Commercial</td><td>10k+</td><td>Best-in-class automatic layouts and edge routing</td><td class="verdict">The diagramming reference; per-developer licences priced on request.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2>Findings</h2>
+    <p class="lede">The things worth knowing before choosing.</p>
+    <ul class="findings">
+      <li><b>cosmos.gl is now MIT.</b> Cosmograph's engine (<code>@cosmograph/cosmos</code>, CC-BY-NC) was renamed <code>@cosmos.gl/graph</code> and donated to the OpenJS Foundation. v3.4.1 ships a self-contained UMD with the whole force simulation on the GPU. The Cosmograph app/UI kit stays non-commercial, so build on the engine.</li>
+      <li><b>NVL is not usable here.</b> Neo4j's visualization library looks like Bloom, but its LICENSE.txt restricts it to Neo4j Aura or Neo4j commercial database deployments. Survey entry only.</li>
+      <li><b>ESM-only gotchas.</b> Sigma's pretty renderers (<code>@sigma/edge-curve</code>, <code>@sigma/node-border</code>) ship ESM only, so that demo uses an import map instead of UMD scripts. G6's 3D extension UMD inlines its own copy of G6, so pair it carefully or use ESM with <code>?deps=@antv/g6@5.1.1</code>.</li>
+      <li><b>CDN URLs are unverified from the sandbox.</b> Every public CDN was blocked where the demos were built, so package paths were derived from the npm tarballs. All URLs are pinned to exact versions; open each demo once on a normal machine to confirm they resolve.</li>
+    </ul>
+  </section>
+
   <footer>
-    <span>More libraries coming: Sigma.js, G6, Cosmograph, ECharts GL, Cytoscape.js, three.js custom</span>
-    <span>Every demo runs on the same seed dataset (<code>seed.sql</code>).</span>
+    <span><a href="https://github.com/imagine-os/empty7" target="_blank" rel="noopener">imagine-os/empty7</a> on GitHub · <a href="research.md">research.md</a> · <a href="plan.md">plan.md</a></span>
+    <span>dataset: fictional film-studio catalog, <code>85 nodes / 361 links</code> (<code>shared/data.json</code>)</span>
   </footer>
 </div>
 </body>

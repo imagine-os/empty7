@@ -1,0 +1,57 @@
+<!doctype html>
+<!--
+  sigma-editorial — Sigma.js v3 + graphology (WebGL 2D), all-ESM via import map (research.md §2.4 Recipe B)
+  CDN URLs used (pinned, verify on a normal machine):
+    https://esm.sh/graphology@0.26.0
+    https://esm.sh/graphology-library@0.8.0                       (layout.circular, communitiesLouvain, FA2Layout worker)
+    https://esm.sh/graphology-layout-forceatlas2@0.10.1/worker    (fallback FA2 worker if the CDN serves the node entry)
+    https://esm.sh/sigma@3.0.3
+    https://esm.sh/@sigma/edge-curve@3.1.0?deps=sigma@3.0.3
+    https://esm.sh/@sigma/node-border@3.0.0?deps=sigma@3.0.3
+    https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap
+  Local modules: ./main.js, ../../shared/hud.js, ../../shared/theme.css, ../../shared/data.json
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editorial Dark · Sigma.js</title>
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <style>
+    body { background: #0b0d14; }
+    #paper { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 45%, rgba(255,255,255,0.035), transparent 70%),
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 100% 56px,
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 56px 100%; }
+    #graph { position: fixed; inset: 0; z-index: 1; opacity: 0; transition: opacity 1.6s ease; }
+    #graph.in { opacity: 1; }
+    #status { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 20; font-size: 11.5px;
+      letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: flex; gap: 8px; align-items: center; pointer-events: none; }
+    #status i { width: 6px; height: 6px; border-radius: 50%; background: #8dff9e; box-shadow: 0 0 8px #8dff9e; transition: background .3s, box-shadow .3s; }
+    #status.idle i { background: rgba(255,255,255,.3); box-shadow: none; }
+    .hud-hidden #status { display: none; }
+    #fallback { position: fixed; inset: 0; display: none; place-items: center; z-index: 50; text-align: center; }
+    #fallback.show { display: grid; } #fallback p { max-width: 420px; color: var(--muted); }
+  </style>
+  <script type="importmap">
+  {"imports":{
+    "graphology":"https://esm.sh/graphology@0.26.0",
+    "graphology-library":"https://esm.sh/graphology-library@0.8.0",
+    "graphology-layout-forceatlas2/worker":"https://esm.sh/graphology-layout-forceatlas2@0.10.1/worker",
+    "sigma":"https://esm.sh/sigma@3.0.3",
+    "@sigma/edge-curve":"https://esm.sh/@sigma/edge-curve@3.1.0?deps=sigma@3.0.3",
+    "@sigma/node-border":"https://esm.sh/@sigma/node-border@3.0.0?deps=sigma@3.0.3"
+  }}
+  </script>
+</head>
+<body>
+  <div id="paper"></div>
+  <div id="graph"></div>
+  <div id="status"><i></i><span>ForceAtlas2 settling</span></div>
+  <div id="fallback"><div><h2>WebGL is required</h2><p>Sigma.js renders with WebGL. Enable hardware acceleration or try another browser.</p></div></div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

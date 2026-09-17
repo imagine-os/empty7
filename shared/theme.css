@@ -1,0 +1,149 @@
+/* Graph Gallery — shared chrome. Type colours mirror data.json meta.type_colors. */
+:root {
+  --c-studio: #f5b642;
+  --c-film:   #ff5f8f;
+  --c-person: #5ec8ff;
+  --c-genre:  #8dff9e;
+  --c-award:  #e6c3ff;
+  --c-gold:   #ffd166;
+  --bg:       #07080f;
+  --fg:       #e8eaf2;
+  --muted:    rgba(232, 234, 242, 0.55);
+  --panel:    rgba(10, 12, 20, 0.72);
+  --line:     rgba(255, 255, 255, 0.08);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glass panel ------------------------------------------------------------ */
+.hud {
+  position: fixed;
+  z-index: 20;
+  padding: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--fg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  user-select: none;
+}
+.hud--tl { top: 16px; left: 16px; }
+.hud--tr { top: 16px; right: 16px; }
+.hud--bl { bottom: 16px; left: 16px; }
+.hud--br { bottom: 16px; right: 16px; }
+
+.hud h1 {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.hud .sub { color: var(--muted); font-size: 12px; }
+
+/* Legend ----------------------------------------------------------------- */
+.legend { display: grid; gap: 6px; }
+.legend-row { display: flex; align-items: center; gap: 8px; text-transform: capitalize; }
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dot, #fff);
+  box-shadow: 0 0 8px var(--dot, #fff);
+  flex: none;
+}
+
+/* Toggles ---------------------------------------------------------------- */
+.toggles { display: flex; flex-wrap: wrap; gap: 6px; max-width: 260px; }
+.pill {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.pill:hover { color: var(--fg); border-color: rgba(255, 255, 255, 0.3); }
+.pill.on {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+/* FPS -------------------------------------------------------------------- */
+.fps {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  padding: 6px 10px;
+  min-width: 56px;
+  text-align: right;
+}
+.fps b { color: var(--fg); font-weight: 600; }
+
+/* Tooltip ---------------------------------------------------------------- */
+.tooltip {
+  position: fixed;
+  z-index: 30;
+  pointer-events: none;
+  max-width: 260px;
+  padding: 8px 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--fg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translate(12px, 12px);
+  transition: opacity .12s;
+}
+.tooltip.show { opacity: 1; }
+.tooltip .tt-label { font-weight: 600; font-size: 13px; margin-bottom: 3px; }
+.tooltip .tt-kv { color: var(--muted); display: flex; justify-content: space-between; gap: 12px; }
+.tooltip .tt-kv b { color: var(--fg); font-weight: 500; }
+
+/* Back link -------------------------------------------------------------- */
+.back {
+  position: fixed;
+  z-index: 20;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+  transition: color .15s;
+}
+.back:hover { color: var(--fg); }
+
+/* Hide chrome for screenshots (press H) ---------------------------------- */
+.hud-hidden .hud,
+.hud-hidden .back,
+.hud-hidden .tooltip { display: none !important; }

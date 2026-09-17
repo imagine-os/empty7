@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blueprint — Cytoscape.js + fcose</title>
+<!--
+  Graph Gallery · cytoscape-blueprint
+  Library: Cytoscape.js 3.34.3 (Canvas 2D) + cytoscape-fcose 2.2.0 (needs layout-base → cose-base first).
+  CDN URLs used (pinned; verify once on a machine with normal internet):
+    https://cdn.jsdelivr.net/npm/cytoscape@3.34.3/dist/cytoscape.min.js
+    https://cdn.jsdelivr.net/npm/layout-base@2.0.1/layout-base.js
+    https://cdn.jsdelivr.net/npm/cose-base@2.2.0/cose-base.js
+    https://cdn.jsdelivr.net/npm/cytoscape-fcose@2.2.0/cytoscape-fcose.js
+  Data: ../../shared/data.json · Chrome: ../../shared/hud.js (+ theme.css, auto-injected)
+-->
+<link rel="stylesheet" href="../../shared/theme.css">
+<style>
+  :root { --bp: #0c1220; }
+  html, body { background: var(--bp); }
+  /* Blueprint grid: minor 24 px lines, major 120 px lines, soft vignette. */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(93, 140, 255, 0.10), rgba(12, 18, 32, 0) 60%),
+      repeating-linear-gradient(0deg,  rgba(120, 160, 255, 0.11) 0 1px, transparent 1px 120px),
+      repeating-linear-gradient(90deg, rgba(120, 160, 255, 0.11) 0 1px, transparent 1px 120px),
+      repeating-linear-gradient(0deg,  rgba(120, 160, 255, 0.045) 0 1px, transparent 1px 24px),
+      repeating-linear-gradient(90deg, rgba(120, 160, 255, 0.045) 0 1px, transparent 1px 24px);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+    box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.55);
+  }
+  #cy { position: fixed; inset: 0; z-index: 1; }
+</style>
+</head>
+<body>
+<div id="cy"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.34.3/dist/cytoscape.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/layout-base@2.0.1/layout-base.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cose-base@2.2.0/cose-base.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape-fcose@2.2.0/cytoscape-fcose.js"></script>
+
+<script type="module">
+import { loadData, linkColor, mountHud, tooltipHtml, GOLD } from '../../shared/hud.js';
+
+const FONT = 'Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+const data = await loadData('../../shared/data.json');
+const C = data.meta.type_colors;
+
+// ---------------------------------------------------------------- elements
+const studioOf = new Map();                       // film id -> studio id
+for (const l of data.links) if (l.relation === 'produced_by') studioOf.set(l.source, l.target);
+
+const nodes = data.nodes.map(n => {
+  let w = n.size * 2.6;                            // shared size semantics: ∝ sqrt(degree)
+  if (n.type === 'film') w += Math.sqrt(n.gross_musd || 0) * 0.7;
+  if (n.type === 'person') w += (n.wins || 0) * 2.5;
+  const short = n.type === 'award' ? n.category : n.label;   // awards read by category; full name in tooltip
+  return { data: { ...n, w: Math.round(w), short, parent: studioOf.get(n.id) } };
+});
+const edges = data.links.map((l, i) => ({
+  data: {
+    id: `e${i}`, source: l.source, target: l.target, relation: l.relation, won: !!l.won,
+    color: linkColor(l), cpd: (i % 2 ? 1 : -1) * (18 + (i * 7) % 26), // alternating bezier bow
+    detail: l.character || l.year || '',
+  },
+}));
+
+// ---------------------------------------------------------------- stylesheet
+const style = [
+  { selector: 'node', style: {
+    width: 'data(w)', height: 'data(w)', label: 'data(short)',
+    'font-family': FONT, 'font-size': 11, 'font-weight': 500, color: '#e8eaf2',
+    'text-outline-color': '#0c1220', 'text-outline-width': 2.5, 'text-outline-opacity': 0.95,
+    'text-valign': 'bottom', 'text-margin-y': 5, 'text-opacity': 0, 'text-max-width': 150, 'text-wrap': 'ellipsis',
+    'border-width': 1, 'border-opacity': 0.8, 'overlay-opacity': 0,
+    'transition-property': 'opacity, text-opacity, border-width', 'transition-duration': '180ms',
+  } },
+  { selector: 'node[degree >= 10], node[type = "studio"], node[type = "award"]', style: { 'text-opacity': 1 } },
+  { selector: 'node[type = "film"]', style: {
+    shape: 'ellipse', 'background-fill': 'radial-gradient',
+    'background-gradient-stop-colors': '#ffe3ec #ff5f8f #6e1a36',
+    'background-gradient-stop-positions': '0 40 100', 'border-color': '#ffb3c8',
+  } },
+  { selector: 'node[type = "person"]', style: {
+    shape: 'diamond', 'background-fill': 'radial-gradient',
+    'background-gradient-stop-colors': '#e6f7ff #5ec8ff #10456b',
+    'background-gradient-stop-positions': '0 40 100', 'border-color': '#a8e2ff',
+  } },
+  { selector: 'node[type = "genre"]', style: {
+    shape: 'round-hexagon', 'background-fill': 'radial-gradient',
+    'background-gradient-stop-colors': '#ecffef #8dff9e #1e5a2a',
+    'background-gradient-stop-positions': '0 45 100', 'border-color': '#c5ffcf', 'font-size': 10,
+  } },
+  { selector: 'node[type = "award"]', style: {
+    shape: 'star', 'background-fill': 'radial-gradient',
+    'background-gradient-stop-colors': '#ffffff #e6c3ff #5a3a7a',
+    'background-gradient-stop-positions': '0 45 100', 'border-color': GOLD, 'border-width': 1.5,
+    'font-size': 11, 'font-weight': 600, color: '#f3e6ff',
+  } },
+  { selector: 'node[type = "studio"]', style: {
+    shape: 'round-rectangle', 'background-color': C.studio, 'background-opacity': 0.9,
+    'border-color': '#ffe2a8', color: '#ffe9bd', 'font-weight': 600,
+  } },
+  { selector: ':parent', style: {                  // studio compound box — the blueprint room
+    shape: 'round-rectangle', 'background-color': C.studio, 'background-opacity': 0.06,
+    'border-color': C.studio, 'border-width': 1, 'border-opacity': 0.55, 'corner-radius': 14,
+    padding: 30, 'compound-sizing-wrt-labels': 'include',
+    'text-valign': 'top', 'text-halign': 'center', 'text-margin-y': 22,
+    'text-transform': 'uppercase', 'font-size': 9.5, 'font-weight': 600, color: C.studio, 'text-opacity': 0.9,
+    'text-outline-width': 0,
+  } },
+  { selector: 'edge', style: {
+    width: 1, 'curve-style': 'unbundled-bezier', 'control-point-distances': 'data(cpd)', 'control-point-weights': 0.5,
+    'line-color': 'data(color)', 'line-opacity': 0.4, 'target-arrow-shape': 'none',
+    'transition-property': 'line-opacity, width', 'transition-duration': '180ms',
+  } },
+  { selector: 'edge[relation = "genre"]', style: { 'curve-style': 'haystack', 'haystack-radius': 0.2, 'line-opacity': 0.22 } },
+  { selector: 'edge[relation = "produced_by"]', style: { 'curve-style': 'straight', 'line-opacity': 0.25, 'line-style': 'dashed', 'line-dash-pattern': [3, 5] } },
+  { selector: 'edge[relation = "nominated"], edge[relation = "nominee"]', style: {
+    'line-style': 'dashed', 'line-dash-pattern': [4, 6], 'line-opacity': 0.35,
+  } },
+  { selector: 'edge[relation = "won"], edge[relation = "nominee"][?won]', style: {
+    width: 1.8, 'line-style': 'solid', 'line-opacity': 0.85, 'line-color': GOLD,
+    'target-arrow-shape': 'triangle', 'target-arrow-color': GOLD, 'arrow-scale': 0.75,
+  } },
+  { selector: 'edge.straight', style: { 'curve-style': 'straight' } },
+  { selector: '.hidden', style: { display: 'none' } },
+  { selector: 'node.faded', style: { opacity: 0.12, 'text-opacity': 0 } },
+  { selector: 'edge.faded', style: { 'line-opacity': 0.04, 'target-arrow-shape': 'none' } },
+  { selector: 'node.nb', style: { 'text-opacity': 1 } },
+  { selector: 'node.hover', style: { 'text-opacity': 1, 'border-width': 2, 'border-color': '#fff' } },
+  { selector: 'node.hover[type = "film"]',   style: { 'underlay-color': C.film,   'underlay-opacity': 0.3, 'underlay-padding': 12 } },
+  { selector: 'node.hover[type = "person"]', style: { 'underlay-color': C.person, 'underlay-opacity': 0.3, 'underlay-padding': 12 } },
+  { selector: 'node.hover[type = "genre"]',  style: { 'underlay-color': C.genre,  'underlay-opacity': 0.3, 'underlay-padding': 12 } },
+  { selector: 'node.hover[type = "award"]',  style: { 'underlay-color': GOLD,     'underlay-opacity': 0.35, 'underlay-padding': 14 } },
+  { selector: 'node.hover[type = "studio"]', style: { 'underlay-color': C.studio, 'underlay-opacity': 0.25, 'underlay-padding': 10 } },
+  { selector: 'edge.nb', style: { 'line-opacity': 1, width: 2 } },
+  { selector: 'node:selected', style: { 'border-width': 2.5, 'border-color': '#fff', 'text-opacity': 1 } },
+];
+
+cytoscape.use(cytoscapeFcose);
+const cy = cytoscape({
+  container: document.getElementById('cy'), elements: { nodes, edges }, style,
+  minZoom: 0.2, maxZoom: 5, selectionType: 'single', pixelRatio: 'auto', boxSelectionEnabled: false,
+});
+
+// ---------------------------------------------------------------- layouts
+const fcose = {
+  name: 'fcose', quality: 'proof', randomize: true, animate: true, animationDuration: 1200,
+  animationEasing: 'ease-out-cubic', fit: true, padding: 50, packComponents: true, tile: true,
+  nodeRepulsion: n => (n.isParent() ? 60000 : 12000), idealEdgeLength: e => ({ produced_by: 70, genre: 90, won: 170, nominated: 170, nominee: 160 })[e.data('relation')] || 140,
+  edgeElasticity: e => (e.data('relation') === 'genre' ? 0.6 : 0.35), nestingFactor: 0.1, gravity: 0.15, gravityCompound: 1.0, gravityRangeCompound: 1.8, numIter: 3000,
+};
+const concentric = {
+  name: 'concentric', animate: true, animationDuration: 1000, animationEasing: 'ease-in-out-cubic', fit: true, padding: 70,
+  concentric: n => n.data('degree') + (n.data('type') === 'award' ? 40 : 0), levelWidth: () => 3, minNodeSpacing: 26, avoidOverlap: true, padding: 50,
+};
+const state = { layout: 'fcose', compounds: true, curved: true, focus: null };
+let running = null;
+function runLayout() {
+  running?.stop();
+  running = cy.layout(state.layout === 'fcose' ? fcose : concentric);
+  running.run();
+}
+function setCompounds(on) {
+  state.compounds = on;
+  cy.batch(() => {
+    cy.nodes('[type = "film"]').forEach(f => f.move({ parent: on ? studioOf.get(f.id()) ?? null : null }));
+    cy.edges('[relation = "produced_by"]').toggleClass('hidden', on);   // containment says it already
+  });
+  runLayout();
+}
+
+// ---------------------------------------------------------------- HUD
+const hud = mountHud({
+  title: 'Blueprint', library: 'Cytoscape.js + fcose', version: '3.34.3 · 2.2.0',
+  toggles: [
+    { id: 'layout', label: 'concentric', on: false, onChange: on => { state.layout = on ? 'concentric' : 'fcose'; runLayout(); } },
+    { id: 'compounds', label: 'compounds', on: true, onChange: setCompounds },
+    { id: 'curved', label: 'curved edges', on: true, onChange: on => cy.edges().not('[relation = "genre"]').toggleClass('straight', !on) },
+  ],
+});
+
+const fmt = n => (n == null ? null : Number.isInteger(n) ? String(n) : n.toFixed(1));
+function tip(n) {
+  const d = n.data();
+  const kv = { degree: d.degree };
+  if (d.type === 'film') Object.assign(kv, { year: d.year, 'gross $M': fmt(d.gross_musd), roi: fmt(d.roi), wins: d.wins });
+  if (d.type === 'person') Object.assign(kv, { born: d.born, films: d.film_count, wins: d.wins, nationality: d.nationality });
+  if (d.type === 'studio') Object.assign(kv, { founded: d.founded, country: d.country, films: n.children().length || n.degree() });
+  if (d.type === 'award') Object.assign(kv, { award: d.award, category: d.category });
+  return tooltipHtml(d.label, kv);
+}
+
+// ---------------------------------------------------------------- interaction
+function highlight(n) {
+  const hood = n.closedNeighborhood().union(n.descendants()).union(n.descendants().connectedEdges());
+  cy.batch(() => {
+    cy.elements().removeClass('faded nb hover');
+    cy.elements().not(hood).addClass('faded');
+    hood.addClass('nb'); n.addClass('hover');
+  });
+  return hood;
+}
+function clearHighlight() { cy.elements().removeClass('faded nb hover'); }
+
+cy.on('mouseover', 'node', e => {
+  if (!state.focus) highlight(e.target);
+  const { clientX: x, clientY: y } = e.originalEvent;
+  hud.showTooltip(tip(e.target), x, y);
+});
+cy.on('mouseout', 'node', () => { if (!state.focus) clearHighlight(); hud.hideTooltip(); });
+cy.on('tap', 'node', e => {
+  state.focus = e.target;
+  const hood = highlight(e.target);
+  cy.animate({ fit: { eles: hood, padding: 90 } }, { duration: 750, easing: 'ease-in-out-cubic' });
+});
+cy.on('tap', e => { if (e.target === cy && state.focus) { state.focus = null; clearHighlight(); } });
+cy.on('dbltap', e => {
+  if (e.target !== cy && !e.target.isEdge()) return;   // double-click on empty canvas (or a stray edge) resets
+  state.focus = null; clearHighlight(); cy.elements().unselect();
+  cy.animate({ fit: { eles: cy.elements(), padding: 50 } }, { duration: 750, easing: 'ease-in-out-cubic' });
+});
+
+// ---------------------------------------------------------------- entrance: bloom from centre, fcose settles
+cy.nodes().forEach(n => n.position({ x: (Math.random() - 0.5) * 80, y: (Math.random() - 0.5) * 80 }));
+cy.nodes().style('opacity', 0);
+cy.edges().style('line-opacity', 0);
+cy.fit(undefined, 70);
+runLayout();
+cy.nodes().animate({ style: { opacity: 1 } }, { duration: 1000, easing: 'ease-out-cubic' });
+setTimeout(() => cy.batch(() => { cy.nodes().removeStyle('opacity'); cy.edges().removeStyle('line-opacity'); }), 1100);
+
+// Test hook (used by the gallery smoke test): screen position of a hub node.
+window.__demo = {
+  cy, ready: true,
+  nodePos(id = 'film:13') { const p = cy.$id(id).renderedPosition(); return { x: p.x, y: p.y }; },
+  allPos: () => cy.nodes().map(n => n.isParent() ? n.renderedBoundingBox() : { ...n.renderedPosition(), r: n.renderedOuterWidth() / 2 }),
+  state: () => ({ hovered: cy.$('.hover').length > 0, focused: !!state.focus, k: cy.zoom() }),
+};
+</script>
+</body>
+</html>
